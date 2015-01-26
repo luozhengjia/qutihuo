@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.qutihuo.merchant.dao.MerchantMapper" >
+    <resultMap id="MerchantMapper" type="com.ejunhai.qutihuo.merchant.model.Merchant" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
+        <result column="business_line" property="businessLine" jdbcType="VARCHAR" />
+        <result column="merchant_level" property="merchantLevel" jdbcType="TINYINT" />
+        <result column="open_time" property="openTime" jdbcType="TIMESTAMP" />
+        <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
+        <result column="available_sms_num" property="availableSmsNum" jdbcType="INTEGER" />
+        <result column="record_number" property="recordNumber" jdbcType="VARCHAR" />
+        <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        id,
+        merchant_name,
+        business_line,
+        merchant_level,
+        open_time,
+        expire_time,
+        available_sms_num,
+        record_number,
+        telephone,
+        create_time,
+        update_time
+    </sql>
+    
+    <select id="read" resultMap="MerchantMapper" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from tb_merchant
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <insert id="insert" parameterType="com.ejunhai.qutihuo.merchant.model.Merchant" useGeneratedKeys="true" keyProperty="id" >
+        insert into tb_merchant (<include refid="Base_Column_List" />)
+        values (
+        #{id,jdbcType=INTEGER},
+        #{merchantName,jdbcType=VARCHAR},
+        #{businessLine,jdbcType=VARCHAR},
+        #{merchantLevel,jdbcType=TINYINT},
+        #{openTime,jdbcType=TIMESTAMP},
+        #{expireTime,jdbcType=TIMESTAMP},
+        #{availableSmsNum,jdbcType=INTEGER},
+        #{recordNumber,jdbcType=VARCHAR},
+        #{telephone,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    
+    <update id="update" parameterType="com.ejunhai.qutihuo.merchant.model.Merchant" >
+        update tb_merchant
+        <set>
+            id = #{id,jdbcType=INTEGER},
+            merchant_name = #{merchantName,jdbcType=VARCHAR},
+            business_line = #{businessLine,jdbcType=VARCHAR},
+            merchant_level = #{merchantLevel,jdbcType=TINYINT},
+            open_time = #{openTime,jdbcType=TIMESTAMP},
+            expire_time = #{expireTime,jdbcType=TIMESTAMP},
+            available_sms_num = #{availableSmsNum,jdbcType=INTEGER},
+            record_number = #{recordNumber,jdbcType=VARCHAR},
+            telephone = #{telephone,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Integer" >
+        delete from tb_merchant
+        where ID = #{id,jdbcType=INTEGER}
+    </delete>
+    
+    <select id="queryMerchantCount" resultType="java.lang.Integer">
+    		select count(1) from tb_merchant
+    </select>
+    
+    <select id="queryMerchantList" resultMap="MerchantMapper">
+    		select <include refid="Base_Column_List" /> from tb_merchant
+    </select>
+    
+</mapper>

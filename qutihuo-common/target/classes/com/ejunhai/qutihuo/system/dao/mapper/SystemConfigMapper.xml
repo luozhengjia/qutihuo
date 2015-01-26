@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.qutihuo.system.dao.SystemConfigMapper" >
+    <resultMap id="SystemConfigMapper" type="com.ejunhai.qutihuo.system.model.SystemConfig" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="config_name" property="configName" jdbcType="VARCHAR" />
+        <result column="config_key" property="configKey" jdbcType="VARCHAR" />
+        <result column="config_value" property="configValue" jdbcType="LONGVARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        id,
+        config_name,
+        config_key,
+        config_value,
+        remark
+    </sql>
+    
+    <select id="read" resultMap="SystemConfigMapper" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from tb_system_config
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <insert id="insert" parameterType="com.ejunhai.qutihuo.system.model.SystemConfig" useGeneratedKeys="true" keyProperty="id" >
+        insert into tb_system_config (<include refid="Base_Column_List" />)
+        values (
+        #{id,jdbcType=INTEGER},
+        #{configName,jdbcType=VARCHAR},
+        #{configKey,jdbcType=VARCHAR},
+        #{configValue,jdbcType=LONGVARCHAR},
+        #{remark,jdbcType=VARCHAR}
+        )
+    </insert>
+    
+    <update id="update" parameterType="com.ejunhai.qutihuo.system.model.SystemConfig" >
+        update tb_system_config
+        <set>
+            id = #{id,jdbcType=INTEGER},
+            config_name = #{configName,jdbcType=VARCHAR},
+            config_key = #{configKey,jdbcType=VARCHAR},
+            config_value = #{configValue,jdbcType=LONGVARCHAR},
+            remark = #{remark,jdbcType=VARCHAR}
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Integer" >
+        delete from tb_system_config
+        where ID = #{id,jdbcType=INTEGER}
+    </delete>
+    
+    <select id="querySystemConfigCount" resultType="java.lang.Integer">
+    		select count(1) from tb_system_config
+    </select>
+    
+    <select id="querySystemConfigList" resultMap="SystemConfigMapper">
+    		select <include refid="Base_Column_List" /> from tb_system_config
+    </select>
+    
+</mapper>

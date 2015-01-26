@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.qutihuo.system.dao.SystemUserMapper" >
+    <resultMap id="SystemUserMapper" type="com.ejunhai.qutihuo.system.model.SystemUser" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+        <result column="passwd" property="passwd" jdbcType="VARCHAR" />
+        <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+        <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+        <result column="user_type" property="userType" jdbcType="TINYINT" />
+        <result column="user_title" property="userTitle" jdbcType="TINYINT" />
+        <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+        <result column="picture_url" property="pictureUrl" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="TINYINT" />
+        <result column="role_ids" property="roleIds" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        id,
+        login_name,
+        passwd,
+        nickname,
+        telephone,
+        user_type,
+        user_title,
+        merchant_id,
+        picture_url,
+        state,
+        role_ids,
+        create_time,
+        update_time
+    </sql>
+    
+    <select id="read" resultMap="SystemUserMapper" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from tb_system_user
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <insert id="insert" parameterType="com.ejunhai.qutihuo.system.model.SystemUser" useGeneratedKeys="true" keyProperty="id" >
+        insert into tb_system_user (<include refid="Base_Column_List" />)
+        values (
+        #{id,jdbcType=INTEGER},
+        #{loginName,jdbcType=VARCHAR},
+        #{passwd,jdbcType=VARCHAR},
+        #{nickname,jdbcType=VARCHAR},
+        #{telephone,jdbcType=VARCHAR},
+        #{userType,jdbcType=TINYINT},
+        #{userTitle,jdbcType=TINYINT},
+        #{merchantId,jdbcType=INTEGER},
+        #{pictureUrl,jdbcType=VARCHAR},
+        #{state,jdbcType=TINYINT},
+        #{roleIds,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    
+    <update id="update" parameterType="com.ejunhai.qutihuo.system.model.SystemUser" >
+        update tb_system_user
+        <set>
+            id = #{id,jdbcType=INTEGER},
+            login_name = #{loginName,jdbcType=VARCHAR},
+            passwd = #{passwd,jdbcType=VARCHAR},
+            nickname = #{nickname,jdbcType=VARCHAR},
+            telephone = #{telephone,jdbcType=VARCHAR},
+            user_type = #{userType,jdbcType=TINYINT},
+            user_title = #{userTitle,jdbcType=TINYINT},
+            merchant_id = #{merchantId,jdbcType=INTEGER},
+            picture_url = #{pictureUrl,jdbcType=VARCHAR},
+            state = #{state,jdbcType=TINYINT},
+            role_ids = #{roleIds,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Integer" >
+        delete from tb_system_user
+        where ID = #{id,jdbcType=INTEGER}
+    </delete>
+    
+    <select id="querySystemUserCount" resultType="java.lang.Integer">
+    		select count(1) from tb_system_user
+    </select>
+    
+    <select id="querySystemUserList" resultMap="SystemUserMapper">
+    		select <include refid="Base_Column_List" /> from tb_system_user
+    </select>
+    
+</mapper>

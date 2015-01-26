@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.qutihuo.order.dao.OrderMainMapper" >
+    <resultMap id="OrderMainMapper" type="com.ejunhai.qutihuo.order.model.OrderMain" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="order_main_no" property="orderMainNo" jdbcType="VARCHAR" />
+        <result column="coupon_number" property="couponNumber" jdbcType="VARCHAR" />
+        <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+        <result column="state" property="state" jdbcType="TINYINT" />
+        <result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
+        <result column="order_date" property="orderDate" jdbcType="VARCHAR" />
+        <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+        <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+        <result column="province_code" property="provinceCode" jdbcType="VARCHAR" />
+        <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+        <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+        <result column="detail_address" property="detailAddress" jdbcType="VARCHAR" />
+        <result column="logistics_company" property="logisticsCompany" jdbcType="VARCHAR" />
+        <result column="express_order_no" property="expressOrderNo" jdbcType="VARCHAR" />
+        <result column="deliver_time" property="deliverTime" jdbcType="TIMESTAMP" />
+        <result column="is_send_sms" property="isSendSms" jdbcType="TINYINT" />
+        <result column="is_print_express" property="isPrintExpress" jdbcType="TINYINT" />
+        <result column="source" property="source" jdbcType="TINYINT" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        id,
+        order_main_no,
+        coupon_number,
+        merchant_id,
+        state,
+        pay_amount,
+        order_date,
+        consignee,
+        telephone,
+        province_code,
+        city_code,
+        area_code,
+        detail_address,
+        logistics_company,
+        express_order_no,
+        deliver_time,
+        is_send_sms,
+        is_print_express,
+        source,
+        remark,
+        create_time
+    </sql>
+    
+    <select id="read" resultMap="OrderMainMapper" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from tb_order_main
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <insert id="insert" parameterType="com.ejunhai.qutihuo.order.model.OrderMain" useGeneratedKeys="true" keyProperty="id" >
+        insert into tb_order_main (<include refid="Base_Column_List" />)
+        values (
+        #{id,jdbcType=INTEGER},
+        #{orderMainNo,jdbcType=VARCHAR},
+        #{couponNumber,jdbcType=VARCHAR},
+        #{merchantId,jdbcType=INTEGER},
+        #{state,jdbcType=TINYINT},
+        #{payAmount,jdbcType=DECIMAL},
+        #{orderDate,jdbcType=VARCHAR},
+        #{consignee,jdbcType=VARCHAR},
+        #{telephone,jdbcType=VARCHAR},
+        #{provinceCode,jdbcType=VARCHAR},
+        #{cityCode,jdbcType=VARCHAR},
+        #{areaCode,jdbcType=VARCHAR},
+        #{detailAddress,jdbcType=VARCHAR},
+        #{logisticsCompany,jdbcType=VARCHAR},
+        #{expressOrderNo,jdbcType=VARCHAR},
+        #{deliverTime,jdbcType=TIMESTAMP},
+        #{isSendSms,jdbcType=TINYINT},
+        #{isPrintExpress,jdbcType=TINYINT},
+        #{source,jdbcType=TINYINT},
+        #{remark,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    
+    <update id="update" parameterType="com.ejunhai.qutihuo.order.model.OrderMain" >
+        update tb_order_main
+        <set>
+            id = #{id,jdbcType=INTEGER},
+            order_main_no = #{orderMainNo,jdbcType=VARCHAR},
+            coupon_number = #{couponNumber,jdbcType=VARCHAR},
+            merchant_id = #{merchantId,jdbcType=INTEGER},
+            state = #{state,jdbcType=TINYINT},
+            pay_amount = #{payAmount,jdbcType=DECIMAL},
+            order_date = #{orderDate,jdbcType=VARCHAR},
+            consignee = #{consignee,jdbcType=VARCHAR},
+            telephone = #{telephone,jdbcType=VARCHAR},
+            province_code = #{provinceCode,jdbcType=VARCHAR},
+            city_code = #{cityCode,jdbcType=VARCHAR},
+            area_code = #{areaCode,jdbcType=VARCHAR},
+            detail_address = #{detailAddress,jdbcType=VARCHAR},
+            logistics_company = #{logisticsCompany,jdbcType=VARCHAR},
+            express_order_no = #{expressOrderNo,jdbcType=VARCHAR},
+            deliver_time = #{deliverTime,jdbcType=TIMESTAMP},
+            is_send_sms = #{isSendSms,jdbcType=TINYINT},
+            is_print_express = #{isPrintExpress,jdbcType=TINYINT},
+            source = #{source,jdbcType=TINYINT},
+            remark = #{remark,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Integer" >
+        delete from tb_order_main
+        where ID = #{id,jdbcType=INTEGER}
+    </delete>
+    
+    <select id="queryOrderMainCount" resultType="java.lang.Integer">
+    		select count(1) from tb_order_main
+    </select>
+    
+    <select id="queryOrderMainList" resultMap="OrderMainMapper">
+    		select <include refid="Base_Column_List" /> from tb_order_main
+    </select>
+    
+</mapper>
