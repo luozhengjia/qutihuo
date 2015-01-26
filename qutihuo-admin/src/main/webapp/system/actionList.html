@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Dashboard</title>
+
+    <meta name="description" content="Dashboard" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon">
+
+    <!--Basic Styles-->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/assets/css/weather-icons.min.css" rel="stylesheet" />
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="/assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/typicons.min.css" rel="stylesheet" />
+    <link href="/assets/css/animate.min.css" rel="stylesheet" />
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="/assets/js/skins.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <#include "/common/navbar.html">
+    <!-- /Navbar -->
+    
+    <!-- Main Container -->
+    <div class="main-container container-fluid">
+        <!-- Page Container -->
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            <#include "/common/menu.html">
+            <!-- /Page Sidebar -->
+            
+            <!-- Page Content -->
+            <div class="page-content">
+            
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li><i class="fa fa-home"></i><a href="#">系统管理</a></li>
+                        <li>菜单列表</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+                
+                <div class="page-body">
+                    <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                        <div class="col-xs-12 col-md-12">
+                            <div class="well with-header with-footer">
+                                <div class="header">
+	                                <div class="col-xs-10">
+	                                	<form class="form-inline" role="form">
+										    <div class="form-group">
+										        <label class="sr-only" for="exampleInputEmail2">操作名称</label>
+										        <input type="text"  name="actionName" class="form-control" value="${(systemActionDto.actionName)!''}" placeholder="按操作名过滤">
+										    </div>
+										    <button type="submit" class="btn">搜索</button>
+										</form>
+		                            </div>
+		                            <div class="col-xs-2">
+		                                <div class = "pull-right">
+											<a class="btn btn-success" href="/system/actionDetail.jhtml">新增操作</a>
+		                                </div>
+		                            </div>
+                                </div>
+                            
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>图标</th>
+                                            <th>操作名</th>
+                                            <th>节点类型</th>
+                                            <th>url</th>                                  
+                                            <th>权重</th>
+                                            <th>创建时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <#list systemActionList as item >
+                                        <tr>
+                                            <td>${item.id}</td>
+                                            <td><i class="${item.iconCss?default('submenu menu-text')}"></i> </td>
+                                            <td>${item.actionName}</td>
+											<td>${ActionType.get(item.actionType).getTitle()}</td>
+                                            <td>${item.url}</td>
+                                            <td>${item.weight?c}</td>
+                                            <td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
+                                            <td>
+                                                <a href="/system/actionDetail.jhtml?id=${item.id?c}" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a>
+                                                <button type="button" class="btn btn-danger btn-xs delete J_delete" data-param='{"id":${item.id?c}}'><i class="fa fa-trash-o"></i> 删除</button>
+											</td>
+                                        </tr>
+                                        </#list>
+                                    </tbody>
+                                </table>
+        
+                                <div class="footer">
+                                    <div class="col-xs-4">总记录数：${pagination.totalCount?c} </div>
+                                    <div class="col-xs-8">
+                                        <#include "/common/pagination.html">
+                                    </div>
+                               </div>
+                            </div>
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Content -->
+        </div>
+        <!-- /Page Container -->
+        <!-- Main Container -->
+    </div>
+
+    <!--Basic Scripts-->
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="/assets/js/beyond.min.js"></script>
+    <script src="/assets/js/base.junhai.js"></script>
+    <script src="/assets/js/bootbox/bootbox.js"></script>
+    <script src="/assets/js/toastr/toastr.js"></script>
+    
+    <script>
+	    bootbox.setDefaults({locale:"zh_CN"});
+        $(".J_delete").on('click', function () {
+        	var dataParam = $(this).attr('data-param');
+        	bootbox.confirm({
+		        message: '你确定删除该条数据？',
+		        title: "提示",
+		        callback: function(result) {  
+		            if (result) {
+	                    $.post('/system/deleteAction.jhtml', JSON.parse(dataParam), function(result) {
+			                if(result.state.code==200){
+				        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+				        	}else{
+				        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+				        	}
+			            }, 'json');
+	                }
+		        }
+	        });
+	    });
+    </script>
+</body>
+</html>

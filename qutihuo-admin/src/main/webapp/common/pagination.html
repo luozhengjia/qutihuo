@@ -1,0 +1,10 @@
+
+<ul class="pagination pull-right">
+    <#if pagination.pageNo &gt; 1><li><a href="#" data-page="${pagination.pageNo-1}">«</a></li><#else><li class="disabled"><span>«</span></li></#if>
+    
+    <#list pagination.pageRange[0]..pagination.pageRange[1] as i>
+        <li class="<#if i==pagination.pageNo>active</#if>"><a href="#" data-page="${i}" >${i}<span class="sr-only">(current)</span></a></li>
+    </#list>
+        
+    <#if pagination.pageNo &lt; pagination.totalPage><li><a href="#" data-page="${pagination.pageNo+1}">»</a></li><#else><li class="disabled"><span>»</span></li></#if>
+</ul>
