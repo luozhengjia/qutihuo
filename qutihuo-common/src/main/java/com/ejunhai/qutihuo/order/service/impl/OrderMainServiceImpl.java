@@ -26,38 +26,34 @@ public class OrderMainServiceImpl implements OrderMainService {
 
     @Override
     public OrderMain read(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
+        return orderMainMapper.read(id);
     }
 
     @Override
     public void insert(OrderMain orderMain) {
-        // TODO Auto-generated method stub
-
+    	orderMainMapper.insert(orderMain);
     }
 
     @Override
     public void update(OrderMain orderMain) {
-        // TODO Auto-generated method stub
+    	orderMainMapper.update(orderMain);
 
     }
 
     @Override
     public void delete(Integer id) {
-        // TODO Auto-generated method stub
+    	orderMainMapper.delete(id);
 
     }
 
     @Override
     public Integer queryOrderMainCount(OrderMain orderMain) {
-        // TODO Auto-generated method stub
-        return null;
+        return orderMainMapper.queryOrderMainCount(orderMain);
     }
 
     @Override
     public List<OrderMain> queryOrderMainList(OrderMain orderMain) {
-        // TODO Auto-generated method stub
-        return null;
+        return orderMainMapper.queryOrderMainList(orderMain);
     }
 
 }

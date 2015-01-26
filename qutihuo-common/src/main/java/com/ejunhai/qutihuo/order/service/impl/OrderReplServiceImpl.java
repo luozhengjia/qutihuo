@@ -26,38 +26,33 @@ public class OrderReplServiceImpl implements OrderReplService {
 
     @Override
     public OrderRepl read(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
+        return orderReplMapper.read(id);
     }
 
     @Override
     public void insert(OrderRepl orderRepl) {
-        // TODO Auto-generated method stub
+    	orderReplMapper.insert(orderRepl);
 
     }
 
     @Override
     public void update(OrderRepl orderRepl) {
-        // TODO Auto-generated method stub
-
+    	orderReplMapper.update(orderRepl);
     }
 
     @Override
     public void delete(Integer id) {
-        // TODO Auto-generated method stub
-
+    	orderReplMapper.delete(id);
     }
 
     @Override
     public Integer queryOrderReplCount(OrderRepl orderRepl) {
-        // TODO Auto-generated method stub
-        return null;
+        return orderReplMapper.queryOrderReplCount(orderRepl);
     }
 
     @Override
     public List<OrderRepl> queryOrderReplList(OrderRepl orderRepl) {
-        // TODO Auto-generated method stub
-        return null;
+        return orderReplMapper.queryOrderReplList(orderRepl);
     }
 
 }

@@ -14,6 +14,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ejunhai.qutihuo.common.constant.CommonConstant;
+import com.ejunhai.qutihuo.order.enums.OrderPrint;
+import com.ejunhai.qutihuo.order.enums.OrderSource;
+import com.ejunhai.qutihuo.order.enums.OrderState;
 import com.ejunhai.qutihuo.system.enums.ActionType;
 import com.ejunhai.qutihuo.system.enums.RoleType;
 import com.ejunhai.qutihuo.system.model.SystemAction;
@@ -27,7 +30,7 @@ public class PrivilageInterceptor implements HandlerInterceptor {
 	@Resource
 	private SystemActionService systemActionService;
 
-	private static Class[] defaultStaticClasses = { ActionType.class, RoleType.class };
+	private static Class[] defaultStaticClasses = { ActionType.class, RoleType.class,OrderPrint.class,OrderState.class,OrderSource.class };
 
 	@Override
 	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
