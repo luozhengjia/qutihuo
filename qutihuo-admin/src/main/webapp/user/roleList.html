@@ -118,31 +118,21 @@
         <!-- Main Container -->
     </div>
     
-    <div class="modal fade" id="modal-addrole" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-	                <h5 class="modal-title">新增角色</h5>
-	            </div>
-	            <form id="html5Form" class="form-horizontal" role="form" method="POST" action="/system/saveRole.jhtml">
-	            	<input type="hidden" name="id"/>
-	                <div class="modal-body">
-	                    <div class="form-group">
-	                        <label class="col-sm-3 control-label">角色名称<font color="red"> *</font></label>
-	                        <div class="col-sm-7">
-	                            <input type="text" class="form-control" name="roleName">
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="modal-footer">
-	                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-	                    <input type="submit" class="btn btn-primary ok" value="确认">
-	                </div>
-	            </form>
+	<form id="html5Form" class="form-horizontal" role="form" method="POST" style="display: none;" action="/system/saveRole.jhtml">
+    	<input type="hidden" name="id"/>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">角色名称<font color="red"> *</font></label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="roleName">
+            </div>
+        </div>
+        
+        <div class="form-group">
+	        <div class="col-xs-5 col-xs-offset-3">
+            	<button type="submit" class="btn btn-success">确认</button>
 	        </div>
 	    </div>
-	</div>
+    </form>
 
     <!--Basic Scripts-->
     <script src="/assets/js/jquery-2.0.3.min.js"></script>
@@ -159,7 +149,6 @@
     
     <script>
     	// 删除角色
-    	bootbox.setDefaults({locale:"zh_CN"});
         $(".J_delete").on('click', function () {
         	var dataParam = $(this).attr('data-param');
         	bootbox.confirm({
@@ -182,19 +171,40 @@
         
         // 新增角色
         $(".J_addrole").on('click', function () {
-        	$("#html5Form")[0].reset();
-        	$('#modal-addrole').modal({keyboard: false});
+        	bootbox.dialog({
+                title: '新增角色',
+                message: $('#html5Form'),
+                show: false
+            })
+            .on('shown.bs.modal', function() {
+            	$('#html5Form').show().formValidation('resetForm', true); 
+            })
+            .on('hide.bs.modal', function(e) {
+            	$('#html5Form').hide().appendTo('body');
+            })
+            .modal('show');
         });
         
         // 编辑角色
         $(".J_editrole").on('click', function () {
-        	$("#html5Form")[0].reset();
-        	$("#html5Form").autofill(JSON.parse($(this).parent().parent().attr('data-formData')));
-        	$('#modal-addrole').modal({keyboard: false});
+        	var formData = JSON.parse($(this).parent().parent().attr('data-formData'));
+        	bootbox.dialog({
+                title: '编辑角色',
+                message: $('#html5Form'),
+                show: false
+            })
+            .on('shown.bs.modal', function() {
+            	$('#html5Form').show().formValidation('resetForm', true); 
+            	$("#html5Form").autofill(formData);
+            })
+            .on('hide.bs.modal', function(e) {
+            	$('#html5Form').hide().appendTo('body');
+            })
+            .modal('show');
         });
         
         // 保存角色
-        var html5Form = $('#html5Form').formValidation({
+        $('#html5Form').formValidation({
 			fields: {
 	            roleName: {
 	                validators: {
