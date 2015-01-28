@@ -30,7 +30,7 @@
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
                         <li><i class="fa fa-home"></i><a href="#">订单管理</a></li>
-                        <li>订单列表</li>
+                        <li>快递公司列表</li>
                     </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
@@ -43,54 +43,42 @@
 	                                <div class="col-xs-10">
 	                                	<form class="form-inline" role="form">
 										    <div class="form-group">
-										        <label class="sr-only" for="exampleInputEmail2">订单编号</label>
-										        <input type="text"  name="orderMainNo" class="form-control" value="${(orderMainDto.orderMainNo)!''}" placeholder="按订单号过滤">
+										        <label class="sr-only" for="exampleInputEmail2">快递公司编号</label>
+										        <input type="text"  name="orderMainNo" class="form-control" value="${(logisticsCompanyDto.lcCode)!''}" placeholder="按订单号过滤">
 										    </div>
 										    <button type="submit" class="btn">搜索</button>
 										</form>
 		                            </div>
 		                            <div class="col-xs-2">
 		                                <div class = "pull-right">
-											<a class="btn btn-success" href="/system/actionDetail.jhtml">新增操作</a>
+											<a class="btn btn-success" href="/logisticsCompany/logisticsCompanyDetail.jhtml">新增操作</a>
 		                                </div>
 		                            </div>
                                 </div>
                             
-                                <table class="table table-hover table-striped table-bordered">
+                                <table class="table table-hover table-striped">
                                     <thead>
                                         <tr>
-                                            <th >
-												<input type="checkbox"> 
-											</th>
-                                            <th>订单号</th>
-                                            <th>优惠券号</th>
-                                            <th>商户ID</th>
-                                            <th>订单金额</th>                                  
-                                            <th>预定日期</th>
-                                            <th>收货人</th>
-                                            <th>联系电话</th>
-                                            <th>收货省市区</th>
-                                            <th>发货状态</th>
-                                            <th>打印状态</th>
+                                            <th>快递公司名称</th>
+                                            <th>快递公司编码</th>
+                                            <th>联系人</th>
+                                            <th>联系电话</th>                                  
+                                            <th>创建时间</th>
+                                            <th>修改时间</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <#list orderMainList as item >
+                                        <#list logisticsCompanyList as item >
                                         <tr>
-                                        	<td><input type=checkbox ></td>
-                                            <td>${item.orderMainNo}</td>
-                                            <td>${item.couponNumber}</td>
-                                            <td>${item.merchantId}</td>
-                                            <td>${item.payAmount?c}</td>
-                                            <td>${item.orderDate}</td>
-                                            <td>${item.consignee}</td>
+                                            <td>${item.lcName}</td>
+                                            <td>${item.lcCode}</td>
+                                            <td>${item.contact}</td>
                                             <td>${item.telephone}</td>
-                                            <td></td>
-                                            <td>${OrderState.get(item.state).getTitle()}</td>
-                                            <td>${OrderPrint.get(item.isPrintExpress).getTitle()}</td>
+                                            <td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
+                                            <td>${item.updateTime?string('yyyy-MM-dd HH:mm')}</td>
                                             <td>
-                                                <a href="/system/actionDetail.jhtml?id=${item.id?c}" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a>
+                                                <a href="/logisticsCompany/logisticsCompanyDetail.jhtml?id=${item.id?c}" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a>
                                                 <button type="button" class="btn btn-danger btn-xs delete J_delete" data-param='{"id":${item.id?c}}'><i class="fa fa-trash-o"></i> 删除</button>
 											</td>
                                         </tr>
@@ -117,17 +105,9 @@
     </div>
 
     <!--Basic Scripts-->
-    <script src="/assets/js/jquery-2.0.3.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
 
-    <!--Beyond Scripts-->
-    <script src="/assets/js/beyond.min.js"></script>
-    <script src="/assets/js/base.junhai.js"></script>
-    <script src="/assets/js/bootbox/bootbox.js"></script>
-    <script src="/assets/js/toastr/toastr.js"></script>
     
     <script>
-	    bootbox.setDefaults({locale:"zh_CN"});
         $(".J_delete").on('click', function () {
         	var dataParam = $(this).attr('data-param');
         	bootbox.confirm({
@@ -135,9 +115,10 @@
 		        title: "提示",
 		        callback: function(result) {  
 		            if (result) {
-	                    $.post('/system/deleteAction.jhtml', JSON.parse(dataParam), function(result) {
+	                    $.post('/logisticsCompany/deleteLogisticsCompany.jhtml', JSON.parse(dataParam), function(result) {
 			                if(result.state.code==200){
 				        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+				        		setTimeout(function () {window.location = "/logisticsCompany/logisticsCompanyList.jhtml";}, 1500);
 				        	}else{
 				        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 				        	}
