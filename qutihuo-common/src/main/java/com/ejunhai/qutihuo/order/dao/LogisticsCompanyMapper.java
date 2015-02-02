@@ -1,7 +1,7 @@
 package com.ejunhai.qutihuo.order.dao;
 
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
+
 import com.ejunhai.qutihuo.order.model.LogisticsCompany;
 
 /**
@@ -60,4 +60,12 @@ public interface LogisticsCompanyMapper {
      */
     public List<LogisticsCompany> queryLogisticsCompanyList(LogisticsCompany logisticsCompany);
 
+    
+    /**
+     * 查询LogisticsCompany
+     * 
+     * @param logisticsCompany
+     * @return
+     */
+    public LogisticsCompany findLogisticsCompany(LogisticsCompany logisticsCompany);
 }

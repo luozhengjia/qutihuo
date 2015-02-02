@@ -122,6 +122,7 @@
     
     <select id="queryOrderMainList" resultMap="OrderMainMapper">
     		select <include refid="Base_Column_List" /> from tb_order_main
+    		limit #{offset},#{pageSize} 
     </select>
     
 </mapper>

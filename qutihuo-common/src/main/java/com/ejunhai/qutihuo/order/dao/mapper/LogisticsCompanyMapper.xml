@@ -69,6 +69,23 @@
     
     <select id="queryLogisticsCompanyList" resultMap="LogisticsCompanyMapper">
     		select <include refid="Base_Column_List" /> from tb_logistics_company
+    		
+    		limit #{offset},#{pageSize} 
     </select>
+    
+    
+    <select id="findLogisticsCompany" resultMap="LogisticsCompanyMapper">
+    		select <include refid="Base_Column_List" /> from tb_logistics_company 
+    		<where>
+    		<if test="lcCode!=null and lcCode!=''">
+				and lc_code = #{lcCode,jdbcType=VARCHAR} 
+			</if>
+	    	<if test="id!=null and id!=''">
+				id = #{id,jdbcType=INTEGER},
+			</if>
+		</where>
+    		
+    </select>
+    
     
 </mapper>

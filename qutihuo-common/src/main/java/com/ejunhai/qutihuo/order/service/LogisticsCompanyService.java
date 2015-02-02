@@ -59,5 +59,14 @@ public interface LogisticsCompanyService {
      * @return
      */
     public List<LogisticsCompany> queryLogisticsCompanyList(LogisticsCompany logisticsCompany);
+    
+    
+    /**
+     * 查询LogisticsCompany
+     * 
+     * @param logisticsCompany
+     * @return
+     */
+    public LogisticsCompany findLogisticsCompany(LogisticsCompany logisticsCompany);
 
 }

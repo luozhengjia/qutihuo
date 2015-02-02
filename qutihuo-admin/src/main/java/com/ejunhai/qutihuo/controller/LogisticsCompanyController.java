@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +52,25 @@ public class LogisticsCompanyController extends BaseController {
 		return "order/logisticsCompanyList";
 	}
 
+	/**
+	 * 选择物流公司
+	 * @param request
+	 * @param logisticsCompanyDto
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/selectLc")
+	@ResponseBody
+	public String selectLc(HttpServletRequest request, LogisticsCompanyDto logisticsCompanyDto, ModelMap modelMap) {
+		// 获取分页数据
+		logisticsCompanyDto.setOffset(0);
+		logisticsCompanyDto.setPageSize(100);
+		List<LogisticsCompany> logisticsCompanyList = logisticsCompanyService
+				.queryLogisticsCompanyList(logisticsCompanyDto);
+		modelMap.put("logisticsCompanyList", logisticsCompanyList);
+		return jsonSuccess(modelMap);
+	}
+
 	@RequestMapping("/logisticsCompanyDetail")
 	public String logisticsCompanyDetail(HttpServletRequest request, LogisticsCompany logisticsCompany,
 			ModelMap modelMap) {
@@ -68,7 +86,7 @@ public class LogisticsCompanyController extends BaseController {
 	@ResponseBody
 	public String saveLogisticsCompany(HttpServletRequest request, LogisticsCompany logisticsCompany) {
 		//JunhaiAssert.notBlank(logisticsCompany.getActionName(), "操作名不能为空");
-		
+
 		if (logisticsCompany.getId() != null && logisticsCompany.getId() > 0) {
 			logisticsCompanyService.update(logisticsCompany);
 		} else {

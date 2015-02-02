@@ -53,4 +53,9 @@ public class LogisticsCompanyServiceImpl implements LogisticsCompanyService {
 	public List<LogisticsCompany> queryLogisticsCompanyList(LogisticsCompany logisticsCompany) {
 		return logisticsCompanyMapper.queryLogisticsCompanyList(logisticsCompany);
 	}
+
+	@Override
+	public LogisticsCompany findLogisticsCompany(LogisticsCompany logisticsCompany) {
+		return logisticsCompanyMapper.findLogisticsCompany(logisticsCompany);
+	}
 }

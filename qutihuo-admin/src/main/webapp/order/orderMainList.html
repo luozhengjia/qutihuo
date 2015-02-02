@@ -51,7 +51,7 @@
 		                            </div>
 		                            <div class="col-xs-2">
 		                                <div class = "pull-right">
-											<a class="btn btn-success" href="/system/actionDetail.jhtml">新增操作</a>
+											<a class="btn btn-success" href="/orderMain/saveOrderMain.jhtml">新增操作</a>
 		                                </div>
 		                            </div>
                                 </div>
@@ -90,7 +90,8 @@
                                             <td>${OrderState.get(item.state).getTitle()}</td>
                                             <td>${OrderPrint.get(item.isPrintExpress).getTitle()}</td>
                                             <td>
-                                                <a href="/system/actionDetail.jhtml?id=${item.id?c}" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a>
+                                                <a href="/orderMain/orderMainDetail.jhtml?id=${item.id?c}" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a>
+                                                <a href="/orderMain/orderMainPrint.jhtml?id=${item.id?c}" class="btn btn-info btn-xs edit"><i class="glyphicon glyphicon-print"></i>打印</a>
                                                 <button type="button" class="btn btn-danger btn-xs delete J_delete" data-param='{"id":${item.id?c}}'><i class="fa fa-trash-o"></i> 删除</button>
 											</td>
                                         </tr>

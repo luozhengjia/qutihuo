@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ejunhai.qutihuo.common.base.BaseController;
 import com.ejunhai.qutihuo.common.base.Pagination;
 import com.ejunhai.qutihuo.errors.JunhaiAssert;
+import com.ejunhai.qutihuo.order.dto.LogisticsCompanyDto;
 import com.ejunhai.qutihuo.order.dto.OrderMainDto;
+import com.ejunhai.qutihuo.order.model.LogisticsCompany;
 import com.ejunhai.qutihuo.order.model.OrderMain;
+import com.ejunhai.qutihuo.order.service.LogisticsCompanyService;
 import com.ejunhai.qutihuo.order.service.OrderMainService;
 
 /**
@@ -31,6 +34,9 @@ public class OrderMainController extends BaseController {
 
 	@Resource
 	private OrderMainService orderMainService;
+
+	@Resource
+	private LogisticsCompanyService logisticsCompanyService;
 
 	@RequestMapping("/orderMainList")
 	public String orderMainList(HttpServletRequest request, OrderMainDto orderMainDto, ModelMap modelMap) {
@@ -59,6 +65,61 @@ public class OrderMainController extends BaseController {
 
 		modelMap.put("orderMain", orderMain);
 		return "order/orderMainEdit";
+	}
+
+	/**
+	 * 获取订单详情
+	 * @param request
+	 * @param orderMain
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/getOrderMain")
+	@ResponseBody
+	public String getOrderMain(HttpServletRequest request, OrderMain orderMain, ModelMap modelMap) {
+		if (orderMain.getId() != null) {
+			orderMain = orderMainService.read(orderMain.getId());
+		}
+
+		modelMap.put("orderMain", orderMain);
+		return jsonSuccess(modelMap);
+	}
+
+	/**
+	 * 打印快递单
+	 * @param request
+	 * @param orderMain
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/printOrder")
+	@ResponseBody
+	public String printOrder(HttpServletRequest request, OrderMain orderMain, String lcCode, ModelMap modelMap) {
+		if (orderMain.getId() != null) {
+			orderMain = orderMainService.read(orderMain.getId());
+		}
+
+		modelMap.put("orderMain", orderMain);
+		LogisticsCompanyDto logisticsCompanyDto = new LogisticsCompanyDto();
+		logisticsCompanyDto.setLcCode(lcCode);
+		LogisticsCompany logisticsCompany = logisticsCompanyService.findLogisticsCompany(logisticsCompanyDto);
+		modelMap.put("logisticsCompany", logisticsCompany);
+		return jsonSuccess(modelMap);
+	}
+
+	@RequestMapping("/orderMainPrint")
+	public String orderMainPrint(HttpServletRequest request, OrderMain orderMain, ModelMap modelMap) {
+		if (orderMain.getId() != null) {
+			orderMain = orderMainService.read(orderMain.getId());
+		}
+		LogisticsCompanyDto logisticsCompanyDto = new LogisticsCompanyDto();
+		logisticsCompanyDto.setOffset(0);
+		logisticsCompanyDto.setPageSize(100);
+		List<LogisticsCompany> logisticsCompanyList = logisticsCompanyService
+				.queryLogisticsCompanyList(logisticsCompanyDto);
+		modelMap.put("lcList", logisticsCompanyList);
+		modelMap.put("orderMain", orderMain);
+		return "order/orderMainPrint";
 	}
 
 	@RequestMapping("/saveOrderMain")
