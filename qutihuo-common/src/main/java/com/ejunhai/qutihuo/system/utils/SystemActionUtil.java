@@ -116,4 +116,9 @@ public class SystemActionUtil {
 		}
 		return routeMap;
 	}
+
+	public static List<SystemAction> getSystemActionTree(Integer actionId, Map<String, SystemAction> systemActionMap) {
+		List<SystemAction> systemActionList = new ArrayList<SystemAction>();
+		return systemActionList;
+	}
 }

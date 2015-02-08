@@ -15,56 +15,26 @@ import com.ejunhai.qutihuo.system.model.SystemPrivilage;
  */
 public interface SystemPrivilageService {
 
-    /**
-     * 根据Id获取SystemPrivilage
-     * 
-     * @param id
-     * @return
-     */
-    public SystemPrivilage read(Integer id);
+	/**
+	 * 根据角色ID获取角色列表
+	 * 
+	 * @param roleIds
+	 * @return
+	 */
+	public List<SystemPrivilage> getSystemPrivilageListByRoleIds(String roleIds);
 
-    /**
-     * 新增SystemPrivilage
-     * 
-     * @param systemPrivilage
-     */
-    public void insert(SystemPrivilage systemPrivilage);
+	/**
+	 * 批量新增
+	 * 
+	 * @param systemPrivilageList
+	 */
+	public void batchAddSystemPrivilage(List<SystemPrivilage> systemPrivilageList);
 
-    /**
-     * 更新SystemPrivilage
-     * 
-     * @param systemPrivilage
-     */
-    public void update(SystemPrivilage systemPrivilage);
-
-    /**
-     * 删除SystemPrivilage
-     * 
-     * @param id
-     */
-    public void delete(Integer id);
-
-    /**
-     * 查询SystemPrivilage数量
-     * 
-     * @param systemPrivilage
-     * @return
-     */
-    public Integer querySystemPrivilageCount(SystemPrivilage systemPrivilage);
-
-    /**
-     * 查询SystemPrivilage列表
-     * 
-     * @param systemPrivilage
-     * @return
-     */
-    public List<SystemPrivilage> querySystemPrivilageList(SystemPrivilage systemPrivilage);
-
-    /**
-     * 根据角色ID获取角色列表
-     * 
-     * @param roleIds
-     * @return
-     */
-    public List<SystemPrivilage> getSystemPrivilageListByRoleIds(String roleIds);
+	/**
+	 * 根据角色ID删除权限
+	 * 
+	 * 
+	 * @param id
+	 */
+	public void deleteByRoleId(Integer roleId);
 }

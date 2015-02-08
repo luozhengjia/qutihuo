@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -23,54 +24,29 @@ import com.ejunhai.qutihuo.system.service.SystemPrivilageService;
 @Service("systemPrivilageService")
 public class SystemPrivilageServiceImpl implements SystemPrivilageService {
 
-    @Resource
-    private SystemPrivilageMapper systemPrivilageMapper;
+	@Resource
+	private SystemPrivilageMapper systemPrivilageMapper;
 
-    @Override
-    public SystemPrivilage read(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public List<SystemPrivilage> getSystemPrivilageListByRoleIds(String roleIds) {
+		List<SystemPrivilage> systemPrivilageList = new ArrayList<SystemPrivilage>();
+		if (StringUtils.isBlank(roleIds)) {
+			return systemPrivilageList;
+		}
 
-    @Override
-    public void insert(SystemPrivilage systemPrivilage) {
-        // TODO Auto-generated method stub
+		return systemPrivilageList;
+	}
 
-    }
+	@Override
+	public void batchAddSystemPrivilage(List<SystemPrivilage> systemPrivilageList) {
+		if (CollectionUtils.isNotEmpty(systemPrivilageList)) {
+			systemPrivilageMapper.batchAddSystemPrivilage(systemPrivilageList);
+		}
+	}
 
-    @Override
-    public void update(SystemPrivilage systemPrivilage) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void delete(Integer id) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public Integer querySystemPrivilageCount(SystemPrivilage systemPrivilage) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public List<SystemPrivilage> querySystemPrivilageList(SystemPrivilage systemPrivilage) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public List<SystemPrivilage> getSystemPrivilageListByRoleIds(String roleIds) {
-        List<SystemPrivilage> systemPrivilageList = new ArrayList<SystemPrivilage>();
-        if (StringUtils.isBlank(roleIds)) {
-            return systemPrivilageList;
-        }
-
-        // TODO Auto-generated method stub
-        return systemPrivilageList;
-    }
+	@Override
+	public void deleteByRoleId(Integer roleId) {
+		systemPrivilageMapper.deleteByRoleId(roleId);
+	}
 
 }

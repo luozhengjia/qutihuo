@@ -89,6 +89,7 @@
 				and action_type = #{actionType,jdbcType=INTEGER} 
 			</if>
 		</where>
+		order by weight asc
     	limit #{offset},#{pageSize} 
     </select>
     
