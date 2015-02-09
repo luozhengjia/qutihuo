@@ -13,8 +13,8 @@
         action_id
     </sql>
     
-    <insert id="batchAddSystemPrivilage" parameterType="com.ejunhai.qutihuo.system.model.SystemPrivilage" useGeneratedKeys="true" keyProperty="id" >
-        insert into tb_system_privilage (<include refid="Base_Column_List" />)
+    <insert id="batchAddSystemPrivilage" parameterType="java.util.List">  
+        insert into tb_system_privilage (<include refid="Base_Column_List" />) values
         <foreach collection="list" item="privilage" index="index" separator="," >  
 	        (
 		        #{privilage.id,jdbcType=INTEGER},

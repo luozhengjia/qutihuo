@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ejunhai.qutihuo.common.base.BaseController;
 import com.ejunhai.qutihuo.common.base.Pagination;
-import com.ejunhai.qutihuo.common.constant.CommonConstant;
 import com.ejunhai.qutihuo.errors.JunhaiAssert;
+import com.ejunhai.qutihuo.system.dto.SystemPrivilageDto;
 import com.ejunhai.qutihuo.system.dto.SystemRoleDto;
 import com.ejunhai.qutihuo.system.dto.SystemUserDto;
 import com.ejunhai.qutihuo.system.model.SystemAction;
@@ -110,25 +111,22 @@ public class SystemUserController extends BaseController {
 	@RequestMapping("/toAuthorize")
 	public String toAuthorize(HttpServletRequest request, String roleId, ModelMap modelMap) {
 
-		// 根据角色获取权限列表
-		Map<Integer, SystemPrivilage> systemPrivilageMap = null;
-		List<SystemPrivilage> legalPrivilageList = systemPrivilageService.getSystemPrivilageListByRoleIds(roleId);
-		systemPrivilageMap = SystemPrivilageUtil.getSystemPrivilageMap(legalPrivilageList);
+		// 获取当前用户角色
+		String roleIds = "1,2,3";
 
-		List<SystemAction> allSystemActionList = systemActionService.getAllSystemActionList();
-		List<SystemAction> menuSystemActionList = SystemActionUtil.getMenuSystemActionList(allSystemActionList);
-		List<SystemAction> rootMenuSystemActionList = new ArrayList<SystemAction>();
-		for (SystemAction systemAction : menuSystemActionList) {
-			if (CommonConstant.ROOT_MENU_ID.equals(systemAction.getParentId())) {
-				rootMenuSystemActionList.add(systemAction);
-			}
-		}
+		// 获取当前用户所拥有的action列表
+		List<SystemPrivilage> authorizedPrivilageList = systemPrivilageService.getSystemPrivilageListByRoleIds(roleIds);
+		List<Integer> authorizedActionIdList = SystemPrivilageUtil.getActionIdList(authorizedPrivilageList);
+		List<SystemAction> authorizedActionList = systemActionService.getSystemActionListByIds(authorizedActionIdList);
+
+		// 获取根(一级菜单)action列表
+		List<SystemAction> rootSystemActionList = SystemActionUtil.getRootActionList(authorizedActionList);
 
 		// 按父节点分组
 		Map<String, List<SystemAction>> parentSystemActionMap = new HashMap<String, List<SystemAction>>();
-		for (SystemAction parentSystemAction : menuSystemActionList) {
+		for (SystemAction parentSystemAction : rootSystemActionList) {
 			List<SystemAction> systemActionGroupList = new ArrayList<SystemAction>();
-			for (SystemAction systemAction : allSystemActionList) {
+			for (SystemAction systemAction : authorizedActionList) {
 				if (systemAction.getParentId().equals(parentSystemAction.getId())) {
 					systemActionGroupList.add(systemAction);
 				}
@@ -136,25 +134,28 @@ public class SystemUserController extends BaseController {
 			parentSystemActionMap.put(String.valueOf(parentSystemAction.getId()), systemActionGroupList);
 		}
 
+		// 获取当前角色已分配的权限列表
+		List<SystemPrivilage> legalPrivilageList = systemPrivilageService.getSystemPrivilageListByRoleIds(roleId);
+
 		modelMap.put("roleId", roleId);
-		modelMap.put("systemPrivilageMap", systemPrivilageMap);
+		modelMap.put("authorizedActionList", authorizedActionList);
 		modelMap.put("parentSystemActionMap", parentSystemActionMap);
-		modelMap.put("rootMenuSystemActionList", rootMenuSystemActionList);
+		modelMap.put("legalPrivilageList", legalPrivilageList);
 		return "user/authorize";
 	}
 
 	@RequestMapping("/saveAuthorize")
 	@ResponseBody
-	public String saveAuthorize(Integer roleId, String actionIds, ModelMap modelMap) {
-		JunhaiAssert.notNull(roleId, "角色ID不能为空");
+	public String saveAuthorize(SystemPrivilageDto systemPrivilageDto, ModelMap modelMap) {
+		JunhaiAssert.notNull(systemPrivilageDto.getRoleId(), "角色ID不能为空");
 
 		// 获取当前用户角色
 		String roleIds = "1,2,3";
 
-		// 首先必须拥有action的权限，才有对该action进行授权
-		Map<Integer, SystemPrivilage> systemPrivilageMap = null;
-		List<SystemPrivilage> legalPrivilageList = systemPrivilageService.getSystemPrivilageListByRoleIds(roleIds);
-		systemPrivilageMap = SystemPrivilageUtil.getSystemPrivilageMap(legalPrivilageList);
+		// 获取当前用户所拥有的action列表
+		List<SystemPrivilage> authorizedPrivilageList = systemPrivilageService.getSystemPrivilageListByRoleIds(roleIds);
+		Map<Integer, SystemPrivilage> authorizedPrivilageMap = null;
+		authorizedPrivilageMap = SystemPrivilageUtil.getSystemPrivilageMap(authorizedPrivilageList);
 
 		// 获取全部action
 		List<SystemAction> allSystemActionList = systemActionService.getAllSystemActionList();
@@ -162,33 +163,24 @@ public class SystemUserController extends BaseController {
 
 		// 获取出需要并且可以授权的actionId
 		Set<Integer> actionIdSet = new HashSet<Integer>();
-		String[] arrActionId = actionIds.split(",");
-		for (String strActionId : arrActionId) {
-			Integer actionId = Integer.parseInt(strActionId);
-			if (systemPrivilageMap.get(actionId) == null) {
-				// continue;
-			}
+		if (StringUtils.isNotBlank(systemPrivilageDto.getActionIds())) {
+			String[] arrActionId = systemPrivilageDto.getActionIds().split(",");
+			for (String strActionId : arrActionId) {
+				Integer actionId = Integer.parseInt(strActionId);
+				if (authorizedPrivilageMap.get(actionId) == null) {
+					continue;
+				}
 
-			// 添加操作路径树-会自动对父节点授权
-			List<SystemAction> systemActionList = SystemActionUtil.getSystemActionTree(actionId, systemActionMap);
-			for (SystemAction systemAction : systemActionList) {
-				actionIdSet.add(systemAction.getId());
+				// 添加操作路径树-会自动对父节点授权
+				List<SystemAction> systemActionList = SystemActionUtil.getCurAction2RootList(actionId, systemActionMap);
+				for (SystemAction systemAction : systemActionList) {
+					actionIdSet.add(systemAction.getId());
+				}
 			}
 		}
 
-		// 删除历史数据
-		systemPrivilageService.deleteByRoleId(roleId);
-
-		legalPrivilageList = new ArrayList<SystemPrivilage>();
-		for (Integer actionId : actionIdSet) {
-			SystemPrivilage systemPrivilage = new SystemPrivilage();
-			systemPrivilage.setActionId(actionId);
-			systemPrivilage.setRoleId(roleId);
-			legalPrivilageList.add(systemPrivilage);
-		}
-
-		// 新增权限数据
-		systemPrivilageService.batchAddSystemPrivilage(legalPrivilageList);
+		// 保存权限数据
+		systemPrivilageService.saveSystemPrivilage(systemPrivilageDto.getRoleId(), actionIdSet);
 		return jsonSuccess();
 	}
 }

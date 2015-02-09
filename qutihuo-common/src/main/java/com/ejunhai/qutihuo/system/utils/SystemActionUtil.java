@@ -117,8 +117,40 @@ public class SystemActionUtil {
 		return routeMap;
 	}
 
-	public static List<SystemAction> getSystemActionTree(Integer actionId, Map<String, SystemAction> systemActionMap) {
+	/**
+	 * 获取根action(一级菜单)列表
+	 * 
+	 * @param systemActionList
+	 * @return
+	 */
+	public static List<SystemAction> getRootActionList(List<SystemAction> systemActionList) {
+		List<SystemAction> rootSystemActionList = new ArrayList<SystemAction>();
+		for (SystemAction systemAction : systemActionList) {
+			if (CommonConstant.ROOT_MENU_ID.equals(systemAction.getParentId())) {
+				rootSystemActionList.add(systemAction);
+			}
+		}
+		return rootSystemActionList;
+	}
+
+	/**
+	 * 获取当前action到根的action列表
+	 * 
+	 * @param actionId
+	 * @param systemActionMap
+	 * @return
+	 */
+	public static List<SystemAction> getCurAction2RootList(Integer actionId, Map<String, SystemAction> systemActionMap) {
 		List<SystemAction> systemActionList = new ArrayList<SystemAction>();
+		SystemAction systemAction = systemActionMap.get(String.valueOf(actionId));
+		systemActionList.add(systemAction);
+		while (!CommonConstant.ROOT_MENU_ID.equals(systemAction.getParentId())) {
+			systemAction = systemActionMap.get(String.valueOf(systemAction.getParentId()));
+			if (systemAction == null) {
+				break;
+			}
+			systemActionList.add(systemAction);
+		}
 		return systemActionList;
 	}
 }

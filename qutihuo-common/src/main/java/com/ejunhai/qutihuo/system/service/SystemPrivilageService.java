@@ -1,6 +1,7 @@
 package com.ejunhai.qutihuo.system.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.ejunhai.qutihuo.system.model.SystemPrivilage;
 
@@ -24,17 +25,11 @@ public interface SystemPrivilageService {
 	public List<SystemPrivilage> getSystemPrivilageListByRoleIds(String roleIds);
 
 	/**
-	 * 批量新增
+	 * 批量保存权限
 	 * 
-	 * @param systemPrivilageList
+	 * @param roleId
+	 * @param actionIdSet
 	 */
-	public void batchAddSystemPrivilage(List<SystemPrivilage> systemPrivilageList);
+	public void saveSystemPrivilage(Integer roleId, Set<Integer> actionIdSet);
 
-	/**
-	 * 根据角色ID删除权限
-	 * 
-	 * 
-	 * @param id
-	 */
-	public void deleteByRoleId(Integer roleId);
 }

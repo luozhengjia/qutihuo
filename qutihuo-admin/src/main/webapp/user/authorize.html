@@ -79,7 +79,7 @@
                             <i class="fa fa-home"></i> 
                             <a href="#">用户管理</a>
                         </li>
-                        <li><a href="/system/actionList.jhtml">角色管理</a></li>
+                        <li><a href="/system/actionList.jhtml">角色列表</a></li>
                         <li>角色授权</li>
                     </ul>
                 </div>
@@ -150,7 +150,7 @@
                                         	 <button type="submit" class="btn btn-success">确认</button>
                                         </div>
                                     </div>
-                               		
+                                    
                                 </form>
                             </div>
         
@@ -177,45 +177,55 @@
 	<script src="/assets/js/jquery.formautofill.min.js"></script>
 <script>
 	
-	// 单击菜单节点时，自动操作子节点
-	$('.menu-title').find('input[name="actionIds"]').on('click', function() {
-		var subActionIdCheckBox=$(this).parents(".menu-item").find('.operation-item input[name="actionIds"]');
-		if($(this).prop("checked")){
-			subActionIdCheckBox.prop("checked",true);
-		}else{
-			subActionIdCheckBox.removeAttr("checked");
+	$(document).ready(function() {
+	
+		// 自动填充表单
+		var actionIds=[<#list legalPrivilageList as item>${item.actionId}<#if item_has_next>,</#if></#list>];
+		for(int i=0;i<actionIds.length;i++){
+			$('.form-horizontal').find('input[name="actionIds"][value="'+actionIds[i]+'"]').prop("checked",true);
 		}
+		
+		// 单击菜单节点时，自动操作子节点
+		$('.menu-title').find('input[name="actionIds"]').on('click', function() {
+			var subActionIdCheckBox=$(this).parents(".menu-item").find('.operation-item input[name="actionIds"]');
+			if($(this).prop("checked")){
+				subActionIdCheckBox.prop("checked",true);
+			}else{
+				subActionIdCheckBox.removeAttr("checked");
+			}
+		});
+		
+		// 选中子节点时，自动选中菜单节点
+		$('.operation-item').find('input[name="actionIds"]').on('click', function() {
+			if($(this).prop("checked")){
+				$(this).parents(".menu-item").find('.menu-title input[name="actionIds"]').prop("checked",true);
+			}
+		});
+		
+		// 异步提交表单
+		$('.form-horizontal').formValidation().on('success.form.fv', function(e) {
+	        // Prevent form submission
+	        e.preventDefault();
+	
+	        // Get the form instance
+	        var $form = $(e.target);
+	
+	        // Get the FormValidation instance
+	        var bv = $form.data('formValidation');
+	
+	        // Use Ajax to submit form data
+	        $.post($form.attr('action'), $form.serialize(), function(result) {
+	            if(result.state.code==200){
+	        		Notify('操作成功', 'bottom-right', '500', 'success', 'fa-check', true);
+	        		setTimeout(function () {window.location = "/system/roleList.jhtml";}, 800);
+	        	}else{
+	        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+	        	}
+	        }, 'json');
+	    });
+	
 	});
 	
-	// 操作子节点时，自动操作菜单节点
-	$('.operation-item').find('input[name="actionIds"]').on('click', function() {
-		var parentActionIdCheckBox=$(this).parents(".menu-item").find('.menu-title input[name="actionIds"]');
-		if($(this).prop("checked")){
-			parentActionIdCheckBox.prop("checked",true);
-		}
-	});
-	
-	// 异步提交表单
-	$('.form-horizontal').formValidation().on('success.form.fv', function(e) {
-        // Prevent form submission
-        e.preventDefault();
-
-        // Get the form instance
-        var $form = $(e.target);
-
-        // Get the FormValidation instance
-        var bv = $form.data('formValidation');
-
-        // Use Ajax to submit form data
-        $.post($form.attr('action'), $form.serialize(), function(result) {
-            if(result.state.code==200){
-        		Notify('操作成功', 'bottom-right', '500', 'success', 'fa-check', true);
-        		setTimeout(function () {window.location = "/system/roleList.jhtml";}, 800);
-        	}else{
-        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
-        	}
-        }, 'json');
-    });
 </script>
 </body>
 </html>

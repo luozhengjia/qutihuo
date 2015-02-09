@@ -2,8 +2,10 @@ package com.ejunhai.qutihuo.system.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -18,16 +20,16 @@ public class SystemPrivilageUtil {
 	 * @return
 	 */
 	public static List<Integer> getActionIdList(List<SystemPrivilage> systemPrivilageList) {
-		List<Integer> actionIdList = new ArrayList<Integer>();
+		Set<Integer> actionIdSet = new HashSet<Integer>();
 		if (CollectionUtils.isEmpty(systemPrivilageList)) {
-			return actionIdList;
+			return new ArrayList<Integer>(actionIdSet);
 		}
 
 		for (SystemPrivilage systemPrivilage : systemPrivilageList) {
-			actionIdList.add(systemPrivilage.getActionId());
+			actionIdSet.add(systemPrivilage.getActionId());
 		}
 
-		return actionIdList;
+		return new ArrayList<Integer>(actionIdSet);
 	}
 
 	public static Map<Integer, SystemPrivilage> getSystemPrivilageMap(List<SystemPrivilage> systemPrivilageList) {
