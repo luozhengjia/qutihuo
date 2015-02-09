@@ -27,68 +27,66 @@ import com.ejunhai.qutihuo.system.utils.SystemPrivilageUtil;
 @Service("systemUserService")
 public class SystemUserServiceImpl implements SystemUserService {
 
-    @Resource
-    private SystemUserMapper systemUserMapper;
+	@Resource
+	private SystemUserMapper systemUserMapper;
 
-    @Resource
-    private SystemPrivilageService systemPrivilageService;
+	@Resource
+	private SystemPrivilageService systemPrivilageService;
 
-    @Resource
-    private SystemActionService systemActionService;
+	@Resource
+	private SystemActionService systemActionService;
 
-    @Override
-    public SystemUser read(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public SystemUser read(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    @Override
-    public void insert(SystemUser systemUser) {
-        // TODO Auto-generated method stub
+	@Override
+	public void insert(SystemUser systemUser) {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
-    @Override
-    public void update(SystemUser systemUser) {
-        // TODO Auto-generated method stub
+	@Override
+	public void update(SystemUser systemUser) {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
-    @Override
-    public void delete(Integer id) {
-        // TODO Auto-generated method stub
+	@Override
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
-    @Override
-    public Integer querySystemUserCount(SystemUserDto systemUserDto) {
-        return systemUserMapper.querySystemUserCount(systemUserDto);
-    }
+	@Override
+	public Integer querySystemUserCount(SystemUserDto systemUserDto) {
+		return systemUserMapper.querySystemUserCount(systemUserDto);
+	}
 
-    @Override
-    public List<SystemUser> querySystemUserList(SystemUserDto systemUserDto) {
-        return systemUserMapper.querySystemUserList(systemUserDto);
-    }
+	@Override
+	public List<SystemUser> querySystemUserList(SystemUserDto systemUserDto) {
+		return systemUserMapper.querySystemUserList(systemUserDto);
+	}
 
-    @Override
-    public boolean verify(String loginName, String passwd) {
-        // 验证账号密码和用户状态是否可用
+	@Override
+	public SystemUser getSystemUserByLoginName(String loginName) {
+		return systemUserMapper.getSystemUserByLoginName(loginName);
+	}
 
-        return false;
-    }
+	@Override
+	public List<SystemAction> authorize(Integer userId) {
+		// 获取用户角色
+		SystemUser systemUser = this.read(userId);
 
-    @Override
-    public List<SystemAction> authorize(Integer userId) {
-        // 获取用户角色
-        SystemUser systemUser = this.read(userId);
+		// 根据用户角色获取资源列表
+		List<SystemPrivilage> systemPrivilageList = null;
+		systemPrivilageList = systemPrivilageService.getSystemPrivilageListByRoleIds(systemUser.getRoleIds());
+		List<Integer> actionIdList = SystemPrivilageUtil.getActionIdList(systemPrivilageList);
+		List<SystemAction> systemActionList = systemActionService.getSystemActionListByIds(actionIdList);
 
-        // 根据用户角色获取资源列表
-        List<SystemPrivilage> systemPrivilageList = null;
-        systemPrivilageList = systemPrivilageService.getSystemPrivilageListByRoleIds(systemUser.getRoleIds());
-        List<Integer> actionIdList = SystemPrivilageUtil.getActionIdList(systemPrivilageList);
-        List<SystemAction> systemActionList = systemActionService.getSystemActionListByIds(actionIdList);
-
-        return systemActionList;
-    }
+		return systemActionList;
+	}
 
 }

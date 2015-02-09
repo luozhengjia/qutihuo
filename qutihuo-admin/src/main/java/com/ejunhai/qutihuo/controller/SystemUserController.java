@@ -86,7 +86,7 @@ public class SystemUserController extends BaseController {
 	public String saveRole(HttpServletRequest request, SystemRole systemRole) {
 		JunhaiAssert.notBlank(systemRole.getRoleName(), "角色名不能为空");
 
-		// 同个商户下角色不可以重复
+		// 同个商户下角色名称不可以重复
 
 		if (systemRole.getId() != null && systemRole.getId() > 0) {
 			systemRoleService.update(systemRole);

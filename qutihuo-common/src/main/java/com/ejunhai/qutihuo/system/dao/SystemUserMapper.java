@@ -59,5 +59,13 @@ public interface SystemUserMapper {
      * @return
      */
     public List<SystemUser> querySystemUserList(SystemUserDto systemUserDto);
+    
+	/**
+	 * 根据登录名获取系统用户
+	 * 
+	 * @param loginName
+	 * @return
+	 */
+	public SystemUser getSystemUserByLoginName(String loginName);
 
 }

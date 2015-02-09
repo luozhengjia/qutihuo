@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Dashboard</title>
+
+    <meta name="description" content="Dashboard" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+
+    <!--Basic Styles-->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/assets/css/weather-icons.min.css" rel="stylesheet" />
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="/assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/typicons.min.css" rel="stylesheet" />
+    <link href="/assets/css/animate.min.css" rel="stylesheet" />
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="/assets/js/skins.js"></script>
+</head>
+
+<body>
+    <div class="login-container animated fadeInDown">
+        <div class="loginbox bg-white">
+            <div class="loginbox-title">SIGN IN</div>
+            <div class="loginbox-social">
+                <div class="social-title ">Connect with Your Social Accounts</div>
+                <div class="social-buttons">
+                    <a href="" class="button-facebook">
+                        <i class="social-icon fa fa-facebook"></i>
+                    </a>
+                    <a href="" class="button-twitter">
+                        <i class="social-icon fa fa-twitter"></i>
+                    </a>
+                    <a href="" class="button-google">
+                        <i class="social-icon fa fa-google-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="loginbox-or">
+                <div class="or-line"></div>
+                <div class="or">OR</div>
+            </div>
+            <form id="loginForm" method="post" class="form-horizontal" method="POST" action="authentication.jhtml">
+            <div class="loginbox-textbox">
+                <input type="text" name="loginName" class="form-control" placeholder="用户名" />
+            </div>
+            <div class="loginbox-textbox">
+                <input type="password" name="password" class="form-control" placeholder="用户密码" />
+            </div>
+            <div class="loginbox-textbox">
+                <input type="text" name="validateCode" class="form-control" placeholder="验证码" />
+            </div>
+            <div class="loginbox-submit">
+                <input type="submit" class="btn btn-primary btn-block" value="登录">
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <!--Basic Scripts-->
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="/assets/js/beyond.min.js"></script>
+    <script src="/assets/js/validation/formValidation.min.js"></script>
+    <script src="/assets/js/validation/framework/bootstrap.min.js"></script>
+	<script src="/assets/js/toastr/toastr.js"></script>
+    
+    <script>
+		$(document).ready(function() {	
+		
+			$('#loginForm').formValidation().on('success.form.fv', function(e) {
+		        // Prevent form submission
+		        e.preventDefault();
+		
+		        // Get the form instance
+		        var $form = $(e.target);
+		
+		        // Get the FormValidation instance
+		        var bv = $form.data('formValidation');
+		
+		        // Use Ajax to submit form data
+		        $.post($form.attr('action'), $form.serialize(), function(result) {
+		            if(result.state.code==200){
+		            	window.location = "/index.jhtml";
+		        	}else{
+		        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+		        	}
+		        }, 'json');
+		    });
+		});
+	</script>
+</body>
+</html>

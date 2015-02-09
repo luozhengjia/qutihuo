@@ -85,11 +85,16 @@
     </delete>
     
     <select id="querySystemUserCount" resultType="java.lang.Integer">
-    		select count(1) from tb_system_user
+    	select count(1) from tb_system_user
     </select>
     
     <select id="querySystemUserList" resultMap="SystemUserMapper">
-    		select <include refid="Base_Column_List" /> from tb_system_user
+    	select <include refid="Base_Column_List" /> from tb_system_user
+    </select>
+    
+    <select id="getSystemUserByLoginName" resultMap="SystemUserMapper">
+    	select <include refid="Base_Column_List" /> from tb_system_user 
+    	where login_name = #{loginName,jdbcType=VARCHAR}
     </select>
     
 </mapper>

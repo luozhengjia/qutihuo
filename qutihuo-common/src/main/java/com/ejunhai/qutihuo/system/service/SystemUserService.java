@@ -17,66 +17,65 @@ import com.ejunhai.qutihuo.system.model.SystemUser;
  */
 public interface SystemUserService {
 
-    /**
-     * 根据Id获取SystemUser
-     * 
-     * @param id
-     * @return
-     */
-    public SystemUser read(Integer id);
+	/**
+	 * 根据Id获取SystemUser
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public SystemUser read(Integer id);
 
-    /**
-     * 新增SystemUser
-     * 
-     * @param systemUser
-     */
-    public void insert(SystemUser systemUser);
+	/**
+	 * 新增SystemUser
+	 * 
+	 * @param systemUser
+	 */
+	public void insert(SystemUser systemUser);
 
-    /**
-     * 更新SystemUser
-     * 
-     * @param systemUser
-     */
-    public void update(SystemUser systemUser);
+	/**
+	 * 更新SystemUser
+	 * 
+	 * @param systemUser
+	 */
+	public void update(SystemUser systemUser);
 
-    /**
-     * 删除SystemUser
-     * 
-     * @param id
-     */
-    public void delete(Integer id);
+	/**
+	 * 删除SystemUser
+	 * 
+	 * @param id
+	 */
+	public void delete(Integer id);
 
-    /**
-     * 查询SystemUser数量
-     * 
-     * @param systemUserDto
-     * @return
-     */
-    public Integer querySystemUserCount(SystemUserDto systemUserDto);
+	/**
+	 * 查询SystemUser数量
+	 * 
+	 * @param systemUserDto
+	 * @return
+	 */
+	public Integer querySystemUserCount(SystemUserDto systemUserDto);
 
-    /**
-     * 查询SystemUser列表
-     * 
-     * @param systemUserDto
-     * @return
-     */
-    public List<SystemUser> querySystemUserList(SystemUserDto systemUserDto);
+	/**
+	 * 查询SystemUser列表
+	 * 
+	 * @param systemUserDto
+	 * @return
+	 */
+	public List<SystemUser> querySystemUserList(SystemUserDto systemUserDto);
 
-    /**
-     * 身份验证
-     * 
-     * @param loginName
-     * @param passwd
-     * @return
-     */
-    public boolean verify(String loginName, String passwd);
+	/**
+	 * 根据登录名获取系统用户
+	 * 
+	 * @param loginName
+	 * @return
+	 */
+	public SystemUser getSystemUserByLoginName(String loginName);
 
-    /**
-     * 用户授权
-     * 
-     * @param userId
-     * @return
-     */
-    public List<SystemAction> authorize(Integer userId);
+	/**
+	 * 用户授权
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<SystemAction> authorize(Integer userId);
 
 }

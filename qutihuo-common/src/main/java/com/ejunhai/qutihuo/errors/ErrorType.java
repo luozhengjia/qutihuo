@@ -7,7 +7,13 @@ public enum ErrorType {
 	PARAMS_ERROR(5000002, "%s不能为空哦"), 
 	OBJ_IS_EMPTY(5000003, "对象%s不存在"), 
 	TOO_LONG(5000004, "%s最多只能输入%s字哦"), 
-	SYSTEM_BUSY(5000005, "系统繁忙，请稍后再试！");
+	SYSTEM_BUSY(5000005, "系统繁忙，请稍后再试！"),
+	
+	// 用户模块
+	SYSTEM_USER_LOGIN_NAME_INVALID(5001001, "用户账号无效"),
+	SYSTEM_USER_LOGIN_PWD_INVALID(5001002, "用户密码无效"),
+	SYSTEM_USER_VALIDATE_CODE_INVALID(5001003, "验证码无效"),
+	SYSTEM_USER_STATE_LOCK(5001004, "用户已锁定");
 
 	private ErrorType(Integer flag, String title) {
 		this.flag = flag;

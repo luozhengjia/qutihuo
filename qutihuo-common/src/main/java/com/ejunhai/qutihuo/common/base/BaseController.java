@@ -9,6 +9,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import com.ejunhai.qutihuo.common.utils.ServiceLocator;
+import com.ejunhai.qutihuo.errors.ErrorType;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,6 +36,10 @@ public class BaseController {
 
 	protected <T> String jsonFailed(int code, String message) {
 		return this.renderJson(code, message, null);
+	}
+
+	protected <T> String jsonFailed(ErrorType errorType) {
+		return this.renderJson(errorType.getValue(), errorType.getTitle(), null);
 	}
 
 	private <T> String renderJson(int code, String message, T data) {
