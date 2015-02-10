@@ -90,7 +90,8 @@
 		            if(result.state.code==200){
 		            	window.location = "/index.jhtml";
 		        	}else{
-		        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+		        		alert(result.state.msg);
+		        		bv.disableSubmitButtons(false);
 		        	}
 		        }, 'json');
 		    });
