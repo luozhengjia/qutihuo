@@ -30,7 +30,8 @@ public class PrivilageInterceptor implements HandlerInterceptor {
 	@Resource
 	private SystemActionService systemActionService;
 
-	private static Class[] defaultStaticClasses = { ActionType.class, RoleType.class,OrderPrint.class,OrderState.class,OrderSource.class };
+	private static Class[] defaultStaticClasses = { ActionType.class, RoleType.class, OrderPrint.class,
+			OrderState.class, OrderSource.class };
 
 	@Override
 	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)

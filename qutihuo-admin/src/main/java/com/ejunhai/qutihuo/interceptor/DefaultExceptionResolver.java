@@ -32,8 +32,7 @@ public class DefaultExceptionResolver implements HandlerExceptionResolver {
 	protected final Gson gson = new GsonBuilder().serializeNulls().disableHtmlEscaping().create();
 
 	@Override
-	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
-			Exception ex) {
+	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 		// 打印错误日志
 		logger.error("接口异常", ex);
 
