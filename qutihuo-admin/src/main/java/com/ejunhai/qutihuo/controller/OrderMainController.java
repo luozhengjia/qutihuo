@@ -95,15 +95,14 @@ public class OrderMainController extends BaseController {
 	@RequestMapping("/printOrder")
 	@ResponseBody
 	public String printOrder(HttpServletRequest request, OrderMain orderMain, String lcCode, ModelMap modelMap) {
-		if (orderMain.getId() != null) {
-			orderMain = orderMainService.read(orderMain.getId());
-		}
-
+		orderMain = orderMainService.read(orderMain.getId());
 		modelMap.put("orderMain", orderMain);
 		LogisticsCompanyDto logisticsCompanyDto = new LogisticsCompanyDto();
 		logisticsCompanyDto.setLcCode(lcCode);
 		LogisticsCompany logisticsCompany = logisticsCompanyService.findLogisticsCompany(logisticsCompanyDto);
-		modelMap.put("logisticsCompany", logisticsCompany);
+		//替换需要打印快递单信息
+		
+		modelMap.put("lc", logisticsCompany);
 		return jsonSuccess(modelMap);
 	}
 

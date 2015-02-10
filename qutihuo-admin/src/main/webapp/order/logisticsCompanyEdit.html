@@ -178,6 +178,11 @@
 				LODOP.SET_PRINT_MODE("PROGRAM_CONTENT_BYVAR",true);//生成程序时，内容参数有变量用变量，无变量用具体值
 				LODOP.ADD_PRINT_TEXT(1*30,100,180,30,"收货人");
 				LODOP.ADD_PRINT_TEXT(2*30,100,180,30,"地址");
+				LODOP.ADD_PRINT_TEXT(3*30,100,180,30,"联系电话");
+				LODOP.ADD_PRINT_TEXT(4*30,100,180,30,"邮政编码");
+				LODOP.ADD_PRINT_TEXT(5*30,100,180,30,"发货人");
+				LODOP.ADD_PRINT_TEXT(6*30,100,180,30,"发货地址");
+				LODOP.ADD_PRINT_TEXT(7*30,100,180,30,"发货人电话");
 				//LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='"+templateImages+"'>");
 				LODOP.SET_PRINT_MODE("PRINT_SETUP_PROGRAM",true);
 				$("#expressTemplate").val(LODOP.PRINT_SETUP());
