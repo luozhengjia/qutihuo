@@ -55,7 +55,11 @@
                                     <div class="form-group">
                                     	<label class="col-lg-2 control-label">物流公司</label>
                                         <div class="col-lg-4">
-                                            <input type="text" class="form-control" id ="lcCode" name="lcCode"/>
+                                           <select class="form-control" id ="lcCode" name="lcCode">
+                                            <#list lcList as item >
+											  <option value="${item.lcCode}">${item.lcName}</option>
+											  </#list>
+											</select>
                                         </div>
                                         <div class="col-lg-4"><p class="help-block">物流公司信息</p></div>
                                     </div>
@@ -93,7 +97,7 @@
 
    
 <script>
-
+     var LODOP; //声明为全局变量
 	 $('#printBtn').on('click', function () {
 		 var lcCode = $("#lcCode").val();
 		 var expressOrderNo = $("#expressOrderNo").val();
@@ -105,19 +109,18 @@
 		}else{
 			var dataParam={"lcCode":lcCode,"expressOrderNo":expressOrderNo,"id":id};
 			$.post('/orderMain/printOrder.jhtml', dataParam, function(result) {
-				alert(result);
                 if(result.state.code==200){
-	
                 	LODOP=getLodop();
 	             	if(LODOP==null){
 	             		return;
 	             	}
-	             	LODOP.NewPage();
-        			eval(data.logisticsCompany.expressTemplate);
+	             	//LODOP.NewPage();
+        			eval(result.data.lc.expressTemplate);
         			LODOP.SET_SHOW_MODE("BKIMG_PRINT",0);
         			LODOP.SET_SHOW_MODE("LANDSCAPE_DEFROTATED",1);//纵向打印时显示正面朝上
-        			//LODOP.PREVIEW();
-        			LODOP.PRINT();
+					//LODOP.PRINT_DESIGN();
+					LODOP.PRINT();//预览
+        			//LODOP.PRINT();
 	        	}else{
 	        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 	        	}
@@ -136,16 +139,14 @@
 			Notify('快递单号为空！', 'bottom-right', '1500', 'success', 'fa-check', true);
 		}else{
 			var dataParam={"lcCode":lcCode,"expressOrderNo":expressOrderNo,"id":id};
-			$.post('/orderMain/printOrder.jhtml', dataParam, function(result) {
-				alert(result);
+			$.post('/orderMain/printOrder.jhtml', '', function(result) {
+				
                 if(result.state.code==200){
-	
                 	LODOP=getLodop();
 	             	if(LODOP==null){
 	             		return;
 	             	}
-	             	LODOP.NewPage();
-        			eval(data.logisticsCompany.expressTemplate);
+	             	eval(result.data.lc.expressTemplate);
         			LODOP.SET_SHOW_MODE("BKIMG_PRINT",0);
         			LODOP.SET_SHOW_MODE("LANDSCAPE_DEFROTATED",1);//纵向打印时显示正面朝上
         			LODOP.PREVIEW();
