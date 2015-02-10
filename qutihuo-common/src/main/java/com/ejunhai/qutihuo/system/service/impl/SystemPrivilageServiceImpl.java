@@ -36,7 +36,7 @@ public class SystemPrivilageServiceImpl implements SystemPrivilageService {
 			return systemPrivilageList;
 		}
 
-		return systemPrivilageList;
+		return systemPrivilageMapper.getSystemPrivilageListByRoleIds(roleIds);
 	}
 
 	@Override

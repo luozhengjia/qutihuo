@@ -10,7 +10,7 @@ import com.ejunhai.qutihuo.utils.SessionManager;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
-	private String[] excludeUrls = { "/login.jhtml", "/authentication.jhtml", "/logout.jhtml" };
+	private String[] excludeUrls = { "login.jhtml", "authentication.jhtml", "logout.jhtml" };
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {

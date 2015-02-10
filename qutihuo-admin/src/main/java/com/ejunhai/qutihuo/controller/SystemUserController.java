@@ -32,6 +32,7 @@ import com.ejunhai.qutihuo.system.service.SystemRoleService;
 import com.ejunhai.qutihuo.system.service.SystemUserService;
 import com.ejunhai.qutihuo.system.utils.SystemActionUtil;
 import com.ejunhai.qutihuo.system.utils.SystemPrivilageUtil;
+import com.ejunhai.qutihuo.utils.SessionManager;
 
 @Controller
 @RequestMapping("system")
@@ -58,8 +59,8 @@ public class SystemUserController extends BaseController {
 			systemUserDto.setOffset(pagination.getOffset());
 			systemUserDto.setPageSize(pagination.getPageSize());
 			systemUserList = systemUserService.querySystemUserList(systemUserDto);
-
 		}
+
 		modelMap.put("systemUserList", systemUserList);
 		modelMap.put("pagination", pagination);
 		return "user/userList";
@@ -112,7 +113,7 @@ public class SystemUserController extends BaseController {
 	public String toAuthorize(HttpServletRequest request, String roleId, ModelMap modelMap) {
 
 		// 获取当前用户角色
-		String roleIds = "1,2,3";
+		String roleIds = SessionManager.get(request).getRoleIds();
 
 		// 获取当前用户所拥有的action列表
 		List<SystemPrivilage> authorizedPrivilageList = systemPrivilageService.getSystemPrivilageListByRoleIds(roleIds);
@@ -146,11 +147,11 @@ public class SystemUserController extends BaseController {
 
 	@RequestMapping("/saveAuthorize")
 	@ResponseBody
-	public String saveAuthorize(SystemPrivilageDto systemPrivilageDto, ModelMap modelMap) {
+	public String saveAuthorize(HttpServletRequest request, SystemPrivilageDto systemPrivilageDto, ModelMap modelMap) {
 		JunhaiAssert.notNull(systemPrivilageDto.getRoleId(), "角色ID不能为空");
 
 		// 获取当前用户角色
-		String roleIds = "1,2,3";
+		String roleIds = SessionManager.get(request).getRoleIds();
 
 		// 获取当前用户所拥有的action列表
 		List<SystemPrivilage> authorizedPrivilageList = systemPrivilageService.getSystemPrivilageListByRoleIds(roleIds);
