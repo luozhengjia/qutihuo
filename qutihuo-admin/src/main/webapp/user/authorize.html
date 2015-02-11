@@ -96,7 +96,7 @@
 								<form method="post" class="form-horizontal" method="POST" action="/system/saveAuthorize.jhtml">
 									<input type="hidden" name="roleId" value="${roleId}"/>
 									
-									<#list rootMenuSystemActionList as item >
+									<#list rootSystemActionList1 as item >
 									<div class="form-group">
 										<label class="col-lg-2 control-label "><span class="category-title">${item.actionName}</span></label>
 										<div class="menu-list col-lg-9">
@@ -109,14 +109,14 @@
 	                                                    </label>
 	                                                </h6>
 													<div class="operation-list" >
-														<#list parentSystemActionMap[item.id?string] as operation>
+														<#list parentSystemActionMap[item.id?string]?if_exists as operation>
 															<div class="operation-item">
 		                                                        <label>
 		                                                            <input type="checkbox" name="actionIds" value="${operation.id}">
 		                                                            <span class="text">${operation.actionName}</span>
 		                                                        </label>
 			                                                </div>
-								                         </#list>
+								                       	</#list>
 													</div>
 												</div>
 							                 <#else>
@@ -128,8 +128,8 @@
 		                                                        <span class="text">${menuNode.actionName}</span>
 		                                                    </label>
 		                                                </h6>
-														<div class="operation-list" >
-															<#list parentSystemActionMap[menuNode.id?string] as operation>
+														<div class="operation-list">
+															<#list parentSystemActionMap[menuNode.id?string]?if_exists as operation>
 																<div class="operation-item">
 			                                                        <label>
 			                                                            <input type="checkbox" name="actionIds" value="${operation.id}">

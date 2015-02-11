@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ejunhai.qutihuo.common.base.BaseController;
 import com.ejunhai.qutihuo.common.base.Pagination;
+import com.ejunhai.qutihuo.common.constant.CommonConstant;
 import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.system.dto.SystemPrivilageDto;
 import com.ejunhai.qutihuo.system.dto.SystemRoleDto;
@@ -120,26 +121,27 @@ public class SystemUserController extends BaseController {
 		List<Integer> authorizedActionIdList = SystemPrivilageUtil.getActionIdList(authorizedPrivilageList);
 		List<SystemAction> authorizedActionList = systemActionService.getSystemActionListByIds(authorizedActionIdList);
 
-		// 获取根(一级菜单)action列表
-		List<SystemAction> rootSystemActionList = SystemActionUtil.getRootActionList(authorizedActionList);
-
-		// 按父节点分组
+		// 获取根(一级菜单)action列表，并按父节点分组
+		List<SystemAction> rootSystemActionList = new ArrayList<SystemAction>();
 		Map<String, List<SystemAction>> parentSystemActionMap = new HashMap<String, List<SystemAction>>();
-		for (SystemAction parentSystemAction : rootSystemActionList) {
-			List<SystemAction> systemActionGroupList = new ArrayList<SystemAction>();
-			for (SystemAction systemAction : authorizedActionList) {
-				if (systemAction.getParentId().equals(parentSystemAction.getId())) {
-					systemActionGroupList.add(systemAction);
-				}
+		for (SystemAction systemAction : authorizedActionList) {
+			if (CommonConstant.ROOT_MENU_ID.equals(systemAction.getParentId())) {
+				rootSystemActionList.add(systemAction);
 			}
-			parentSystemActionMap.put(String.valueOf(parentSystemAction.getId()), systemActionGroupList);
+
+			List<SystemAction> groupList = parentSystemActionMap.get(String.valueOf(systemAction.getParentId()));
+			if (groupList == null) {
+				groupList = new ArrayList<SystemAction>();
+				parentSystemActionMap.put(String.valueOf(systemAction.getParentId()), groupList);
+			}
+			groupList.add(systemAction);
 		}
 
 		// 获取当前角色已分配的权限列表
 		List<SystemPrivilage> legalPrivilageList = systemPrivilageService.getSystemPrivilageListByRoleIds(roleId);
 
 		modelMap.put("roleId", roleId);
-		modelMap.put("authorizedActionList", authorizedActionList);
+		modelMap.put("rootSystemActionList1", rootSystemActionList);
 		modelMap.put("parentSystemActionMap", parentSystemActionMap);
 		modelMap.put("legalPrivilageList", legalPrivilageList);
 		return "user/authorize";

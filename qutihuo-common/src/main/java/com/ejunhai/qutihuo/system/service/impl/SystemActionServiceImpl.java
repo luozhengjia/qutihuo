@@ -1,10 +1,12 @@
 package com.ejunhai.qutihuo.system.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import com.ejunhai.qutihuo.system.dao.SystemActionMapper;
@@ -67,7 +69,11 @@ public class SystemActionServiceImpl implements SystemActionService {
 
 	@Override
 	public List<SystemAction> getSystemActionListByIds(List<Integer> actionIdList) {
-		return systemActionMapper.getSystemActionListByIds(actionIdList);
+		List<SystemAction> systemActionList = new ArrayList<SystemAction>();
+		if (CollectionUtils.isNotEmpty(actionIdList)) {
+			systemActionList = systemActionMapper.getSystemActionListByIds(actionIdList);
+		}
+		return systemActionList;
 	}
 
 	@Override
@@ -77,5 +83,4 @@ public class SystemActionServiceImpl implements SystemActionService {
 		systemActionDto.setPageSize(Integer.MAX_VALUE);
 		return systemActionMapper.querySystemActionList(systemActionDto);
 	}
-
 }

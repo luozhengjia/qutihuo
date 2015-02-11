@@ -28,7 +28,7 @@ public class LoginController extends BaseController {
 
 		// 若用户已登录则跳转到欢迎页
 		if (SessionManager.get(request) != null) {
-			return "redirect:index.jhtml";
+			return "redirect:/index.jhtml";
 		}
 
 		return "login";
@@ -42,8 +42,10 @@ public class LoginController extends BaseController {
 		JunhaiAssert.notNull(validateCode, "验证码不能为空");
 
 		// 验证验证码
-		// String serverValidateCode = (String) request.getSession().getAttribute(null);
-		// JunhaiAssert.isTrue(validateCode.equals(serverValidateCode), ErrorType.SYSTEM_USER_VALIDATE_CODE_INVALID);
+		// String serverValidateCode = (String)
+		// request.getSession().getAttribute(null);
+		// JunhaiAssert.isTrue(validateCode.equals(serverValidateCode),
+		// ErrorType.SYSTEM_USER_VALIDATE_CODE_INVALID);
 
 		// 验证用户账号
 		SystemUser systemUser = systemUserService.getSystemUserByLoginName(loginName);
@@ -65,6 +67,6 @@ public class LoginController extends BaseController {
 
 		// 注销用户
 		SessionManager.clear(request);
-		return "redirect:login.jhtml";
+		return "redirect:/login.jhtml";
 	}
 }

@@ -36,7 +36,13 @@ public class SystemPrivilageServiceImpl implements SystemPrivilageService {
 			return systemPrivilageList;
 		}
 
-		return systemPrivilageMapper.getSystemPrivilageListByRoleIds(roleIds);
+		List<Integer> roleIdList = new ArrayList<Integer>();
+		String[] arrRoleId = roleIds.split(",");
+		for (int i = 0; i < arrRoleId.length; i++) {
+			roleIdList.add(Integer.parseInt(arrRoleId[i]));
+		}
+
+		return systemPrivilageMapper.getSystemPrivilageListByRoleIds(roleIdList);
 	}
 
 	@Override

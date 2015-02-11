@@ -10,7 +10,7 @@ import com.ejunhai.qutihuo.utils.SessionManager;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
-	private String[] excludeUrls = { "login.jhtml", "authentication.jhtml", "logout.jhtml" };
+	private String[] excludeUrls = { "/login.jhtml", "/authentication.jhtml", "/logout.jhtml" };
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
@@ -23,7 +23,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
 		// 若用户未登录，则跳转至登陆页
 		if (SessionManager.get(request) == null) {
-			response.sendRedirect("login.jhtml");
+			response.sendRedirect("/login.jhtml");
 		}
 		return true;
 	}

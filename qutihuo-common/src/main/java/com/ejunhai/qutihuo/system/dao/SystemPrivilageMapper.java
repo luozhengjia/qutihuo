@@ -21,7 +21,7 @@ public interface SystemPrivilageMapper {
 	 * @param roleIds
 	 * @return
 	 */
-	public List<SystemPrivilage> getSystemPrivilageListByRoleIds(String roleIds);
+	public List<SystemPrivilage> getSystemPrivilageListByRoleIds(List<Integer> roleIds);
 
 	/**
 	 * 批量新增
