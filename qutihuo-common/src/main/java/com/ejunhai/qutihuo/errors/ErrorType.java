@@ -8,6 +8,7 @@ public enum ErrorType {
 	OBJ_IS_EMPTY(5000003, "对象%s不存在"), 
 	TOO_LONG(5000004, "%s最多只能输入%s字哦"), 
 	SYSTEM_BUSY(5000005, "系统繁忙，请稍后再试！"),
+	SYSTEM_FORBIDDEN(5000006, "没有操作权限！"),
 	
 	// 用户模块
 	SYSTEM_USER_LOGIN_NAME_INVALID(5001001, "用户账号无效"),

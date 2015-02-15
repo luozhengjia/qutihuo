@@ -13,22 +13,6 @@ import com.ejunhai.qutihuo.system.model.SystemAction;
 
 public class SystemActionUtil {
 
-	/**
-	 * 获取菜单action列表-包含菜单和目录
-	 * 
-	 * @param systemActionList
-	 * @return
-	 */
-	public static List<SystemAction> getMenuSystemActionList(List<SystemAction> systemActionList) {
-		List<SystemAction> menuSystemActionList = new ArrayList<SystemAction>();
-		for (SystemAction systemAction : systemActionList) {
-			if (!ActionType.operation.getValue().equals(systemAction.getActionType())) {
-				menuSystemActionList.add(systemAction);
-			}
-		}
-
-		return menuSystemActionList;
-	}
 
 	/**
 	 * 根据节点类型获取父节点列表
@@ -92,6 +76,23 @@ public class SystemActionUtil {
 	}
 
 	/**
+	 * 
+	 * @param systemActionList
+	 * @return
+	 */
+	public static Map<String, SystemAction> getUrl2ActionMap(List<SystemAction> systemActionList) {
+		Map<String, SystemAction> routeMap = new HashMap<String, SystemAction>();
+		if (systemActionList == null) {
+			return routeMap;
+		}
+
+		for (SystemAction systemAction : systemActionList) {
+			routeMap.put(systemAction.getUrl(), systemAction);
+		}
+		return routeMap;
+	}
+
+	/**
 	 * 根据url获取目录路由
 	 * 
 	 * @param systemActionList
@@ -115,22 +116,6 @@ public class SystemActionUtil {
 			}
 		}
 		return routeMap;
-	}
-
-	/**
-	 * 获取根action(一级菜单)列表
-	 * 
-	 * @param systemActionList
-	 * @return
-	 */
-	public static List<SystemAction> getRootActionList(List<SystemAction> systemActionList) {
-		List<SystemAction> rootSystemActionList = new ArrayList<SystemAction>();
-		for (SystemAction systemAction : systemActionList) {
-			if (CommonConstant.ROOT_MENU_ID.equals(systemAction.getParentId())) {
-				rootSystemActionList.add(systemAction);
-			}
-		}
-		return rootSystemActionList;
 	}
 
 	/**

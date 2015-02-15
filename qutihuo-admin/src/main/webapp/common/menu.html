@@ -7,7 +7,7 @@
     
     <ul class="nav sidebar-menu">
         <#list rootMenuSystemActionList as item >
-            <li  class="<#if routeMap[item.id?string]??>active</#if> <#if routeMap[item.id?string]??&&item.actionType==1>open</#if>">
+            <li  class="<#if menuRouteMap[item.id?string]??>active</#if> <#if menuRouteMap[item.id?string]??&&item.actionType==1>open</#if>">
                  <#if item.actionType==2>
                      <a href="${item.url}">
                          <i class="menu-icon ${item.iconCss}"></i>
@@ -20,8 +20,8 @@
                          <i class="menu-expand"></i>
                      </a>
                      <ul class="submenu">
-                         <#list systemActionMap[item.id?string] as node >
-                             <li class="<#if routeMap[node.id?string]??>active</#if>">
+                         <#list menuSystemActionMap[item.id?string] as node >
+                             <li class="<#if menuRouteMap[node.id?string]??>active</#if>">
                                  <a href="${node.url}">
                                      <span class="menu-text">${node.actionName}</span>
                                  </a>

@@ -141,7 +141,7 @@ public class SystemUserController extends BaseController {
 		List<SystemPrivilage> legalPrivilageList = systemPrivilageService.getSystemPrivilageListByRoleIds(roleId);
 
 		modelMap.put("roleId", roleId);
-		modelMap.put("rootSystemActionList1", rootSystemActionList);
+		modelMap.put("rootSystemActionList", rootSystemActionList);
 		modelMap.put("parentSystemActionMap", parentSystemActionMap);
 		modelMap.put("legalPrivilageList", legalPrivilageList);
 		return "user/authorize";

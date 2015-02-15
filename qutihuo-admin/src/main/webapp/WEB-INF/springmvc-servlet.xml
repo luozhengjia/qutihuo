@@ -24,7 +24,8 @@
 	<mvc:interceptors>  
     	<bean class="com.ejunhai.qutihuo.interceptor.AuthenticationInterceptor" />  
     	<bean class="com.ejunhai.qutihuo.interceptor.PrivilageInterceptor" />  
-    </mvc:interceptors>   
+    	<bean class="com.ejunhai.qutihuo.interceptor.MenuBulidInterceptor" />  
+    </mvc:interceptors>
     
     <!-- 设置编码  -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">  
@@ -62,12 +63,21 @@
 		</property>
 	</bean>
 	
+	<bean id="freemarkerStatic" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="classpath:staticClass.properties" />
+    </bean>
+    
+    <bean id="freemarkerStaticModels" class="com.ejunhai.qutihuo.common.utils.FreemarkerStaticModels" factory-method="getInstance">
+        <property name="staticModels" ref="freemarkerStatic"/>
+    </bean>
+	
 	<bean id="ftlviewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
 		<property name="contentType" value="text/html;charset=UTF-8" />
 		 <property name="cache" value="true"/>
 		<property name="prefix" value="" />
 		<property name="suffix" value=".html"/>
+		<property name="attributesMap" ref="freemarkerStaticModels"/>
 	</bean>
 
 	<mvc:annotation-driven />

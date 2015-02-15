@@ -96,7 +96,7 @@
 								<form method="post" class="form-horizontal" method="POST" action="/system/saveAuthorize.jhtml">
 									<input type="hidden" name="roleId" value="${roleId}"/>
 									
-									<#list rootSystemActionList1 as item >
+									<#list rootSystemActionList as item >
 									<div class="form-group">
 										<label class="col-lg-2 control-label "><span class="category-title">${item.actionName}</span></label>
 										<div class="menu-list col-lg-9">
@@ -181,9 +181,9 @@
 	
 		// 自动填充表单
 		var actionIds=[<#list legalPrivilageList as item>${item.actionId}<#if item_has_next>,</#if></#list>];
-		for(int i=0;i<actionIds.length;i++){
-			$('.form-horizontal').find('input[name="actionIds"][value="'+actionIds[i]+'"]').prop("checked",true);
-		}
+		$.each(actionIds,function(n,value) {   
+			$('.form-horizontal').find('input[name="actionIds"][value="'+ value +'"]').prop("checked",true);
+  		});  
 		
 		// 单击菜单节点时，自动操作子节点
 		$('.menu-title').find('input[name="actionIds"]').on('click', function() {
