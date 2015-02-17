@@ -23,6 +23,7 @@ import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.system.dto.SystemPrivilageDto;
 import com.ejunhai.qutihuo.system.dto.SystemRoleDto;
 import com.ejunhai.qutihuo.system.dto.SystemUserDto;
+import com.ejunhai.qutihuo.system.enums.UserType;
 import com.ejunhai.qutihuo.system.model.SystemAction;
 import com.ejunhai.qutihuo.system.model.SystemPrivilage;
 import com.ejunhai.qutihuo.system.model.SystemRole;
@@ -113,13 +114,19 @@ public class SystemUserController extends BaseController {
 	@RequestMapping("/toAuthorize")
 	public String toAuthorize(HttpServletRequest request, String roleId, ModelMap modelMap) {
 
-		// 获取当前用户角色
-		String roleIds = SessionManager.get(request).getRoleIds();
+		List<SystemAction> authorizedActionList = null;
+		if (UserType.ssa.getValue().equals(SessionManager.get(request).getUserType())) {
+			authorizedActionList = systemActionService.getAllSystemActionList();
+		} else {
+			// 获取当前用户角色
+			String roleIds = SessionManager.get(request).getRoleIds();
 
-		// 获取当前用户所拥有的action列表
-		List<SystemPrivilage> authorizedPrivilageList = systemPrivilageService.getSystemPrivilageListByRoleIds(roleIds);
-		List<Integer> authorizedActionIdList = SystemPrivilageUtil.getActionIdList(authorizedPrivilageList);
-		List<SystemAction> authorizedActionList = systemActionService.getSystemActionListByIds(authorizedActionIdList);
+			// 获取当前用户所拥有的action列表
+			List<SystemPrivilage> authorizedPrivilageList = null;
+			authorizedPrivilageList = systemPrivilageService.getSystemPrivilageListByRoleIds(roleIds);
+			List<Integer> authorizedActionIdList = SystemPrivilageUtil.getActionIdList(authorizedPrivilageList);
+			authorizedActionList = systemActionService.getSystemActionListByIds(authorizedActionIdList);
+		}
 
 		// 获取根(一级菜单)action列表，并按父节点分组
 		List<SystemAction> rootSystemActionList = new ArrayList<SystemAction>();
@@ -166,11 +173,12 @@ public class SystemUserController extends BaseController {
 
 		// 获取出需要并且可以授权的actionId
 		Set<Integer> actionIdSet = new HashSet<Integer>();
+		Integer userType = SessionManager.get(request).getUserType();
 		if (StringUtils.isNotBlank(systemPrivilageDto.getActionIds())) {
 			String[] arrActionId = systemPrivilageDto.getActionIds().split(",");
 			for (String strActionId : arrActionId) {
 				Integer actionId = Integer.parseInt(strActionId);
-				if (authorizedPrivilageMap.get(actionId) == null) {
+				if (!UserType.ssa.getValue().equals(userType) && authorizedPrivilageMap.get(actionId) == null) {
 					continue;
 				}
 

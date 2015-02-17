@@ -60,6 +60,7 @@ public class BaseController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	protected Map<String, Object> parseJsonTemplate(String templateURL, Object modelMap) throws Exception {
 		FreeMarkerConfigurer freeMarkerConfigurer = ServiceLocator.getBean("freemarkerConfig");
 		Template template = freeMarkerConfigurer.getConfiguration().getTemplate(templateURL);
