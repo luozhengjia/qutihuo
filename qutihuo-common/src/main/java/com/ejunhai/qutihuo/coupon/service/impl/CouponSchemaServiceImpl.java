@@ -1,10 +1,13 @@
 package com.ejunhai.qutihuo.coupon.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.ejunhai.qutihuo.coupon.dao.CouponSchemaMapper;
+import com.ejunhai.qutihuo.coupon.dto.CouponSchemaDto;
 import com.ejunhai.qutihuo.coupon.model.CouponSchema;
 import com.ejunhai.qutihuo.coupon.service.CouponSchemaService;
 
@@ -19,43 +22,36 @@ import com.ejunhai.qutihuo.coupon.service.CouponSchemaService;
 @Service("couponSchemaService")
 public class CouponSchemaServiceImpl implements CouponSchemaService {
 
-    @Resource
-    private CouponSchemaMapper couponSchemaMapper;
+	@Resource
+	private CouponSchemaMapper couponSchemaMapper;
 
-    @Override
-    public CouponSchema read(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public CouponSchema read(Integer id) {
+		return couponSchemaMapper.read(id);
+	}
 
-    @Override
-    public void insert(CouponSchema couponSchema) {
-        // TODO Auto-generated method stub
+	@Override
+	public void insert(CouponSchema couponSchema) {
+		couponSchemaMapper.insert(couponSchema);
+	}
 
-    }
+	@Override
+	public void update(CouponSchema couponSchema) {
+		couponSchemaMapper.update(couponSchema);
+	}
 
-    @Override
-    public void update(CouponSchema couponSchema) {
-        // TODO Auto-generated method stub
+	@Override
+	public void delete(Integer id) {
+		couponSchemaMapper.delete(id);
+	}
 
-    }
+	@Override
+	public Integer queryCouponSchemaCount(CouponSchemaDto couponSchemaDto) {
+		return couponSchemaMapper.queryCouponSchemaCount(couponSchemaDto);
+	}
 
-    @Override
-    public void delete(Integer id) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public Integer queryCouponSchemaCount(CouponSchema couponSchema) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Integer queryCouponSchemaList(CouponSchema couponSchema) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
+	@Override
+	public List<CouponSchema> queryCouponSchemaList(CouponSchemaDto couponSchemaDto) {
+		return couponSchemaMapper.queryCouponSchemaList(couponSchemaDto);
+	}
 }

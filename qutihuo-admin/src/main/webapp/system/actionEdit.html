@@ -215,8 +215,10 @@
 			// 需要重新加载父节点列表数据
 			$('#html5Form').find('select[name="parentId"] option').remove();  
 			$.getJSON('/system/getParentActionList.jhtml',{actionType:$(this).val()},function(result) {
-				$.each(result.data.actionList, function (key, val) {  
-                    $('#html5Form').find('select[name="parentId"]').append("<option value='"+val.id+"'>"+val.actionName+"</option>");
+				$.each(result.data.actionList, function (key, val) {
+					var selected = formData.parentId==val.id?"'selected'='selected'":"";
+					var optionHtml = "<option value='"+val.id+"' "+ selected + ">"+val.actionName+"</option>";
+                    $('#html5Form').find('select[name="parentId"]').append(optionHtml);
                 });
 			});
 	        
@@ -234,6 +236,8 @@
 				$('[data-topic="iconCss"]').hide();
 				$('#surveyForm').formValidation('addField', $('[data-topic="url"]'));
 			}
+			
+			$('#html5Form').find("select option[value='3']").attr("selected", true);
 		});
 		
         

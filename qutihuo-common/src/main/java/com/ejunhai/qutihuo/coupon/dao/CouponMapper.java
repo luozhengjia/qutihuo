@@ -15,49 +15,49 @@ import com.ejunhai.qutihuo.coupon.model.Coupon;
  */
 public interface CouponMapper {
 
-    /**
-     * 根据Id获取Coupon
-     * 
-     * @param id
-     * @return
-     */
-    public Coupon read(Integer id);
-    
-    /**
-     * 新增Coupon
-     * 
-     * @param coupon
-     */
-    public void insert(Coupon coupon);
+	/**
+	 * 根据Id获取Coupon
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Coupon read(Integer id);
 
-    /**
-     * 更新Coupon
-     * 
-     * @param coupon
-     */
-    public void update(Coupon coupon);
-    
-    /**
-     * 删除Coupon
-     * 
-     * @param id
-     */
-    public void delete(Integer id);
-    
-    /**
-     * 查询Coupon数量
-     * 
-     * @param coupon
-     * @return
-     */
-    public Integer queryCouponCount(Coupon coupon);
-    
-    /**
-     * 查询Coupon列表
-     * 
-     * @param coupon
-     * @return
-     */
-    public List<Coupon> queryCouponList(Coupon coupon);
+	/**
+	 * 新增Coupon
+	 * 
+	 * @param coupon
+	 */
+	public void insert(Coupon coupon);
+
+	/**
+	 * 更新Coupon
+	 * 
+	 * @param coupon
+	 */
+	public void update(Coupon coupon);
+
+	/**
+	 * 删除Coupon
+	 * 
+	 * @param id
+	 */
+	public void delete(Integer id);
+
+	/**
+	 * 查询Coupon数量
+	 * 
+	 * @param coupon
+	 * @return
+	 */
+	public Integer queryCouponCount(Coupon coupon);
+
+	/**
+	 * 查询Coupon列表
+	 * 
+	 * @param coupon
+	 * @return
+	 */
+	public List<Coupon> queryCouponList(Coupon coupon);
 
 }

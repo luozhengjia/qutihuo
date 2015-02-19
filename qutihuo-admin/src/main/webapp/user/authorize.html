@@ -79,7 +79,7 @@
                             <i class="fa fa-home"></i> 
                             <a href="#">用户管理</a>
                         </li>
-                        <li><a href="/system/actionList.jhtml">角色列表</a></li>
+                        <li><a href="/system/roleList.jhtml">角色列表</a></li>
                         <li>角色授权</li>
                     </ul>
                 </div>
@@ -99,7 +99,7 @@
 									<#list rootSystemActionList as item >
 									<div class="form-group">
 										<label class="col-lg-2 control-label "><span class="category-title">${item.actionName}</span></label>
-										<div class="menu-list col-lg-9">
+										<div class="menu-list col-lg-10">
 											<#if item.actionType==2>
 												<div class="menu-item clearfix">
 													<h6>
