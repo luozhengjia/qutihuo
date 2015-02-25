@@ -8,7 +8,6 @@
         <result column="nickname" property="nickname" jdbcType="VARCHAR" />
         <result column="telephone" property="telephone" jdbcType="VARCHAR" />
         <result column="user_type" property="userType" jdbcType="TINYINT" />
-        <result column="user_title" property="userTitle" jdbcType="TINYINT" />
         <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
         <result column="picture_url" property="pictureUrl" jdbcType="VARCHAR" />
         <result column="state" property="state" jdbcType="TINYINT" />
@@ -24,7 +23,6 @@
         nickname,
         telephone,
         user_type,
-        user_title,
         merchant_id,
         picture_url,
         state,
@@ -49,7 +47,6 @@
         #{nickname,jdbcType=VARCHAR},
         #{telephone,jdbcType=VARCHAR},
         #{userType,jdbcType=TINYINT},
-        #{userTitle,jdbcType=TINYINT},
         #{merchantId,jdbcType=INTEGER},
         #{pictureUrl,jdbcType=VARCHAR},
         #{state,jdbcType=TINYINT},
@@ -68,7 +65,6 @@
             nickname = #{nickname,jdbcType=VARCHAR},
             telephone = #{telephone,jdbcType=VARCHAR},
             user_type = #{userType,jdbcType=TINYINT},
-            user_title = #{userTitle,jdbcType=TINYINT},
             merchant_id = #{merchantId,jdbcType=INTEGER},
             picture_url = #{pictureUrl,jdbcType=VARCHAR},
             state = #{state,jdbcType=TINYINT},
@@ -86,10 +82,20 @@
     
     <select id="querySystemUserCount" resultType="java.lang.Integer">
     	select count(1) from tb_system_user
+    	<where>
+    		<if test="loginName!=null and loginName!=''">
+				and login_name like CONCAT('%',#{loginName},'%')
+			</if>
+		</where>
     </select>
     
     <select id="querySystemUserList" resultMap="SystemUserMapper">
     	select <include refid="Base_Column_List" /> from tb_system_user
+    	<where>
+    		<if test="loginName!=null and loginName!=''">
+				and login_name like CONCAT('%',#{loginName},'%')
+			</if>
+		</where>
     </select>
     
     <select id="getSystemUserByLoginName" resultMap="SystemUserMapper">

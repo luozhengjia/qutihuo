@@ -1,8 +1,8 @@
 package com.ejunhai.qutihuo.system.dto;
 
-import com.ejunhai.qutihuo.system.model.SystemRole;
+import com.ejunhai.qutihuo.system.model.SystemUser;
 
-public class SystemUserDto extends SystemRole {
+public class SystemUserDto extends SystemUser {
 	/**
      * 
      */

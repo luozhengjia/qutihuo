@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Dashboard</title>
+
+    <meta name="description" content="Dashboard" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon">
+
+    <!--Basic Styles-->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/assets/css/weather-icons.min.css" rel="stylesheet" />
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="/assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/typicons.min.css" rel="stylesheet" />
+    <link href="/assets/css/animate.min.css" rel="stylesheet" />
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="/assets/js/skins.js"></script>
+   
+</head>
+
+<body>
+    <!-- Navbar -->
+    <#include "/common/navbar.html">
+    <!-- /Navbar -->
+    
+    <!-- Main Container -->
+    <div class="main-container container-fluid">
+        <!-- Page Container -->
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            <#include "/common/menu.html">
+            <!-- /Page Sidebar -->
+            
+            <!-- Page Content -->
+            <div class="page-content">
+            
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i> 
+                            <a href="#">礼品卡管理</a>
+                        </li>
+                        <li><a href="/coupon/couponSchemaList.jhtml">礼品卡方案</a></li>
+                        <li>新增礼品卡方案</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+                
+                <div class="page-body">
+                    <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                        <div class="col-xs-12 col-md-12">
+                            <div class="well with-header with-footer">
+                                <div class="header">
+                                	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>新增礼品卡方案</b>
+                                </div>
+                            
+								<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/coupon/saveCouponSchema.jhtml">
+									<input type="hidden" name="id"/>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">礼品卡名称<font color="red"> *</font></label>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" name="couponName"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">礼品卡图标<font color="red"> *</font></label>
+                                        <div class="col-lg-5">
+                                            <input type="text" class="form-control" name="iconUrl"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="reservation" class="col-lg-2 control-label">有效期<font color="red"> *</font></label>
+                                        <div class="col-lg-5">
+                                        	<div class="input-group">
+                                                <input class="form-control" type="text" name="useStartdate" id="useStartdate">
+                                                <span class="input-group-addon">至</span>
+                                                <input class="form-control" type="text" name="useEnddate" id="useEnddate">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        
+									<div class="form-group">
+                                        <label class="col-lg-2 control-label">总发行量<font color="red"> *</font></label>
+                                        <div class="col-lg-2">
+                                            <input type="text" class="form-control" name="issueAmount"/>
+                                        </div>
+                                        <div class="col-lg-4"><p class="help-block">总共发行卡券数量，最大值不能超过1000</p></div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">日限兑换量</label>
+                                        <div class="col-lg-2">
+                                            <input type="text" class="form-control" name="dayLimitNum"/>
+                                        </div>
+                                        <div class="col-lg-4"><p class="help-block">每日兑换商品的最大数量</p></div>
+                                    </div>
+
+									<div class="form-group">
+                                        <label class="col-lg-2 control-label">提前预约天数</label>
+                                        <div class="col-lg-2">
+                                            <input type="text" class="form-control" name="frontDayNum"/>
+                                        </div>
+                                        <div class="col-lg-6"><p class="help-block">提前预约的天数，如两天则最早到后天才能预约</p></div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">礼品介绍<font color="red"> *</font></label>
+                                        <div class="col-lg-8">
+                                            <textarea class="form-control" name="remark" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="col-lg-2 col-lg-offset-2">
+                                        	 <button type="submit" class="btn btn-success">确认</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Content -->
+        </div>
+        <!-- /Page Container -->
+        <!-- Main Container -->
+    </div>
+
+    <!--Basic Scripts-->
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="/assets/js/beyond.min.js"></script>
+    <script src="/assets/js/validation/formValidation.min.js"></script>
+    <script src="/assets/js/validation/framework/bootstrap.min.js"></script>
+    <script src="/assets/js/datetime/bootstrap-datepicker.js"></script>
+	<script src="/assets/js/toastr/toastr.js"></script>
+	<script src="/assets/js/jquery.formautofill.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#html5Form').formValidation({
+				fields: {
+		            actionName: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '操作名称不能为空'
+		                    }
+		                }
+		            }
+		        }
+			})        
+			.on('success.form.fv', function(e) {
+	            // Prevent form submission
+	            e.preventDefault();
+	
+	            // Get the form instance
+	            var $form = $(e.target);
+	
+	            // Get the FormValidation instance
+	            var bv = $form.data('formValidation');
+	            // Use Ajax to submit form data
+	            $.post($form.attr('action'), $form.serialize(), function(result) {
+	                if(result.state.code==200){
+		        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+		        		setTimeout(function () {window.location = "/coupon/couponSchemaList.jhtml";}, 1500);
+		        	}else{
+		        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+		        	}
+	            }, 'json');
+	        });
+			
+			// 构建表单数据	
+			var formData = {			
+	         	"id":${(couponSchema.id)!'null'},
+				"couponName":"${(couponSchema.couponName)!''}",
+				"iconUrl":"${(couponSchema.iconUrl)!''}",
+				"useStartdate":"${(couponSchema.useStartdate?string('yyyy-MM-dd'))}",
+				"useEnddate":"${(couponSchema.useEnddate?string('yyyy-MM-dd'))}",
+				"issueAmount":${(couponSchema.issueAmount?c)!100}, 
+				"dayLimitNum":${(couponSchema.dayLimitNum?c)!10},
+				"frontDayNum":"${(couponSchema.frontDayNum?c)!2}",
+				"remark":"${(couponSchema.remark)!''}"
+	        };
+	        
+			// 自动填充表单
+	        $("#html5Form").autofill(formData);
+	        
+	        $('#useStartdate').datepicker({maxDate:'#useEnddate',format:'yyyy-mm-dd'});
+			$('#useEnddate').datepicker({minDate:'#useStartdate',format:'yyyy-mm-dd'});
+		});
+	</script>
+</body>
+</html>

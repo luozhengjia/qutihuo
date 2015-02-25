@@ -39,14 +39,9 @@ public class SystemUser implements Serializable {
     private String telephone;
 
     /**
-     * 用户类型 1 系统管理员 2 商户
+     * 用户类型 1 超级系统管理员 2 系统管理员 3 商户户主 4 商户管理员
      */
     private Integer userType;
-
-    /**
-     * 用户头衔 1 超级管理员 2 户主
-     */
-    private Integer userTitle;
 
     /**
      * 商户ID
@@ -124,14 +119,6 @@ public class SystemUser implements Serializable {
 
     public void setUserType(Integer userType) {
         this.userType = userType;
-    }
-
-    public Integer getUserTitle() {
-        return userTitle;
-    }
-
-    public void setUserTitle(Integer userTitle) {
-        this.userTitle = userTitle;
     }
 
     public Integer getMerchantId() {

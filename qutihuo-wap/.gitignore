@@ -1,0 +1,14 @@
+
+/.project
+
+/.classpath
+/tmp
+/.settings
+/eclipse
+/nbproject/
+/lib
+/target
+
+/logs
+
+/bin

@@ -1,5 +1,6 @@
 package com.ejunhai.qutihuo.system.service.impl;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -38,26 +39,25 @@ public class SystemUserServiceImpl implements SystemUserService {
 
 	@Override
 	public SystemUser read(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return systemUserMapper.read(id);
 	}
 
 	@Override
 	public void insert(SystemUser systemUser) {
-		// TODO Auto-generated method stub
-
+		systemUser.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		systemUser.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		systemUserMapper.insert(systemUser);
 	}
 
 	@Override
 	public void update(SystemUser systemUser) {
-		// TODO Auto-generated method stub
-
+		systemUser.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		systemUserMapper.update(systemUser);
 	}
 
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
-
+		systemUserMapper.delete(id);
 	}
 
 	@Override
