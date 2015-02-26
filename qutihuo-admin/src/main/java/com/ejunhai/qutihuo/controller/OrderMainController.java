@@ -1,6 +1,7 @@
 package com.ejunhai.qutihuo.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -128,6 +129,11 @@ public class OrderMainController extends BaseController {
 		if (orderMain.getId() != null && orderMain.getId() > 0) {
 			orderMainService.update(orderMain);
 		} else {
+			//订单号
+			orderMain.setOrderMainNo("11");
+			//优惠券带出商家信息
+			
+			
 			orderMainService.insert(orderMain);
 		}
 		return jsonSuccess();
