@@ -111,7 +111,7 @@ public class SystemUserController extends BaseController {
 		Integer merchantId = SessionManager.get(request).getMerchantId();
 		if (systemUserDto.getId() != null) {
 			systemUser = systemUserService.read(systemUserDto.getId());
-			JunhaiAssert.isTrue(merchantId != null && systemUser.getMerchantId().equals(merchantId), "id无效");
+			JunhaiAssert.isTrue(merchantId == null || merchantId.equals(systemUser.getMerchantId()), "id无效");
 		}
 
 		systemUser.setNickname(systemUserDto.getNickname());
@@ -145,7 +145,7 @@ public class SystemUserController extends BaseController {
 		// 验证用户是否有操作权限
 		SystemUser systemUser = systemUserService.read(systemUserDto.getId());
 		Integer merchantId = SessionManager.get(request).getMerchantId();
-		JunhaiAssert.isTrue(merchantId != null && systemUser.getMerchantId().equals(merchantId), "id无效");
+		JunhaiAssert.isTrue(merchantId == null || merchantId.equals(systemUser.getMerchantId()), "id无效");
 
 		// 更新密码
 		systemUser.setPasswd(systemUserDto.getPasswd());
@@ -158,7 +158,13 @@ public class SystemUserController extends BaseController {
 	@RequestMapping("/lockUser")
 	@ResponseBody
 	public String lockUser(HttpServletRequest request) {
-		return null;
+		return jsonSuccess();
+	}
+
+	@RequestMapping("/unlockUser")
+	@ResponseBody
+	public String unlockUser(HttpServletRequest request) {
+		return jsonSuccess();
 	}
 
 	@RequestMapping("/roleList")

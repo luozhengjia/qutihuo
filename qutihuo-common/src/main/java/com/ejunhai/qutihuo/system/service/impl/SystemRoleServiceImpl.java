@@ -63,8 +63,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
 
 	@Override
 	public List<SystemRole> getSystemRoleListByIds(List<Integer> idList) {
-		// TODO Auto-generated method stub
-		return null;
+		return systemRoleMapper.getSystemRoleListByIds(idList);
 	}
 
 }

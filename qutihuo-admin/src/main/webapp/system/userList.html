@@ -91,7 +91,7 @@
                                             <td>${item.nickname}</td>
                                             <td>${item.telephone}</td>
                                             <td>${UserType.get(item.userType).getTitle()}</td>
-                                            <td></td>
+                                            <td><#list item.roleIds?split(",") as roleId>${systemRoleMap[roleId].roleName}<#if roleId_has_next>,</#if></#list></td>
                                             <td>${UserState.get(item.state).getTitle()}</td>
                                             <td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
                                             <td>
@@ -218,7 +218,7 @@
             var bv = $form.data('formValidation');
 
             // Use Ajax to submit form data
-            $.post($form.attr('action'), $form.serialize(), function(result) {
+             $.post($form.attr('action'), $form.serialize(), function(result) {
                 if(result.state.code==200){
 	        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
 	        		setTimeout(function () {window.location = "/system/userList.jhtml";}, 1500);

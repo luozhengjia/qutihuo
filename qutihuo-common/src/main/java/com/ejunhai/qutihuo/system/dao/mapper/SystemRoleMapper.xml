@@ -60,4 +60,12 @@
     		select <include refid="Base_Column_List" /> from tb_system_role
     </select>
     
+    <select id="getSystemRoleListByIds" resultMap="SystemRoleMapper">
+    	select <include refid="Base_Column_List" /> from tb_system_role where id in (
+	        <foreach collection="list" item="roleId" index="index" separator="," >  
+		        #{roleId}
+		    </foreach>
+	    ) 
+    </select>
+    
 </mapper>

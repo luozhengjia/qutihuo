@@ -60,5 +60,13 @@ public interface SystemRoleMapper {
      * @return
      */
     public List<SystemRole> querySystemRoleList(SystemRoleDto systemRoleDto);
+    
+	/**
+	 * 根据ID批量获取角色信息
+	 * 
+	 * @param idList
+	 * @return
+	 */
+	public List<SystemRole> getSystemRoleListByIds(List<Integer> idList);
 
 }
