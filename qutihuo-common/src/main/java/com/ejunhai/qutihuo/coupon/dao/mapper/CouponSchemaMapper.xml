@@ -115,6 +115,7 @@
     	<where>
     		<if test="couponName != null and couponName!=''">and coupon_name like CONCAT('%',#{couponName},'%')</if>
 		</where>
+		limit #{offset},#{pageSize} 
     </select>
     
 </mapper>

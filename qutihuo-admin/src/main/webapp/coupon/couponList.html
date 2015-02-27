@@ -69,7 +69,6 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>礼品卡编码</th>
-                                            <th>礼品卡密码</th>
                                             <th>方案名称</th>
                                             <th>有效时间</th>
                                             <th>状态</th>
@@ -83,12 +82,11 @@
                                         <tr data-formData='{"id":${item.id}}'>
                                 			<td>${item.id}</td>
                                 			<td>${item.couponNumber}</td>
-                                			<td>${item.couponPassword}</td>
                                 			<td></td>
                                 			<td>${item.useStartdate?string('yyyy-MM-dd')} 至 ${item.useEnddate?string('yyyy-MM-dd')}</td>
-                                			<td>${item.state?c}</td>
-                                			<td>${item.useTime?string('yyyy-MM-dd HH:mm')}</td>
-                                			<td>${item.orderNumber}</td>
+                                			<td>${CouponState.get(item.state).getTitle()}</td>
+                                			<td>${(item.useTime?string('yyyy-MM-dd HH:mm'))!'-'}</td>
+                                			<td>${(item.orderNumber)!'-'}</td>
                                 			<td>
                                 			</td>
                                         </tr>

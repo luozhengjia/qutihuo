@@ -53,11 +53,12 @@
     </delete>
     
     <select id="querySystemRoleCount" resultType="java.lang.Integer">
-    		select count(1) from tb_system_role
+    	select count(1) from tb_system_role
     </select>
     
     <select id="querySystemRoleList" resultMap="SystemRoleMapper">
-    		select <include refid="Base_Column_List" /> from tb_system_role
+    	select <include refid="Base_Column_List" /> from tb_system_role
+    	limit #{offset},#{pageSize} 
     </select>
     
     <select id="getSystemRoleListByIds" resultMap="SystemRoleMapper">

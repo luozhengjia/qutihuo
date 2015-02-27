@@ -96,6 +96,7 @@
 				and login_name like CONCAT('%',#{loginName},'%')
 			</if>
 		</where>
+		limit #{offset},#{pageSize} 
     </select>
     
     <select id="getSystemUserByLoginName" resultMap="SystemUserMapper">

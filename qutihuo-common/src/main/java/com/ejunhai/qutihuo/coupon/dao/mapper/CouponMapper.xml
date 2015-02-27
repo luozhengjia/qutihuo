@@ -43,6 +43,7 @@
   			<if test="state != null">and state=#{state} </if>
   			<if test="couponNumber != null and couponNumber !=''">and coupon_number like CONCAT(#{couponNumber},'%') </if>
 		</where>
+		limit #{offset},#{pageSize} 
     </select>
     
     <insert id="batchAddCoupon" parameterType="com.ejunhai.qutihuo.coupon.model.Coupon" useGeneratedKeys="true" keyProperty="id" >
