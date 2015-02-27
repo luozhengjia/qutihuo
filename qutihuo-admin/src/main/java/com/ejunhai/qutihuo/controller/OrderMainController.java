@@ -58,6 +58,11 @@ public class OrderMainController extends BaseController {
 		return "order/orderMainList";
 	}
 
+	@RequestMapping("/orderMainAdd")
+	public String orderMainAdd(HttpServletRequest request, OrderMain orderMain, ModelMap modelMap) {
+		return "order/orderMainAdd";
+	}
+	
 	@RequestMapping("/orderMainDetail")
 	public String orderMainDetail(HttpServletRequest request, OrderMain orderMain, ModelMap modelMap) {
 		if (orderMain.getId() != null) {
