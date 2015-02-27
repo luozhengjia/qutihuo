@@ -79,7 +79,7 @@
         #{isPrintExpress,jdbcType=TINYINT},
         #{source,jdbcType=TINYINT},
         #{remark,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP}
+        now()
         )
     </insert>
     
