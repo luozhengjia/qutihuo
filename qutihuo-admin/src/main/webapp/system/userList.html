@@ -98,9 +98,9 @@
                                             	<a href="/system/userDetail.jhtml?userId=${item.id?c}" class="btn btn-info btn-xs"><i class="fa fa-edit"></i> 编辑</a>
                                             	<button type="button" class="btn btn-success btn-xs J_editPwd"><i class="fa fa-wrench"></i> 修改密码</button>
                                             	<#if item.state==UserState.normal.value>
-                                            		<button type="button" class="btn btn-danger btn-xs J_lockUser"><i class="fa fa-lock"></i> 锁定账号</button>
+                                            		<button type="button" class="btn btn-danger btn-xs J_lockUser" data-param='{"id":${item.id?c}}'><i class="fa fa-lock"></i> 锁定账号</button>
                                             	<#else>
-                                            		<button type="button" class="btn btn-danger btn-xs J_unlockUser"><i class="fa fa-lock"></i> 解锁账号</button>
+                                            		<button type="button" class="btn btn-warning btn-xs J_unlockUser" data-param='{"id":${item.id?c}}'><i class="fa fa-unlock"></i> 解锁账号</button>
                                             	</#if>
 											</td>
                                         </tr>
@@ -188,7 +188,7 @@
             .modal('show');
         });
 
-		// 保存角色
+		// 保存密码
         $('#html5Form').formValidation({
 			fields: {
 	            passwd: {
@@ -223,11 +223,53 @@
 	        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
 	        		setTimeout(function () {window.location = "/system/userList.jhtml";}, 1500);
 	        	}else{
-	        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+	        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 	        	}
             }, 'json');
         });
 		
+		// 锁定用户
+        $(".J_lockUser").on('click', function () {
+        	var dataParam = $(this).attr('data-param');
+        	bootbox.confirm({
+		        message: '你确定锁定该用户？',
+		        title: "提示",
+		        callback: function(result) {  
+		            if (result) {
+	                    $.post('/system/lockUser.jhtml', JSON.parse(dataParam), function(result) {
+			                if(result.state.code==200){
+				        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+				        		setTimeout(function () {window.location = "/system/userList.jhtml";}, 1500);
+				        	}else{
+				        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+				        	}
+			            }, 'json');
+	                }
+		        }
+	        });
+	    });
+	    
+	    		
+		// 解锁用户
+        $(".J_unlockUser").on('click', function () {
+        	var dataParam = $(this).attr('data-param');
+        	bootbox.confirm({
+		        message: '你确定解锁该用户？',
+		        title: "提示",
+		        callback: function(result) {  
+		            if (result) {
+	                    $.post('/system/unlockUser.jhtml', JSON.parse(dataParam), function(result) {
+			                if(result.state.code==200){
+				        		Notify('操作成功!', 'bottom-right', '1500', 'success', 'fa-check', true);
+				        		setTimeout(function () {window.location = "/system/userList.jhtml";}, 1500);
+				        	}else{
+				        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+				        	}
+			            }, 'json');
+	                }
+		        }
+	        });
+	    });
     </script>
 </body>
 </html>

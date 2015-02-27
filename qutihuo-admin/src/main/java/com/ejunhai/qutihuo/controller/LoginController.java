@@ -1,5 +1,8 @@
 package com.ejunhai.qutihuo.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +17,7 @@ import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.system.enums.UserState;
 import com.ejunhai.qutihuo.system.model.SystemUser;
 import com.ejunhai.qutihuo.system.service.SystemUserService;
+import com.ejunhai.qutihuo.utils.FrontUtil;
 import com.ejunhai.qutihuo.utils.SessionManager;
 
 @Controller
@@ -68,5 +72,16 @@ public class LoginController extends BaseController {
 		// 注销用户
 		SessionManager.clear(request);
 		return "redirect:/login.jhtml";
+	}
+
+	@RequestMapping("/forbidden")
+	@ResponseBody
+	public String forbidden(HttpServletRequest request, HttpServletResponse response) {
+		// 处理异步请求-重定向到统一异常处理
+		if (!FrontUtil.isAjax(request)) {
+			return "redirect:/login.jhtml";
+		}
+
+		return jsonFailed(ErrorType.SYSTEM_FORBIDDEN.getValue(), ErrorType.SYSTEM_FORBIDDEN.getTitle());
 	}
 }

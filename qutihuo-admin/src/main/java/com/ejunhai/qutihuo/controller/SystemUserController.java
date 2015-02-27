@@ -157,13 +157,29 @@ public class SystemUserController extends BaseController {
 
 	@RequestMapping("/lockUser")
 	@ResponseBody
-	public String lockUser(HttpServletRequest request) {
+	public String lockUser(HttpServletRequest request, SystemUserDto systemUserDto) {
+		JunhaiAssert.notNull(systemUserDto.getId(), "用户ID不能为空");
+
+		// 验证用户是否有操作权限
+		SystemUser systemUser = systemUserService.read(systemUserDto.getId());
+		Integer merchantId = SessionManager.get(request).getMerchantId();
+		JunhaiAssert.isTrue(merchantId == null || merchantId.equals(systemUser.getMerchantId()), "id无效");
+		systemUser.setState(UserState.lock.getValue());
+		systemUserService.update(systemUser);
 		return jsonSuccess();
 	}
 
 	@RequestMapping("/unlockUser")
 	@ResponseBody
-	public String unlockUser(HttpServletRequest request) {
+	public String unlockUser(HttpServletRequest request, SystemUserDto systemUserDto) {
+		JunhaiAssert.notNull(systemUserDto.getId(), "用户ID不能为空");
+
+		// 验证用户是否有操作权限
+		SystemUser systemUser = systemUserService.read(systemUserDto.getId());
+		Integer merchantId = SessionManager.get(request).getMerchantId();
+		JunhaiAssert.isTrue(merchantId == null || merchantId.equals(systemUser.getMerchantId()), "id无效");
+		systemUser.setState(UserState.normal.getValue());
+		systemUserService.update(systemUser);
 		return jsonSuccess();
 	}
 
