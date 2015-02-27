@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Dashboard</title>
+
+    <meta name="description" content="Dashboard" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon">
+
+    <!--Basic Styles-->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/assets/css/weather-icons.min.css" rel="stylesheet" />
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="/assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/typicons.min.css" rel="stylesheet" />
+    <link href="/assets/css/animate.min.css" rel="stylesheet" />
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="/assets/js/skins.js"></script>
+   
+</head>
+
+<body>
+    <!-- Navbar -->
+    <#include "/common/navbar.html">
+    <!-- /Navbar -->
+    
+    <!-- Main Container -->
+    <div class="main-container container-fluid">
+        <!-- Page Container -->
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            <#include "/common/menu.html">
+            <!-- /Page Sidebar -->
+            
+            <!-- Page Content -->
+            <div class="page-content">
+            
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i> 
+                            <a href="#">订单管理</a>
+                        </li>
+                        <li><a href="/orderMain/orderMainList.jhtml">订单列表</a></li>
+                        <li>新增订单</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+                
+                <div class="page-body">
+                    <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                        <div class="col-xs-12 col-md-12">
+                            <div class="well with-header with-footer">
+                                <div class="header">
+                                	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>新增订单</b>
+                                </div>
+                            
+								<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/orderMain/saveOrderMain.jhtml">
+									<input type="hidden" name="id"/>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">优惠券码<font color="red"> *</font></label>
+                                        <div class="col-lg-4">
+                                            <input type="text" class="form-control" name="couponNumber"/>
+                                        </div>
+                                    </div>
+                                    
+                                   <div class="form-group">
+                                        <label class="col-lg-2 control-label">预定日期<font color="red"> *</font></label>
+                                        <div class="col-lg-4">
+                                           <div class="input-group">
+                                                <input class="form-control date-picker" id="id-date-picker-1"  name="orderDate" type="text" data-date-format="yyyy-mm-dd">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">收货人<font color="red"> *</font></label>
+                                        <div class="col-lg-4">
+                                            <input type="text" class="form-control" name="consignee"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">联系电话<font color="red"> *</font></label>
+                                        <div class="col-lg-4">
+                                            <span class="input-icon icon-right">
+                                                <input type="text" class="form-control input-xl"   name="telephone" >
+                                                <i class="glyphicon glyphicon-earphone darkpink circular"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">省市区<font color="red"> *</font></label>
+                                        <div class="col-lg-4">
+                                            <input type="text" class="form-control" name="actionName"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">详细地址<font color="red"> *</font></label>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" name="detailAddress"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">订单备注</label>
+                                        <div class="col-lg-8">
+                                            <textarea class="form-control" name="remark" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="col-lg-2 col-lg-offset-2">
+                                        	 <button type="submit" class="btn btn-success">确认</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Content -->
+        </div>
+        <!-- /Page Container -->
+        <!-- Main Container -->
+    </div>
+
+    <!--Basic Scripts-->
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/datetime/bootstrap-datepicker.js"></script>
+    <!--Beyond Scripts-->
+    <script src="/assets/js/beyond.min.js"></script>
+    <script src="/assets/js/validation/formValidation.min.js"></script>
+    <script src="/assets/js/validation/framework/bootstrap.min.js"></script>
+    <script src="/assets/js/fuelux/spinner/fuelux.spinner.min.js"></script>
+	<script src="/assets/js/toastr/toastr.js"></script>
+	<script src="/assets/js/jquery.formautofill.min.js"></script>
+<script>
+	$('.date-picker').datepicker();
+
+	$(document).ready(function() {
+		$('#html5Form').formValidation({
+			fields: {
+				couponNumber: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '优惠券码不能为空'
+	                    }
+	                }
+	            },
+	            orderDate: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '预定日期不能为空'
+	                    }
+	                }
+	            },
+	            consignee :{
+	            	validators: {
+	                    notEmpty: {
+	                        message: '收货人不能为空'
+	                    }
+	                }
+	            },
+	            telephone: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '联系电话不能为空'
+	                    }
+	                }
+	            },
+	            detailAddress: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '详细地址不能为空'
+	                    }
+	                }
+	            }
+	        }
+		})        
+		.on('success.form.fv', function(e) {
+            // Prevent form submission
+            e.preventDefault();
+
+            // Get the form instance
+            var $form = $(e.target);
+
+            // Get the FormValidation instance
+            var bv = $form.data('formValidation');
+
+            // Use Ajax to submit form data
+            $.post($form.attr('action'), $form.serialize(), function(result) {
+            console.log(result);
+                if(result.state.code==200){
+	        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+	        		setTimeout(function () {window.location = "/orderMain/orderMainList.jhtml";}, 1500);
+	        	}else{
+	        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+	        	}
+            }, 'json');
+        });
+		
+		
+        
+		// 构建表单数据	
+		var formData = {			
+         	"id":${(orderMain.id)!'null'},
+			"couponNumber":"${(orderMain.couponNumber)!''}",
+			"orderDate":"${(orderMain.orderDate)!''}",
+			"remark":"${(orderMain.remark)!''}"
+        };
+        
+		// 自动填充表单
+        $("#html5Form").autofill(formData);
+		$('.spinner').spinner({max:9999999,min:100,value:formData.weight});
+
+	
+	});
+</script>
+</body>
+</html>

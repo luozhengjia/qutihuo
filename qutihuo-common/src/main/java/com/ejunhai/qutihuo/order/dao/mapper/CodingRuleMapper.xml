@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.qutihuo.order.dao.CodingRuleMapper" >
+    <resultMap id="CodingRuleMapper" type="com.ejunhai.qutihuo.order.model.CodingRule" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
+        <result column="prefix" property="prefix" jdbcType="VARCHAR" />
+        <result column="current_serial_no" property="currentSerialNo" jdbcType="INTEGER" />
+        <result column="serial_no_length" property="serialNoLength" jdbcType="INTEGER" />
+        <result column="reset_mode" property="resetMode" jdbcType="INTEGER" />
+        <result column="allow_break_no" property="allowBreakNo" jdbcType="SMALLINT" />
+        <result column="reset_time" property="resetTime" jdbcType="TIMESTAMP" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        id,
+        merchant_id,
+        merchant_name,
+        prefix,
+        current_serial_no,
+        serial_no_length,
+        reset_mode,
+        allow_break_no,
+        reset_time,
+        remarks
+    </sql>
+    
+    <select id="read" resultMap="CodingRuleMapper" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from tb_coding_rule
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <insert id="insert" parameterType="com.ejunhai.qutihuo.order.model.CodingRule" useGeneratedKeys="true" keyProperty="id" >
+        insert into tb_coding_rule (<include refid="Base_Column_List" />)
+        values (
+        #{id,jdbcType=INTEGER},
+        #{merchantId,jdbcType=INTEGER},
+        #{merchantName,jdbcType=VARCHAR},
+        #{prefix,jdbcType=VARCHAR},
+        #{currentSerialNo,jdbcType=INTEGER},
+        #{serialNoLength,jdbcType=INTEGER},
+        #{resetMode,jdbcType=INTEGER},
+        #{allowBreakNo,jdbcType=SMALLINT},
+        #{resetTime,jdbcType=TIMESTAMP},
+        #{remarks,jdbcType=VARCHAR}
+        )
+    </insert>
+    
+    <update id="update" parameterType="com.ejunhai.qutihuo.order.model.CodingRule" >
+        update tb_coding_rule
+        <set>
+            id = #{id,jdbcType=INTEGER},
+            merchant_id = #{merchantId,jdbcType=INTEGER},
+            merchant_name = #{merchantName,jdbcType=VARCHAR},
+            prefix = #{prefix,jdbcType=VARCHAR},
+            current_serial_no = #{currentSerialNo,jdbcType=INTEGER},
+            serial_no_length = #{serialNoLength,jdbcType=INTEGER},
+            reset_mode = #{resetMode,jdbcType=INTEGER},
+            allow_break_no = #{allowBreakNo,jdbcType=SMALLINT},
+            reset_time = #{resetTime,jdbcType=TIMESTAMP},
+            remarks = #{remarks,jdbcType=VARCHAR}
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Integer" >
+        delete from tb_coding_rule
+        where ID = #{id,jdbcType=INTEGER}
+    </delete>
+    
+    <select id="queryCodingRuleCount" resultType="java.lang.Integer">
+    		select count(1) from tb_coding_rule
+    </select>
+    
+    <select id="queryCodingRuleList" resultMap="CodingRuleMapper">
+    		select <include refid="Base_Column_List" /> from tb_coding_rule
+    </select>
+    
+     <select id="getOrderNo" resultType="java.lang.String">
+    		SELECT get_nextval('ORDER_NO')
+    </select>
+    
+</mapper>
