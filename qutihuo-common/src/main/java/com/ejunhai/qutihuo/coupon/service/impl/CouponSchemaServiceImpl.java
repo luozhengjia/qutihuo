@@ -1,5 +1,6 @@
 package com.ejunhai.qutihuo.coupon.service.impl;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -32,6 +33,7 @@ public class CouponSchemaServiceImpl implements CouponSchemaService {
 
 	@Override
 	public void insert(CouponSchema couponSchema) {
+		couponSchema.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		couponSchemaMapper.insert(couponSchema);
 	}
 

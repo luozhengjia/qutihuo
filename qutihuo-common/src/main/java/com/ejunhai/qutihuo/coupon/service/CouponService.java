@@ -17,35 +17,6 @@ import com.ejunhai.qutihuo.coupon.model.Coupon;
 public interface CouponService {
 
 	/**
-	 * 根据Id获取Coupon
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public Coupon read(Integer id);
-
-	/**
-	 * 新增Coupon
-	 * 
-	 * @param coupon
-	 */
-	public void insert(Coupon coupon);
-
-	/**
-	 * 更新Coupon
-	 * 
-	 * @param coupon
-	 */
-	public void update(Coupon coupon);
-
-	/**
-	 * 删除Coupon
-	 * 
-	 * @param id
-	 */
-	public void delete(Integer id);
-
-	/**
 	 * 查询Coupon数量
 	 * 
 	 * @param coupon
@@ -60,5 +31,20 @@ public interface CouponService {
 	 * @return
 	 */
 	public List<Coupon> queryCouponList(CouponDto couponDto);
+
+	/**
+	 * 批量生成礼品卡
+	 * 
+	 * @param couponSchemaId
+	 * @param num
+	 */
+	public void batchGenerateCoupon(Integer couponSchemaId, int num);
+
+	/**
+	 * 券码密码扰乱
+	 * 
+	 * @param couponSchemaId
+	 */
+	public void disturbCoupon(Integer couponSchemaId);
 
 }

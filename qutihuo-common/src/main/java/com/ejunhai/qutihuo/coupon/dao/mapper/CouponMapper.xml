@@ -27,57 +27,48 @@
         create_time
     </sql>
     
-    <select id="read" resultMap="CouponMapper" parameterType="java.lang.Integer" >
-        select 
-        <include refid="Base_Column_List" />
-        from tb_coupon
-        where ID = #{id,jdbcType=INTEGER}
-    </select>
-    
-    <insert id="insert" parameterType="com.ejunhai.qutihuo.coupon.model.Coupon" useGeneratedKeys="true" keyProperty="id" >
-        insert into tb_coupon (<include refid="Base_Column_List" />)
-        values (
-        #{id,jdbcType=INTEGER},
-        #{couponNumber,jdbcType=VARCHAR},
-        #{couponPassword,jdbcType=VARCHAR},
-        #{couponSchemaId,jdbcType=INTEGER},
-        #{state,jdbcType=SMALLINT},
-        #{useStartdate,jdbcType=TIMESTAMP},
-        #{useEnddate,jdbcType=TIMESTAMP},
-        #{orderNumber,jdbcType=VARCHAR},
-        #{useTime,jdbcType=TIMESTAMP},
-        #{createTime,jdbcType=TIMESTAMP}
-        )
-    </insert>
-    
-    <update id="update" parameterType="com.ejunhai.qutihuo.coupon.model.Coupon" >
-        update tb_coupon
-        <set>
-            id = #{id,jdbcType=INTEGER},
-            coupon_number = #{couponNumber,jdbcType=VARCHAR},
-            coupon_password = #{couponPassword,jdbcType=VARCHAR},
-            coupon_schema_id = #{couponSchemaId,jdbcType=INTEGER},
-            state = #{state,jdbcType=SMALLINT},
-            use_startdate = #{useStartdate,jdbcType=TIMESTAMP},
-            use_enddate = #{useEnddate,jdbcType=TIMESTAMP},
-            order_number = #{orderNumber,jdbcType=VARCHAR},
-            use_time = #{useTime,jdbcType=TIMESTAMP},
-            create_time = #{createTime,jdbcType=TIMESTAMP}
-        </set>
-        where ID = #{id,jdbcType=INTEGER}
-    </update>
-    
-    <delete id="delete" parameterType="java.lang.Integer" >
-        delete from tb_coupon
-        where ID = #{id,jdbcType=INTEGER}
-    </delete>
-    
     <select id="queryCouponCount" resultType="java.lang.Integer">
-    		select count(1) from tb_coupon
+    	select count(1) from tb_coupon
+    	<where>
+    		<if test="couponSchemaId != null and couponSchemaId !=''"> and coupon_schema_id = #{couponSchemaId} </if>
+  			<if test="state != null">and state=#{state} </if>
+  			<if test="couponNumber != null and couponNumber !=''">and coupon_number like CONCAT(#{couponNumber},'%') </if>
+		</where>
     </select>
     
     <select id="queryCouponList" resultMap="CouponMapper">
-    		select <include refid="Base_Column_List" /> from tb_coupon
+    	select <include refid="Base_Column_List" /> from tb_coupon
+    	<where>
+    		<if test="couponSchemaId != null and couponSchemaId !=''"> and coupon_schema_id = #{couponSchemaId} </if>
+  			<if test="state != null">and state=#{state} </if>
+  			<if test="couponNumber != null and couponNumber !=''">and coupon_number like CONCAT(#{couponNumber},'%') </if>
+		</where>
     </select>
+    
+    <insert id="batchAddCoupon" parameterType="com.ejunhai.qutihuo.coupon.model.Coupon" useGeneratedKeys="true" keyProperty="id" >
+        insert into tb_coupon (<include refid="Base_Column_List" />) values 
+        <foreach collection="list" item="coupon" index="index" separator="," >  
+	        (
+		        #{coupon.id,jdbcType=INTEGER},
+		        #{coupon.couponNumber,jdbcType=VARCHAR},
+		        #{coupon.couponPassword,jdbcType=VARCHAR},
+		        #{coupon.couponSchemaId,jdbcType=INTEGER},
+		        #{coupon.state,jdbcType=SMALLINT},
+		        #{coupon.useStartdate,jdbcType=TIMESTAMP},
+		        #{coupon.useEnddate,jdbcType=TIMESTAMP},
+		        #{coupon.orderNumber,jdbcType=VARCHAR},
+		        #{coupon.useTime,jdbcType=TIMESTAMP},
+		        #{coupon.createTime,jdbcType=TIMESTAMP}
+	        )
+	    </foreach>
+    </insert>
+    
+    <update id="disturbCoupon"  parameterType="java.lang.Integer">
+        update tb_coupon
+        <set>
+            coupon_password=md5(coupon_password)
+        </set>
+        where coupon_schema_id = #{couponSchemaId}
+    </update>
     
 </mapper>

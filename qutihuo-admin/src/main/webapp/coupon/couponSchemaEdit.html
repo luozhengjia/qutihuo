@@ -18,6 +18,7 @@
     <link id="beyond-link" href="/assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/typicons.min.css" rel="stylesheet" />
     <link href="/assets/css/animate.min.css" rel="stylesheet" />
+    <link href="/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
     <script src="/assets/js/skins.js"></script>
@@ -110,7 +111,7 @@
                                         <div class="col-lg-2">
                                             <input type="text" class="form-control" name="frontDayNum"/>
                                         </div>
-                                        <div class="col-lg-6"><p class="help-block">提前预约的天数，如两天则最早到后天才能预约</p></div>
+                                        <div class="col-lg-6"><p class="help-block">提前预约的天数，如2天则最早到后天才能预约</p></div>
                                     </div>
                                     
                                     <div class="form-group">
@@ -146,17 +147,81 @@
     <script src="/assets/js/beyond.min.js"></script>
     <script src="/assets/js/validation/formValidation.min.js"></script>
     <script src="/assets/js/validation/framework/bootstrap.min.js"></script>
-    <script src="/assets/js/datetime/bootstrap-datepicker.js"></script>
+    <script src="/assets/js/datetime/bootstrap-datetimepicker.min.js"></script>
+    <script src="/assets/js/datetime/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 	<script src="/assets/js/toastr/toastr.js"></script>
 	<script src="/assets/js/jquery.formautofill.min.js"></script>
 	<script>
 		$(document).ready(function() {
+			
+			// 构建表单数据	
+			var formData = {			
+	         	"id":${(couponSchema.id)!'null'},
+				"couponName":"${(couponSchema.couponName)!''}",
+				"iconUrl":"${(couponSchema.iconUrl)!''}",
+				"useStartdate":"${(couponSchema.useStartdate?string('yyyy-MM-dd 00:00'))!''}",
+				"useEnddate":"${(couponSchema.useEnddate?string('yyyy-MM-dd 23:59'))!''}",
+				"issueAmount":${(couponSchema.issueAmount?c)!100}, 
+				"dayLimitNum":${(couponSchema.dayLimitNum?c)!10},
+				"frontDayNum":"${(couponSchema.frontDayNum?c)!2}",
+				"remark":"${(couponSchema.remark)!''}"
+	        };
+	        
+			// 自动填充表单
+	        $("#html5Form").autofill(formData);
+		
+			// 开始日期
+	        $('#useStartdate').datetimepicker({language:'zh-CN',autoclose: 1,todayHighlight: 1, minView: 2,format:'yyyy-mm-dd 00:00'}).on('changeDate', function(ev){
+				 $('#useEnddate').datetimepicker('setStartDate', $(this).val());
+			});
+			
+			// 结束日期
+			$('#useEnddate').datetimepicker({language:'zh-CN',autoclose: 1,todayHighlight: 1, minView: 2,format:'yyyy-mm-dd 23:59'}).on('changeDate', function(ev){
+				 $('#useStartdate').datetimepicker('setEndDate', $(this).val());
+			});
+			
+			// 提交表单
 			$('#html5Form').formValidation({
 				fields: {
-		            actionName: {
+		            couponName: {
 		                validators: {
 		                    notEmpty: {
-		                        message: '操作名称不能为空'
+		                        message: '礼品卡名称不能为空'
+		                    }
+		                }
+		            },
+		            iconUrl: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '礼品卡图标不能为空'
+		                    }
+		                }
+		            },
+		            useStartdate: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '有效期开始日期不能为空'
+		                    }
+		                }
+		            },
+		            useEnddate: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '有效期结束日期不能为空'
+		                    }
+		                }
+		            },
+		            issueAmount: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '总发行量不能为空'
+		                    }
+		                }
+		            },
+		            remark: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '礼品介绍不能为空'
 		                    }
 		                }
 		            }
@@ -181,25 +246,6 @@
 		        	}
 	            }, 'json');
 	        });
-			
-			// 构建表单数据	
-			var formData = {			
-	         	"id":${(couponSchema.id)!'null'},
-				"couponName":"${(couponSchema.couponName)!''}",
-				"iconUrl":"${(couponSchema.iconUrl)!''}",
-				"useStartdate":"${(couponSchema.useStartdate?string('yyyy-MM-dd'))}",
-				"useEnddate":"${(couponSchema.useEnddate?string('yyyy-MM-dd'))}",
-				"issueAmount":${(couponSchema.issueAmount?c)!100}, 
-				"dayLimitNum":${(couponSchema.dayLimitNum?c)!10},
-				"frontDayNum":"${(couponSchema.frontDayNum?c)!2}",
-				"remark":"${(couponSchema.remark)!''}"
-	        };
-	        
-			// 自动填充表单
-	        $("#html5Form").autofill(formData);
-	        
-	        $('#useStartdate').datepicker({maxDate:'#useEnddate',format:'yyyy-mm-dd'});
-			$('#useEnddate').datepicker({minDate:'#useStartdate',format:'yyyy-mm-dd'});
 		});
 	</script>
 </body>

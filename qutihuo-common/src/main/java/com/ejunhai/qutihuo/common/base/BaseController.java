@@ -1,11 +1,16 @@
 package com.ejunhai.qutihuo.common.base;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import com.ejunhai.qutihuo.common.utils.ServiceLocator;
@@ -66,5 +71,16 @@ public class BaseController {
 		Template template = freeMarkerConfigurer.getConfiguration().getTemplate(templateURL);
 		String returnStr = FreeMarkerTemplateUtils.processTemplateIntoString(template, modelMap);
 		return gson.fromJson(returnStr.replaceAll("\\s", " "), Map.class);
+	}
+
+	/**
+	 * 设置表单日期属性转换器
+	 * 
+	 * @param binder
+	 */
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 }

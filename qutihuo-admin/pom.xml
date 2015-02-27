@@ -34,10 +34,27 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.7</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>poi-ooxml-schemas</artifactId>
+					<groupId>org.apache.poi</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
 			<groupId>com.ejunhai</groupId>
 			<artifactId>qutihuo-common</artifactId>
 			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
+
 	</dependencies>
 
 	<profiles>

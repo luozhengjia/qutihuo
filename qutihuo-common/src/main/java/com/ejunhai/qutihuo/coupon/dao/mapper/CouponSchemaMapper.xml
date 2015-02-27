@@ -100,16 +100,21 @@
     </update>
     
     <delete id="delete" parameterType="java.lang.Integer" >
-        delete from tb_coupon_schema
-        where ID = #{id,jdbcType=INTEGER}
+        delete from tb_coupon_schema where ID = #{id,jdbcType=INTEGER}
     </delete>
     
     <select id="queryCouponSchemaCount" resultType="java.lang.Integer">
-    		select count(1) from tb_coupon_schema
+    	select count(1) from tb_coupon_schema
+    	<where>
+    		<if test="couponName != null and couponName!=''">and coupon_name like CONCAT('%',#{couponName},'%')</if>
+		</where>
     </select>
     
     <select id="queryCouponSchemaList" resultMap="CouponSchemaMapper">
-    		select <include refid="Base_Column_List" /> from tb_coupon_schema
+    	select <include refid="Base_Column_List" /> from tb_coupon_schema
+    	<where>
+    		<if test="couponName != null and couponName!=''">and coupon_name like CONCAT('%',#{couponName},'%')</if>
+		</where>
     </select>
     
 </mapper>

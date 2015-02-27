@@ -93,19 +93,19 @@
                                 			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
                                 			<td>
                                 				<#if item.hasIssueNum ==item.issueAmount>
-                                					<a class="btn btn-success btn-xs" href="/coupon/exportCoupons.jhtml?id=${item.id?c}"><i class="fa fa-download"></i> 下载</a>
-                                					<#if item.hasDisturb ==0>
-                                						<button type="button" class="btn btn-danger btn-xs J_disturb"><i class="fa fa-eye-slash"></i> 扰乱</button>
+                                					<a class="btn btn-success btn-xs" href="/coupon/exportCoupons.jhtml?couponSchemaId=${item.id?c}"><i class="fa fa-download"></i> 下载</a>
+                                					<#if item.hasConfusion ==1>
+                                						<button type="button" class="btn btn-danger btn-xs J_disturb" data-param='{"couponSchemaId":${item.id?c}}'><i class="fa fa-eye-slash"></i> 扰乱</button>
                                 					</#if>
                                 				<#else>
-                                					<button type="button" class="btn btn-success btn-xs J_generate"><i class="fa fa-plus-circle"></i> 生成</button>
+                                					<button type="button" class="btn btn-success btn-xs J_generate" data-param='{"couponSchemaId":${item.id?c}}'><i class="fa fa-plus-circle"></i> 生成</button>
                                 				</#if>
                                 				
                                 				<#if item.hasIssueNum==0>
-                                					<a class="btn btn-info btn-xs" href="/coupon/toCouponSchema.jhtml?id=${item.id?c}"><i class="fa fa-edit"></i> 编辑</a>
-                                					<button type="button" class="btn btn-danger btn-xs delete J_delete"><i class="fa fa-trash-o"></i> 删除</button>
+                                					<a class="btn btn-info btn-xs" href="/coupon/toCouponSchema.jhtml?couponSchemaId=${item.id?c}"><i class="fa fa-edit"></i> 编辑</a>
+                                					<button type="button" class="btn btn-danger btn-xs delete J_delete" data-param='{"couponSchemaId":${item.id?c}}'><i class="fa fa-trash-o"></i> 删除</button>
                                 				<#else>
-                                					<a class="btn btn-info btn-xs" href="/coupon/toCouponSchema.jhtml?id=${item.id?c}"><i class="fa fa-eye"></i> 查看</a>
+                                					<a class="btn btn-info btn-xs" href="/coupon/toCouponSchema.jhtml?couponSchemaId=${item.id?c}"><i class="fa fa-eye"></i> 查看</a>
                                 				</#if>
                                 			</td>
                                         </tr>
@@ -158,7 +158,7 @@
 				        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
 				        		setTimeout(function () {window.location = "/coupon/couponSchemaList.jhtml";}, 1500);
 				        	}else{
-				        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+				        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 				        	}
 			            }, 'json');
 	                }
@@ -170,7 +170,7 @@
 	    $(".J_generate").on('click', function () {
         	var dataParam = $(this).attr('data-param');
         	bootbox.confirm({
-		        message: '生成优惠券后将无法编辑该优惠券方案<br/><br/>每次最多能生成1000张优惠券<br/><br/>你确定要生成优惠券吗？',
+		        message: '生成礼品卡后将无法编辑该礼品卡方案<br/><br/>每次最多能生成1000张礼品卡<br/><br/>你确定要生成礼品卡吗？',
 		        title: "提示",
 		        callback: function(result) {  
 		            if (result) {
@@ -179,7 +179,7 @@
 				        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
 				        		setTimeout(function () {window.location = "/coupon/couponSchemaList.jhtml";}, 1500);
 				        	}else{
-				        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+				        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 				        	}
 			            }, 'json');
 	                }
@@ -191,7 +191,7 @@
 	    $(".J_disturb").on('click', function () {
         	var dataParam = $(this).attr('data-param');
         	bootbox.confirm({
-		        message: '生成优惠券后将无法编辑该优惠券方案<br/><br/>每次最多能生成1000张优惠券<br/><br/>你确定要生成优惠券吗？',
+		        message: '请确认是否已经下载过礼品卡列表？<br/><br/>礼品卡扰乱后将无法分辨礼品卡密码<br/><br/>你确定要扰乱礼品卡吗？',
 		        title: "提示",
 		        callback: function(result) {  
 		            if (result) {
@@ -200,7 +200,7 @@
 				        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
 				        		setTimeout(function () {window.location = "/coupon/couponSchemaList.jhtml";}, 1500);
 				        	}else{
-				        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+				        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 				        	}
 			            }, 'json');
 	                }

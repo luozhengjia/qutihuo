@@ -79,6 +79,9 @@
 		<property name="suffix" value=".html"/>
 		<property name="attributesMap" ref="freemarkerStaticModels"/>
 	</bean>
+	
+	<!-- 配置对文件上传的支持 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
 	<mvc:annotation-driven />
 
