@@ -214,21 +214,6 @@
             }, 'json');
         });
 		
-		
-        
-		// 构建表单数据	
-		var formData = {			
-         	"id":${(orderMain.id)!'null'},
-			"couponNumber":"${(orderMain.couponNumber)!''}",
-			"orderDate":"${(orderMain.orderDate)!''}",
-			"remark":"${(orderMain.remark)!''}"
-        };
-        
-		// 自动填充表单
-        $("#html5Form").autofill(formData);
-		$('.spinner').spinner({max:9999999,min:100,value:formData.weight});
-
-	
 	});
 </script>
 </body>

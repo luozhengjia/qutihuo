@@ -86,27 +86,48 @@
     <update id="update" parameterType="com.ejunhai.qutihuo.order.model.OrderMain" >
         update tb_order_main
         <set>
-            id = #{id,jdbcType=INTEGER},
-            order_main_no = #{orderMainNo,jdbcType=VARCHAR},
-            coupon_number = #{couponNumber,jdbcType=VARCHAR},
-            merchant_id = #{merchantId,jdbcType=INTEGER},
-            state = #{state,jdbcType=TINYINT},
-            pay_amount = #{payAmount,jdbcType=DECIMAL},
+            <if test="state != null">
+            	state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="orderDate != null">
             order_date = #{orderDate,jdbcType=VARCHAR},
+             </if>
+              <if test="consignee != null">
             consignee = #{consignee,jdbcType=VARCHAR},
+              </if>
+               <if test="telephone != null">
             telephone = #{telephone,jdbcType=VARCHAR},
+             </if>
+             <if test="provinceCode != null">
             province_code = #{provinceCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cityCode != null">
             city_code = #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCode != null">
             area_code = #{areaCode,jdbcType=VARCHAR},
+            </if>
+            <if test="detailAddress != null">
             detail_address = #{detailAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsCompany != null">
             logistics_company = #{logisticsCompany,jdbcType=VARCHAR},
+            </if>
+            <if test="expressOrderNo != null">
             express_order_no = #{expressOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="deliverTime != null">
             deliver_time = #{deliverTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isSendSms != null">
             is_send_sms = #{isSendSms,jdbcType=TINYINT},
+            </if>
+            <if test="isPrintExpress != null">
             is_print_express = #{isPrintExpress,jdbcType=TINYINT},
-            source = #{source,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
             remark = #{remark,jdbcType=VARCHAR},
-            create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
         </set>
         where ID = #{id,jdbcType=INTEGER}
     </update>
