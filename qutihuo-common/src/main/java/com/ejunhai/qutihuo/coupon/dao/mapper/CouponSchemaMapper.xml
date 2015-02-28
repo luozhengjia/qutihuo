@@ -118,4 +118,21 @@
 		limit #{offset},#{pageSize} 
     </select>
     
+    <select id="getCouponSchemaListByIds" resultMap="CouponSchemaMapper">
+    	select <include refid="Base_Column_List" /> from tb_coupon_schema
+    	 where id in (
+	        <foreach collection="list" item="id" index="index" separator="," >  
+		        #{id}
+		    </foreach>
+		    )
+    </select>
+    
+    <update id="updateCouponUseNum"  parameterType="java.lang.Integer">
+        update tb_coupon_schema
+        <set>
+            has_use_num = #{hasUseNum,jdbcType=SMALLINT}
+        </set>
+        where id = #{couponSchemaId}
+    </update>
+    
 </mapper>

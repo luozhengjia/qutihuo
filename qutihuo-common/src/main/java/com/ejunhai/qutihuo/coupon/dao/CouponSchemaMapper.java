@@ -2,6 +2,8 @@ package com.ejunhai.qutihuo.coupon.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ejunhai.qutihuo.coupon.dto.CouponSchemaDto;
 import com.ejunhai.qutihuo.coupon.model.CouponSchema;
 
@@ -59,5 +61,21 @@ public interface CouponSchemaMapper {
 	 * @return
 	 */
 	public List<CouponSchema> queryCouponSchemaList(CouponSchemaDto couponSchemaDto);
+
+	/**
+	 * 根据ID获取CouponSchema列表
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	public List<CouponSchema> getCouponSchemaListByIds(List<Integer> ids);
+
+	/**
+	 * 更新券使用数
+	 * 
+	 * @param couponSchemaId
+	 * @param useNum
+	 */
+	public void updateCouponUseNum(@Param("couponSchemaId") Integer couponSchemaId, @Param("useNum") Integer useNum);
 
 }

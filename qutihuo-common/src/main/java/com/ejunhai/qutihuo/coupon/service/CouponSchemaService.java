@@ -61,4 +61,19 @@ public interface CouponSchemaService {
 	 */
 	public List<CouponSchema> queryCouponSchemaList(CouponSchemaDto couponSchemaDto);
 
+	/**
+	 * 根据ID获取CouponSchema列表
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	public List<CouponSchema> getCouponSchemaListByIds(List<Integer> ids);
+
+	/**
+	 * 更新券使用数
+	 * 
+	 * @param couponSchemaId
+	 * @param useNum
+	 */
+	public void updateCouponUseNum(Integer couponSchemaId, Integer useNum);
 }

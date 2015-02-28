@@ -56,4 +56,14 @@ public class CouponSchemaServiceImpl implements CouponSchemaService {
 	public List<CouponSchema> queryCouponSchemaList(CouponSchemaDto couponSchemaDto) {
 		return couponSchemaMapper.queryCouponSchemaList(couponSchemaDto);
 	}
+
+	@Override
+	public List<CouponSchema> getCouponSchemaListByIds(List<Integer> ids) {
+		return couponSchemaMapper.getCouponSchemaListByIds(ids);
+	}
+
+	@Override
+	public void updateCouponUseNum(Integer couponSchemaId, Integer useNum) {
+		couponSchemaMapper.updateCouponUseNum(couponSchemaId, useNum);
+	}
 }

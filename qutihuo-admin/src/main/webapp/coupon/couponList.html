@@ -58,6 +58,12 @@
 										    <div class="form-group">
 										        <input type="text"  name="couponSchemaId" class="form-control" value="${(couponDto.couponSchemaId)!''}" placeholder="按方案Id过滤">
 										        <input type="text"  name="couponNumber" class="form-control" value="${(couponDto.couponName)!''}" placeholder="按礼品卡编码过滤">
+										        <select name="state" class="form-control">
+													<option value="">按状态过滤</option>
+													<#list CouponState.values() as item >
+														<option value="${item.value}" <#if couponDto.state?? && couponDto.state==item.value>selected</#if>>${item.title}</option> 
+													</#list>
+	                                            </select>
 										    </div>
 										    <button type="submit" class="btn">搜索</button>
 										</form>
@@ -79,15 +85,21 @@
                                     </thead>
                                     <tbody>
                                         <#list couponList as item >
-                                        <tr data-formData='{"id":${item.id}}'>
-                                			<td>${item.id}</td>
+                                        <tr>
+                                			<td>${item.id?c}</td>
                                 			<td>${item.couponNumber}</td>
-                                			<td></td>
+                                			<td>${couponSchemaMap[item.couponSchemaId?string].couponName}（${item.couponSchemaId?c}）</td>
                                 			<td>${item.useStartdate?string('yyyy-MM-dd')} 至 ${item.useEnddate?string('yyyy-MM-dd')}</td>
                                 			<td>${CouponState.get(item.state).getTitle()}</td>
-                                			<td>${(item.useTime?string('yyyy-MM-dd HH:mm'))!'-'}</td>
-                                			<td>${(item.orderNumber)!'-'}</td>
+                                			<td style="text-align:center">${(item.useTime?string('yyyy-MM-dd HH:mm'))!'-'}</td>
+                                			<td style="text-align:center">${(item.orderNumber)!'-'}</td>
                                 			<td>
+                                				<#if item.state==0||item.state==1>
+				                					<#if item.state==0>
+				                						<button type="button" class="btn btn-success btn-xs J_activate" data-param='{"couponId":${item.id?c}}'><i class="fa fa-plus-circle"></i> 激活</button>
+				                					</#if>
+				                					<button type="button" class="btn btn-danger btn-xs delete J_discard" data-param='{"couponId":${item.id?c}}'><i class="fa fa-trash-o"></i> 作废</button>
+				                				</#if>
                                 			</td>
                                         </tr>
                                         </#list>
@@ -126,20 +138,20 @@
     <script src="/assets/js/jquery.formautofill.min.js"></script>
     
     <script>
-		// 删除礼品卡方案
-        $(".J_delete").on('click', function () {
+		// 激活礼品卡
+        $(".J_activate").on('click', function () {
         	var dataParam = $(this).attr('data-param');
         	bootbox.confirm({
-		        message: '你确定删除该条数据？',
+		        message: '你确定要激活该礼品卡？',
 		        title: "提示",
 		        callback: function(result) {  
 		            if (result) {
-	                    $.post('/coupon/deleteCouponSchema.jhtml', JSON.parse(dataParam), function(result) {
+	                    $.post('/coupon/activateCoupon.jhtml', JSON.parse(dataParam), function(result) {
 			                if(result.state.code==200){
 				        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-				        		setTimeout(function () {window.location = "/coupon/couponSchemaList.jhtml";}, 1500);
+				        		setTimeout(function () {window.location = "/coupon/couponList.jhtml";}, 1500);
 				        	}else{
-				        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+				        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 				        	}
 			            }, 'json');
 	                }
@@ -147,41 +159,20 @@
 	        });
 	    });
 	    
-	    // 生成礼品卡
-	    $(".J_generate").on('click', function () {
+	    // 作废礼品卡
+        $(".J_discard").on('click', function () {
         	var dataParam = $(this).attr('data-param');
         	bootbox.confirm({
-		        message: '生成优惠券后将无法编辑该优惠券方案<br/><br/>每次最多能生成1000张优惠券<br/><br/>你确定要生成优惠券吗？',
+		        message: '你确定要作废该礼品卡？',
 		        title: "提示",
 		        callback: function(result) {  
 		            if (result) {
-	                    $.post('/coupon/generateCoupons.jhtml', JSON.parse(dataParam), function(result) {
+	                    $.post('/coupon/discardCoupon.jhtml', JSON.parse(dataParam), function(result) {
 			                if(result.state.code==200){
 				        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-				        		setTimeout(function () {window.location = "/coupon/couponSchemaList.jhtml";}, 1500);
+				        		setTimeout(function () {window.location = "/coupon/couponList.jhtml";}, 1500);
 				        	}else{
-				        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
-				        	}
-			            }, 'json');
-	                }
-		        }
-	        });
-	    });
-	    
-	    // 扰乱礼品卡密码
-	    $(".J_disturb").on('click', function () {
-        	var dataParam = $(this).attr('data-param');
-        	bootbox.confirm({
-		        message: '生成优惠券后将无法编辑该优惠券方案<br/><br/>每次最多能生成1000张优惠券<br/><br/>你确定要生成优惠券吗？',
-		        title: "提示",
-		        callback: function(result) {  
-		            if (result) {
-	                    $.post('/coupon/disturbCoupons.jhtml', JSON.parse(dataParam), function(result) {
-			                if(result.state.code==200){
-				        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-				        		setTimeout(function () {window.location = "/coupon/couponSchemaList.jhtml";}, 1500);
-				        	}else{
-				        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+				        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 				        	}
 			            }, 'json');
 	                }

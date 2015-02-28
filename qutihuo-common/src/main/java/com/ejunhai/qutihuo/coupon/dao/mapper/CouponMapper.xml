@@ -6,6 +6,7 @@
         <result column="coupon_number" property="couponNumber" jdbcType="VARCHAR" />
         <result column="coupon_password" property="couponPassword" jdbcType="VARCHAR" />
         <result column="coupon_schema_id" property="couponSchemaId" jdbcType="INTEGER" />
+        <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
         <result column="state" property="state" jdbcType="SMALLINT" />
         <result column="use_startdate" property="useStartdate" jdbcType="TIMESTAMP" />
         <result column="use_enddate" property="useEnddate" jdbcType="TIMESTAMP" />
@@ -19,6 +20,7 @@
         coupon_number,
         coupon_password,
         coupon_schema_id,
+        merchant_id,
         state,
         use_startdate,
         use_enddate,
@@ -27,21 +29,35 @@
         create_time
     </sql>
     
+   	<select id="read" resultMap="CouponMapper" parameterType="java.lang.Integer" >
+        select <include refid="Base_Column_List" /> from tb_coupon  where ID = #{id,jdbcType=INTEGER}
+    </select>
+    
+   	<select id="getCouponByNo" resultMap="CouponMapper" parameterType="String" >
+        select <include refid="Base_Column_List" /> from tb_coupon  where coupon_number = #{couponNumber,jdbcType=INTEGER}
+    </select>
+    
+    <select id="getCouponByOrderNo" resultMap="CouponMapper" parameterType="String" >
+        select <include refid="Base_Column_List" /> from tb_coupon  where order_number = #{orderNumber,jdbcType=INTEGER}
+    </select>
+    
     <select id="queryCouponCount" resultType="java.lang.Integer">
     	select count(1) from tb_coupon
     	<where>
+    		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
     		<if test="couponSchemaId != null and couponSchemaId !=''"> and coupon_schema_id = #{couponSchemaId} </if>
+  			<if test="couponNumber != null and couponNumber !=''">and coupon_number =#{couponNumber} </if>
   			<if test="state != null">and state=#{state} </if>
-  			<if test="couponNumber != null and couponNumber !=''">and coupon_number like CONCAT(#{couponNumber},'%') </if>
 		</where>
     </select>
     
     <select id="queryCouponList" resultMap="CouponMapper">
     	select <include refid="Base_Column_List" /> from tb_coupon
     	<where>
+    		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
     		<if test="couponSchemaId != null and couponSchemaId !=''"> and coupon_schema_id = #{couponSchemaId} </if>
+  			<if test="couponNumber != null and couponNumber !=''">and coupon_number =#{couponNumber} </if>
   			<if test="state != null">and state=#{state} </if>
-  			<if test="couponNumber != null and couponNumber !=''">and coupon_number like CONCAT(#{couponNumber},'%') </if>
 		</where>
 		limit #{offset},#{pageSize} 
     </select>
@@ -54,6 +70,7 @@
 		        #{coupon.couponNumber,jdbcType=VARCHAR},
 		        #{coupon.couponPassword,jdbcType=VARCHAR},
 		        #{coupon.couponSchemaId,jdbcType=INTEGER},
+		        #{coupon.merchantId,jdbcType=INTEGER},
 		        #{coupon.state,jdbcType=SMALLINT},
 		        #{coupon.useStartdate,jdbcType=TIMESTAMP},
 		        #{coupon.useEnddate,jdbcType=TIMESTAMP},
@@ -64,12 +81,30 @@
 	    </foreach>
     </insert>
     
-    <update id="disturbCoupon"  parameterType="java.lang.Integer">
+    <update id="disturbCoupons"  parameterType="java.lang.Integer">
         update tb_coupon
         <set>
             coupon_password=md5(coupon_password)
         </set>
         where coupon_schema_id = #{couponSchemaId}
+    </update>
+    
+    <update id="updateCouponState"  parameterType="java.lang.Integer">
+        update tb_coupon
+        <set>
+            state = #{state,jdbcType=SMALLINT}
+        </set>
+        where id = #{id}
+    </update>
+    
+    <update id="useCoupon"  parameterType="java.lang.Integer">
+        update tb_coupon
+        <set>
+            state = #{state,jdbcType=SMALLINT},
+            use_order_number = #{useOrderNumber,jdbcType=VARCHAR},
+            use_time = #{useTime,jdbcType=TIMESTAMP}
+        </set>
+        where id = #{id}
     </update>
     
 </mapper>

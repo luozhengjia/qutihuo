@@ -38,6 +38,23 @@ public class CouponServiceImpl implements CouponService {
 	private CouponSchemaService couponSchemaService;
 
 	@Override
+	public Coupon read(Integer id) {
+		return couponMapper.read(id);
+	}
+
+	@Override
+	public Coupon getCouponByNo(String couponNumber) {
+		JunhaiAssert.notNull(couponNumber, "礼品卡号码不能为空");
+		return couponMapper.getCouponByNo(couponNumber);
+	}
+
+	@Override
+	public Coupon getCouponByOrderNo(String orderNumber) {
+		JunhaiAssert.notNull(orderNumber, "订单号不能为空");
+		return couponMapper.getCouponByOrderNo(orderNumber);
+	}
+
+	@Override
 	public Integer queryCouponCount(CouponDto couponDto) {
 		return couponMapper.queryCouponCount(couponDto);
 	}
@@ -49,6 +66,7 @@ public class CouponServiceImpl implements CouponService {
 
 	@Override
 	public void batchGenerateCoupon(Integer couponSchemaId, int num) {
+		JunhaiAssert.notNull(couponSchemaId, "礼品卡方案ID不能为空");
 		CouponSchema couponSchema = couponSchemaService.read(couponSchemaId);
 		JunhaiAssert.notNull(couponSchema, "礼品卡不存在");
 
@@ -79,14 +97,54 @@ public class CouponServiceImpl implements CouponService {
 	}
 
 	@Override
-	public void disturbCoupon(Integer couponSchemaId) {
+	public void disturbCoupons(Integer couponSchemaId) {
+		JunhaiAssert.notNull(couponSchemaId, "礼品卡方案ID不能为空");
 		CouponSchema couponSchema = couponSchemaService.read(couponSchemaId);
-		JunhaiAssert.notNull(couponSchema, "礼品卡不存在");
+		JunhaiAssert.notNull(couponSchema, "礼品卡方案不存在");
 
 		if (Confusion.no.getValue().equals(couponSchema.getHasConfusion())) {
-			couponMapper.disturbCoupon(couponSchemaId);
+			couponMapper.disturbCoupons(couponSchemaId);
 			couponSchema.setHasConfusion(Confusion.yes.getValue());
 			couponSchemaService.update(couponSchema);
 		}
 	}
+
+	@Override
+	public void activateCoupon(Integer couponId) {
+		JunhaiAssert.notNull(couponId, "礼品卡ID不能为空");
+		Coupon coupon = couponMapper.read(couponId);
+		JunhaiAssert.notNull(coupon, "礼品卡不存在");
+
+		// 检查礼品卡状态
+		boolean flag = CouponState.notactivated.getValue().equals(coupon.getState());
+		JunhaiAssert.isTrue(flag, "无法操作该礼品卡");
+		couponMapper.updateCouponState(couponId, CouponState.unused.getValue());
+	}
+
+	@Override
+	public void discardCoupon(Integer couponId) {
+		JunhaiAssert.notNull(couponId, "礼品卡ID不能为空");
+		Coupon coupon = couponMapper.read(couponId);
+		JunhaiAssert.notNull(coupon, "礼品卡不存在");
+
+		// 检查礼品卡状态
+		boolean flag = CouponState.notactivated.getValue().equals(coupon.getState());
+		flag = flag || CouponState.unused.getValue().equals(coupon.getState());
+		JunhaiAssert.isTrue(flag, "无法操作该礼品卡");
+		couponMapper.updateCouponState(couponId, CouponState.discard.getValue());
+	}
+
+	@Override
+	public void useCoupon(String couponNumber, String orderNumber) {
+		Coupon coupon = this.couponMapper.getCouponByNo(couponNumber);
+		JunhaiAssert.notNull(coupon, "礼品卡不存在");
+
+		coupon.setOrderNumber(orderNumber);
+		coupon.setUseTime(new Timestamp(System.currentTimeMillis()));
+		couponMapper.useCoupon(coupon);
+
+		CouponSchema couponSchema = couponSchemaService.read(coupon.getCouponSchemaId());
+		couponSchemaService.updateCouponUseNum(coupon.getCouponSchemaId(), couponSchema.getHasUseNum() + 1);
+	}
+
 }

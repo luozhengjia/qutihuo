@@ -32,6 +32,7 @@ import com.ejunhai.qutihuo.coupon.model.Coupon;
 import com.ejunhai.qutihuo.coupon.model.CouponSchema;
 import com.ejunhai.qutihuo.coupon.service.CouponSchemaService;
 import com.ejunhai.qutihuo.coupon.service.CouponService;
+import com.ejunhai.qutihuo.coupon.utils.CouponUtil;
 import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.utils.SessionManager;
 
@@ -223,7 +224,7 @@ public class CouponController extends BaseController {
 		Integer merchantId = SessionManager.get(request).getMerchantId();
 		JunhaiAssert.isTrue(couponSchema.getMerchantId().equals(merchantId), "id无效");
 
-		couponService.disturbCoupon(couponSchemaId);
+		couponService.disturbCoupons(couponSchemaId);
 		return jsonSuccess();
 	}
 
@@ -239,11 +240,40 @@ public class CouponController extends BaseController {
 			couponDto.setOffset(pagination.getOffset());
 			couponDto.setPageSize(pagination.getPageSize());
 			couponList = couponService.queryCouponList(couponDto);
+
+			// 获取礼品卡方案信息
+			List<Integer> couponSchemaIdList = CouponUtil.getCouponSchemaIdList(couponList);
+			List<CouponSchema> couponSchemaList = couponSchemaService.getCouponSchemaListByIds(couponSchemaIdList);
+			modelMap.put("couponSchemaMap", CouponUtil.getCouponSchemaMap(couponSchemaList));
 		}
 
 		modelMap.put("pagination", pagination);
 		modelMap.put("couponDto", couponDto);
 		modelMap.put("couponList", couponList);
 		return "coupon/couponList";
+	}
+
+	@RequestMapping("/activateCoupon")
+	@ResponseBody
+	public String activateCoupon(HttpServletRequest request, Integer couponId) throws Exception {
+		JunhaiAssert.notNull(couponId, "id不能为空");
+		Coupon coupon = couponService.read(couponId);
+		Integer merchantId = SessionManager.get(request).getMerchantId();
+		JunhaiAssert.isTrue(coupon.getMerchantId().equals(merchantId), "id无效");
+
+		couponService.activateCoupon(couponId);
+		return jsonSuccess();
+	}
+
+	@RequestMapping("/discardCoupon")
+	@ResponseBody
+	public String discardCoupon(HttpServletRequest request, Integer couponId) throws Exception {
+		JunhaiAssert.notNull(couponId, "id不能为空");
+		Coupon coupon = couponService.read(couponId);
+		Integer merchantId = SessionManager.get(request).getMerchantId();
+		JunhaiAssert.isTrue(coupon.getMerchantId().equals(merchantId), "id无效");
+
+		couponService.discardCoupon(couponId);
+		return jsonSuccess();
 	}
 }

@@ -2,6 +2,8 @@ package com.ejunhai.qutihuo.coupon.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ejunhai.qutihuo.coupon.dto.CouponDto;
 import com.ejunhai.qutihuo.coupon.model.Coupon;
 
@@ -14,6 +16,30 @@ import com.ejunhai.qutihuo.coupon.model.Coupon;
  * 
  */
 public interface CouponMapper {
+
+	/**
+	 * 根据Id获取Coupon
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Coupon read(Integer id);
+
+	/**
+	 * 根据券码获取礼品卡
+	 * 
+	 * @param couponNumber
+	 * @return
+	 */
+	public Coupon getCouponByNo(String couponNumber);
+
+	/**
+	 * 根据订单号获取礼品卡
+	 * 
+	 * @param orderNumber
+	 * @return
+	 */
+	public Coupon getCouponByOrderNo(String orderNumber);
 
 	/**
 	 * 查询Coupon数量
@@ -43,6 +69,21 @@ public interface CouponMapper {
 	 * 
 	 * @param couponSchemaId
 	 */
-	public void disturbCoupon(Integer couponSchemaId);
+	public void disturbCoupons(Integer couponSchemaId);
+
+	/**
+	 * 更新券状态
+	 * 
+	 * @param id
+	 * @param state
+	 */
+	public void updateCouponState(@Param("id") Integer id, @Param("state") Integer state);
+
+	/**
+	 * 使用礼品卡
+	 * 
+	 * @param coupon
+	 */
+	public void useCoupon(Coupon coupon);
 
 }
