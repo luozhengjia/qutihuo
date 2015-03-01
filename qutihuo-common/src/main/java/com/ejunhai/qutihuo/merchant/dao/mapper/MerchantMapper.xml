@@ -10,7 +10,9 @@
         <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
         <result column="available_sms_num" property="availableSmsNum" jdbcType="INTEGER" />
         <result column="record_number" property="recordNumber" jdbcType="VARCHAR" />
+        <result column="contacts" property="contacts" jdbcType="VARCHAR" />
         <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     </resultMap>
@@ -24,7 +26,9 @@
         expire_time,
         available_sms_num,
         record_number,
+        contacts,
         telephone,
+        address,
         create_time,
         update_time
     </sql>
@@ -39,17 +43,19 @@
     <insert id="insert" parameterType="com.ejunhai.qutihuo.merchant.model.Merchant" useGeneratedKeys="true" keyProperty="id" >
         insert into tb_merchant (<include refid="Base_Column_List" />)
         values (
-        #{id,jdbcType=INTEGER},
-        #{merchantName,jdbcType=VARCHAR},
-        #{businessLine,jdbcType=VARCHAR},
-        #{merchantLevel,jdbcType=TINYINT},
-        #{openTime,jdbcType=TIMESTAMP},
-        #{expireTime,jdbcType=TIMESTAMP},
-        #{availableSmsNum,jdbcType=INTEGER},
-        #{recordNumber,jdbcType=VARCHAR},
-        #{telephone,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP},
-        #{updateTime,jdbcType=TIMESTAMP}
+	        #{id,jdbcType=INTEGER},
+	        #{merchantName,jdbcType=VARCHAR},
+	        #{businessLine,jdbcType=VARCHAR},
+	        #{merchantLevel,jdbcType=TINYINT},
+	        #{openTime,jdbcType=TIMESTAMP},
+	        #{expireTime,jdbcType=TIMESTAMP},
+	        #{availableSmsNum,jdbcType=INTEGER},
+	        #{recordNumber,jdbcType=VARCHAR},
+	        #{contacts,jdbcType=VARCHAR},
+	        #{telephone,jdbcType=VARCHAR},
+	        #{address,jdbcType=VARCHAR},
+	        #{createTime,jdbcType=TIMESTAMP},
+	        #{updateTime,jdbcType=TIMESTAMP}
         )
     </insert>
     
@@ -64,7 +70,9 @@
             expire_time = #{expireTime,jdbcType=TIMESTAMP},
             available_sms_num = #{availableSmsNum,jdbcType=INTEGER},
             record_number = #{recordNumber,jdbcType=VARCHAR},
+            contacts = #{contacts,jdbcType=VARCHAR},
             telephone = #{telephone,jdbcType=VARCHAR},
+            address = #{address,jdbcType=VARCHAR},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             update_time = #{updateTime,jdbcType=TIMESTAMP}
         </set>
@@ -77,11 +85,17 @@
     </delete>
     
     <select id="queryMerchantCount" resultType="java.lang.Integer">
-    		select count(1) from tb_merchant
+    	select count(1) from tb_merchant
     </select>
     
     <select id="queryMerchantList" resultMap="MerchantMapper">
-    		select <include refid="Base_Column_List" /> from tb_merchant
+    	select <include refid="Base_Column_List" /> from tb_merchant
+    	<where>
+    		<if test="merchantName!=null and merchantName!=''">
+				and merchant_name like CONCAT('%',#{merchantName},'%')
+			</if>
+		</where>
+		limit #{offset},#{pageSize} 
     </select>
     
 </mapper>

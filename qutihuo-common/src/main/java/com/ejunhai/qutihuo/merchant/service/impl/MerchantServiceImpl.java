@@ -1,10 +1,14 @@
 package com.ejunhai.qutihuo.merchant.service.impl;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.ejunhai.qutihuo.merchant.dao.MerchantMapper;
+import com.ejunhai.qutihuo.merchant.dto.MerchantDto;
 import com.ejunhai.qutihuo.merchant.model.Merchant;
 import com.ejunhai.qutihuo.merchant.service.MerchantService;
 
@@ -19,43 +23,40 @@ import com.ejunhai.qutihuo.merchant.service.MerchantService;
 @Service("merchantService")
 public class MerchantServiceImpl implements MerchantService {
 
-    @Resource
-    private MerchantMapper merchantMapper;
+	@Resource
+	private MerchantMapper merchantMapper;
 
-    @Override
-    public Merchant read(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public Merchant read(Integer id) {
+		return merchantMapper.read(id);
+	}
 
-    @Override
-    public void insert(Merchant merchant) {
-        // TODO Auto-generated method stub
+	@Override
+	public void insert(Merchant merchant) {
+		merchant.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		merchant.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		merchantMapper.insert(merchant);
+	}
 
-    }
+	@Override
+	public void update(Merchant merchant) {
+		merchant.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		merchantMapper.update(merchant);
+	}
 
-    @Override
-    public void update(Merchant merchant) {
-        // TODO Auto-generated method stub
+	@Override
+	public void delete(Integer id) {
+		merchantMapper.delete(id);
+	}
 
-    }
+	@Override
+	public Integer queryMerchantCount(MerchantDto merchantDto) {
+		return merchantMapper.queryMerchantCount(merchantDto);
+	}
 
-    @Override
-    public void delete(Integer id) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public Integer queryMerchantCount(Merchant merchant) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Integer queryMerchantList(Merchant merchant) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public List<Merchant> queryMerchantList(MerchantDto merchantDto) {
+		return merchantMapper.queryMerchantList(merchantDto);
+	}
 
 }

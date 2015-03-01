@@ -1,5 +1,8 @@
 package com.ejunhai.qutihuo.merchant.service;
 
+import java.util.List;
+
+import com.ejunhai.qutihuo.merchant.dto.MerchantDto;
 import com.ejunhai.qutihuo.merchant.model.Merchant;
 
 /**
@@ -13,49 +16,49 @@ import com.ejunhai.qutihuo.merchant.model.Merchant;
  */
 public interface MerchantService {
 
-    /**
-     * 根据Id获取Merchant
-     * 
-     * @param id
-     * @return
-     */
-    public Merchant read(Integer id);
+	/**
+	 * 根据Id获取Merchant
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Merchant read(Integer id);
 
-    /**
-     * 新增Merchant
-     * 
-     * @param merchant
-     */
-    public void insert(Merchant merchant);
+	/**
+	 * 新增Merchant
+	 * 
+	 * @param merchant
+	 */
+	public void insert(Merchant merchant);
 
-    /**
-     * 更新Merchant
-     * 
-     * @param merchant
-     */
-    public void update(Merchant merchant);
+	/**
+	 * 更新Merchant
+	 * 
+	 * @param merchant
+	 */
+	public void update(Merchant merchant);
 
-    /**
-     * 删除Merchant
-     * 
-     * @param id
-     */
-    public void delete(Integer id);
+	/**
+	 * 删除Merchant
+	 * 
+	 * @param id
+	 */
+	public void delete(Integer id);
 
-    /**
-     * 查询Merchant数量
-     * 
-     * @param merchant
-     * @return
-     */
-    public Integer queryMerchantCount(Merchant merchant);
+	/**
+	 * 查询Merchant数量
+	 * 
+	 * @param merchant
+	 * @return
+	 */
+	public Integer queryMerchantCount(MerchantDto merchantDto);
 
-    /**
-     * 查询Merchant列表
-     * 
-     * @param merchant
-     * @return
-     */
-    public Integer queryMerchantList(Merchant merchant);
+	/**
+	 * 查询Merchant列表
+	 * 
+	 * @param merchant
+	 * @return
+	 */
+	public List<Merchant> queryMerchantList(MerchantDto merchantDto);
 
 }
