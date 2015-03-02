@@ -108,7 +108,10 @@
 			Notify('快递单号为空！', 'bottom-right', '1500', 'success', 'fa-check', true);
 		}else{
 			var dataParam={"lcCode":lcCode,"expressOrderNo":expressOrderNo,"id":id};
-			$.post('/orderMain/printOrder.jhtml', dataParam, function(result) {
+			//var url = '/orderMain/printOrder.jhtml?lcCode='+lcCode+'&expressOrderNo='+expressOrderNo+'&id='+id;
+			$.post('/orderMain/printOrder.jhtml', dataParam, function(result){
+				console.log(result);
+				alert(result.state.code);
                 if(result.state.code==200){
                 	LODOP=getLodop();
 	             	if(LODOP==null){
@@ -119,12 +122,12 @@
         			LODOP.SET_SHOW_MODE("BKIMG_PRINT",0);
         			LODOP.SET_SHOW_MODE("LANDSCAPE_DEFROTATED",1);//纵向打印时显示正面朝上
 					//LODOP.PRINT_DESIGN();
-					LODOP.PRINT();//预览
+					LODOP.PREVIEW();//预览
         			//LODOP.PRINT();
 	        	}else{
 	        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 	        	}
-            }, 'json');
+            });
 		}
 
 	 });	 

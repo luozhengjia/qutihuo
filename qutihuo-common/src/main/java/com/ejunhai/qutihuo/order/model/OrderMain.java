@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.ejunhai.qutihuo.common.base.JsonDateSerializer10;
+import com.ejunhai.qutihuo.common.base.JsonDateSerializer19;
+
 /**
  * 订单表
  * 
@@ -92,6 +97,7 @@ public class OrderMain implements Serializable {
     /**
      * 发货时间
      */
+    @JsonSerialize(using = JsonDateSerializer19.class)
     private Timestamp deliverTime;
 
     /**
@@ -117,6 +123,7 @@ public class OrderMain implements Serializable {
     /**
      * 下单时间
      */
+	@JsonSerialize(using = JsonDateSerializer19.class)
     private Timestamp createTime;
 
     public Integer getId() {

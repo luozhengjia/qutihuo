@@ -1,7 +1,6 @@
 package com.ejunhai.qutihuo.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,6 +16,7 @@ import com.ejunhai.qutihuo.common.base.Pagination;
 import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.order.dto.LogisticsCompanyDto;
 import com.ejunhai.qutihuo.order.dto.OrderMainDto;
+import com.ejunhai.qutihuo.order.enums.OrderState;
 import com.ejunhai.qutihuo.order.model.LogisticsCompany;
 import com.ejunhai.qutihuo.order.model.OrderMain;
 import com.ejunhai.qutihuo.order.service.LogisticsCompanyService;
@@ -39,6 +39,13 @@ public class OrderMainController extends BaseController {
 	@Resource
 	private LogisticsCompanyService logisticsCompanyService;
 
+	/**
+	 * 订单列表
+	 * @param request
+	 * @param orderMainDto
+	 * @param modelMap
+	 * @return
+	 */
 	@RequestMapping("/orderMainList")
 	public String orderMainList(HttpServletRequest request, OrderMainDto orderMainDto, ModelMap modelMap) {
 		Integer iCount = orderMainService.queryOrderMainCount(orderMainDto);
@@ -58,11 +65,25 @@ public class OrderMainController extends BaseController {
 		return "order/orderMainList";
 	}
 
+	/**
+	 * 订单新增
+	 * @param request
+	 * @param orderMain
+	 * @param modelMap
+	 * @return
+	 */
 	@RequestMapping("/orderMainAdd")
 	public String orderMainAdd(HttpServletRequest request, OrderMain orderMain, ModelMap modelMap) {
 		return "order/orderMainAdd";
 	}
 	
+	/**
+	 * 订单详情
+	 * @param request
+	 * @param orderMain
+	 * @param modelMap
+	 * @return
+	 */
 	@RequestMapping("/orderMainDetail")
 	public String orderMainDetail(HttpServletRequest request, OrderMain orderMain, ModelMap modelMap) {
 		if (orderMain.getId() != null) {
@@ -100,8 +121,8 @@ public class OrderMainController extends BaseController {
 	 */
 	@RequestMapping("/printOrder")
 	@ResponseBody
-	public String printOrder(HttpServletRequest request, OrderMain orderMain, String lcCode, ModelMap modelMap) {
-		orderMain = orderMainService.read(orderMain.getId());
+	public String printOrder(HttpServletRequest request, String expressOrderNo,int id, String lcCode, ModelMap modelMap) {
+		OrderMain orderMain = orderMainService.read(id);
 		modelMap.put("orderMain", orderMain);
 		LogisticsCompanyDto logisticsCompanyDto = new LogisticsCompanyDto();
 		logisticsCompanyDto.setLcCode(lcCode);
@@ -109,9 +130,23 @@ public class OrderMainController extends BaseController {
 		//替换需要打印快递单信息
 		
 		modelMap.put("lc", logisticsCompany);
+		//修改订单打印和快递单号
+		OrderMain updateOrderMain =  new OrderMain();
+		updateOrderMain.setId(id);
+		updateOrderMain.setIsPrintExpress(1);
+		updateOrderMain.setExpressOrderNo(expressOrderNo);
+		orderMainService.update(updateOrderMain);
+		
 		return jsonSuccess(modelMap);
 	}
 
+	/**
+	 * 去打印快递单
+	 * @param request
+	 * @param orderMain
+	 * @param modelMap
+	 * @return
+	 */
 	@RequestMapping("/orderMainPrint")
 	public String orderMainPrint(HttpServletRequest request, OrderMain orderMain, ModelMap modelMap) {
 		if (orderMain.getId() != null) {
@@ -127,6 +162,12 @@ public class OrderMainController extends BaseController {
 		return "order/orderMainPrint";
 	}
 
+	/**
+	 * 新增或修改订单
+	 * @param request
+	 * @param orderMain
+	 * @return
+	 */
 	@RequestMapping("/saveOrderMain")
 	@ResponseBody
 	public String saveOrderMain(HttpServletRequest request, OrderMain orderMain) {
@@ -134,16 +175,17 @@ public class OrderMainController extends BaseController {
 		if (orderMain.getId() != null && orderMain.getId() > 0) {
 			orderMainService.update(orderMain);
 		} else {
-			//订单号
-			orderMain.setOrderMainNo("11");
-			//优惠券带出商家信息
-			
-			
 			orderMainService.insert(orderMain);
 		}
 		return jsonSuccess();
 	}
 
+	/**
+	 * 删除订单
+	 * @param request
+	 * @param orderMain
+	 * @return
+	 */
 	@RequestMapping("/deleteOrderMain")
 	@ResponseBody
 	public String deleteOrderMain(HttpServletRequest request, OrderMain orderMain) {
@@ -152,4 +194,44 @@ public class OrderMainController extends BaseController {
 		return jsonSuccess();
 	}
 
+	/**
+	 * 订单发货
+	 * @param request
+	 * @param orderMain
+	 * @return
+	 */
+	@RequestMapping("/orderDeliver")
+	@ResponseBody
+	public String orderDeliver(HttpServletRequest request, OrderMain orderMain) {
+		JunhaiAssert.notNull(orderMain, "参数不能为空");
+		//修改订单发货状态
+		OrderMain updateOrderMain =  new OrderMain();
+		updateOrderMain.setId(orderMain.getId());
+		updateOrderMain.setState(OrderState.DELIVERD.getValue());
+		orderMainService.update(updateOrderMain);
+		return jsonSuccess();
+	}
+	
+	
+	/**
+	 * 发送短信
+	 * @param request
+	 * @param orderMain
+	 * @return
+	 */
+	@RequestMapping("/orderSendSMS")
+	@ResponseBody
+	public String orderSendSMS(HttpServletRequest request, OrderMain orderMain) {
+		JunhaiAssert.notNull(orderMain, "参数不能为空");
+		//TODO 是否需要判断已经发送过短信
+		orderMain = orderMainService.read(orderMain.getId());
+		//SmsUtil.sendSms(orderMain.getTelephone(), "短信通知");
+		//修改订单发货状态
+		OrderMain updateOrderMain =  new OrderMain();
+		updateOrderMain.setId(orderMain.getId());
+		updateOrderMain.setIsSendSms(1);
+		orderMainService.update(updateOrderMain);
+		return jsonSuccess();
+	}
+	
 }
