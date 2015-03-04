@@ -83,18 +83,16 @@
     <select id="querySystemUserCount" resultType="java.lang.Integer">
     	select count(1) from tb_system_user
     	<where>
-    		<if test="loginName!=null and loginName!=''">
-				and login_name like CONCAT('%',#{loginName},'%')
-			</if>
+    		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
+    		<if test="loginName!=null and loginName!=''"> and login_name like CONCAT('%',#{loginName},'%')</if>
 		</where>
     </select>
     
     <select id="querySystemUserList" resultMap="SystemUserMapper">
     	select <include refid="Base_Column_List" /> from tb_system_user
     	<where>
-    		<if test="loginName!=null and loginName!=''">
-				and login_name like CONCAT('%',#{loginName},'%')
-			</if>
+    		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
+    		<if test="loginName!=null and loginName!=''"> and login_name like CONCAT('%',#{loginName},'%')</if>
 		</where>
 		limit #{offset},#{pageSize} 
     </select>

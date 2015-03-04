@@ -106,6 +106,7 @@
     <select id="queryCouponSchemaCount" resultType="java.lang.Integer">
     	select count(1) from tb_coupon_schema
     	<where>
+    		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
     		<if test="couponName != null and couponName!=''">and coupon_name like CONCAT('%',#{couponName},'%')</if>
 		</where>
     </select>
@@ -113,6 +114,7 @@
     <select id="queryCouponSchemaList" resultMap="CouponSchemaMapper">
     	select <include refid="Base_Column_List" /> from tb_coupon_schema
     	<where>
+    		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
     		<if test="couponName != null and couponName!=''">and coupon_name like CONCAT('%',#{couponName},'%')</if>
 		</where>
 		limit #{offset},#{pageSize} 

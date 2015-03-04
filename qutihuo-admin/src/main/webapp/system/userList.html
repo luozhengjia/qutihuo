@@ -191,17 +191,23 @@
 		// 保存密码
         $('#html5Form').formValidation({
 			fields: {
-	            passwd: {
+				passwd: {
 	                validators: {
 	                    notEmpty: {
 	                        message: '登陆密码不能为空'
+	                    },
+	                    stringLength: {
+	                        min: 6,
+	                        max: 16,
+	                        message: '登陆密码长度必须在6-16个字符以内'
 	                    }
 	                }
 	            },
 	            comfirmPasswd: {
 	                validators: {
-	                    notEmpty: {
-	                        message: '确认密码不能为空'
+	                    identical: {
+	                    	field: 'passwd',
+	                        message: '确认登陆密码不一致'
 	                    }
 	                }
 	            }

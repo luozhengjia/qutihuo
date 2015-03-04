@@ -74,6 +74,24 @@ public class BaseController {
 	}
 
 	/**
+	 * form validation 组件数据验证格式
+	 * 
+	 * @return
+	 */
+	protected String validateSuccess() {
+		return "{ \"valid\": true }";
+	}
+
+	/**
+	 * form validation 组件数据验证格式
+	 * 
+	 * @return
+	 */
+	protected String validateFailed() {
+		return "{ \"valid\": false }";
+	}
+
+	/**
 	 * 设置表单日期属性转换器
 	 * 
 	 * @param binder

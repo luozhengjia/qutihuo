@@ -58,6 +58,7 @@ public class SystemUserController extends BaseController {
 
 	@RequestMapping("/userList")
 	public String userList(HttpServletRequest request, SystemUserDto systemUserDto, ModelMap modelMap) {
+		systemUserDto.setMerchantId(SessionManager.get(request).getMerchantId());
 		Integer iCount = systemUserService.querySystemUserCount(systemUserDto);
 		Pagination pagination = new Pagination(systemUserDto.getPageNo(), iCount);
 
@@ -82,11 +83,14 @@ public class SystemUserController extends BaseController {
 
 	@RequestMapping("/userDetail")
 	public String userDetail(HttpServletRequest request, Integer userId, ModelMap modelMap) {
+		Integer merchantId = SessionManager.get(request).getMerchantId();
 
 		// 验证用户是否有操作权限
-		SystemUser systemUser = systemUserService.read(userId);
-		Integer merchantId = SessionManager.get(request).getMerchantId();
-		JunhaiAssert.isTrue(merchantId == null || merchantId.equals(systemUser.getMerchantId()), "id无效");
+		if (userId != null) {
+			SystemUser systemUser = systemUserService.read(userId);
+			modelMap.put("systemUser", systemUser);
+			JunhaiAssert.isTrue(merchantId == null || merchantId.equals(systemUser.getMerchantId()), "id无效");
+		}
 
 		// 获取可以分配给用户的角色列表
 		SystemRoleDto systemRoleDto = new SystemRoleDto();
@@ -97,41 +101,61 @@ public class SystemUserController extends BaseController {
 		modelMap.put("systemRoleList", systemRoleList);
 		modelMap.put("systemRoleMap", SystemRoleUtil.getSystemRoleMap(systemRoleList));
 
-		modelMap.put("systemUser", systemUser);
-		return "system/userEdit";
+		// 新增或编辑用户信息
+		return userId == null ? "system/userAdd" : "system/userEdit";
 	}
 
-	@RequestMapping("/saveUser")
+	@RequestMapping("/addUser")
 	@ResponseBody
-	public String saveUser(HttpServletRequest request, SystemUserDto systemUserDto) {
-		JunhaiAssert.notBlank(systemUserDto.getNickname(), "用户昵称不能为空");
-
-		// 验证用户是否有操作权限
-		SystemUser systemUser = new SystemUser();
+	public String addUser(HttpServletRequest request, SystemUserDto systemUserDto) {
+		JunhaiAssert.notNull(systemUserDto.getLoginName(), "登陆账号不能为空");
 		Integer merchantId = SessionManager.get(request).getMerchantId();
-		if (systemUserDto.getId() != null) {
-			systemUser = systemUserService.read(systemUserDto.getId());
-			JunhaiAssert.isTrue(merchantId == null || merchantId.equals(systemUser.getMerchantId()), "id无效");
+
+		SystemUser systemUser = new SystemUser();
+		systemUser.setNickname(systemUserDto.getNickname());
+		systemUser.setTelephone(systemUserDto.getTelephone());
+		systemUser.setPictureUrl("/assets/img/avatars/Osvaldus-Valutis.jpg");
+		systemUser.setRoleIds(systemUserDto.getRoleIds());
+
+		systemUser.setLoginName(systemUserDto.getLoginName());
+		systemUser.setPasswd(systemUserDto.getPasswd());
+
+		// 系统管理员可以创建系统管理员，商户可以创建商户管理员
+		systemUser.setUserType(merchantId == null ? UserType.ma.getValue() : UserType.sa.getValue());
+		systemUser.setMerchantId(merchantId);
+		systemUser.setState(UserState.normal.getValue());
+		systemUserService.insert(systemUser);
+		return jsonSuccess();
+	}
+
+	@RequestMapping("/notRepeatLoginName")
+	@ResponseBody
+	public String notRepeatLoginName(String loginName) {
+		if (StringUtils.isBlank(loginName)) {
+			return validateSuccess();
+		}
+
+		SystemUser systemUser = systemUserService.getSystemUserByLoginName(loginName);
+		return systemUser == null ? validateSuccess() : validateFailed();
+	}
+
+	@RequestMapping("/editUser")
+	@ResponseBody
+	public String editUser(HttpServletRequest request, SystemUserDto systemUserDto) {
+		JunhaiAssert.notNull(systemUserDto.getId(), "用户Id不能为空");
+		Integer merchantId = SessionManager.get(request).getMerchantId();
+		SystemUser systemUser = systemUserService.read(systemUserDto.getId());
+		JunhaiAssert.isTrue(merchantId == null || merchantId.equals(systemUser.getMerchantId()), "id无效");
+
+		// 超级系统管理员和商户户主不可以编辑角色
+		Integer userType = systemUser.getUserType();
+		if (UserType.sa.getValue().equals(userType) || UserType.ma.getValue().equals(userType)) {
+			systemUser.setRoleIds(systemUserDto.getRoleIds());
 		}
 
 		systemUser.setNickname(systemUserDto.getNickname());
 		systemUser.setTelephone(systemUserDto.getTelephone());
-		systemUser.setPictureUrl(systemUserDto.getPictureUrl());
-		systemUser.setRoleIds(systemUserDto.getRoleIds());
-
-		// 新增或更新用户信息
-		if (systemUserDto.getId() != null) {
-			systemUserService.update(systemUser);
-		} else {
-			systemUser.setLoginName(systemUserDto.getLoginName());
-			systemUser.setPasswd(systemUserDto.getPasswd());
-
-			// 系统管理员可以创建系统管理员，商户可以创建商户
-			systemUser.setUserType(merchantId == null ? UserType.ma.getValue() : UserType.sa.getValue());
-			systemUser.setMerchantId(merchantId);
-			systemUser.setState(UserState.normal.getValue());
-			systemUserService.insert(systemUser);
-		}
+		systemUserService.update(systemUser);
 
 		return jsonSuccess();
 	}

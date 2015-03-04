@@ -48,7 +48,7 @@
                             <a href="#">系统管理</a>
                         </li>
                         <li><a href="/system/userList.jhtml">用户列表</a></li>
-                        <li>编辑用户</li>
+                        <li>新增用户</li>
                     </ul>
                 </div>
                 <!-- /Page Breadcrumb -->
@@ -58,17 +58,33 @@
                         <div class="col-xs-12 col-md-12">
                             <div class="well with-header with-footer">
                                 <div class="header">
-                                	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>编辑用户</b>
+                                	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>新增用户</b>
                                 </div>
                             
-								<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/system/editUser.jhtml">
+								<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/system/addUser.jhtml">
 									<input type="hidden" name="id"/>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">登陆账号<font color="red"> *</font></label>
                                         <div class="col-lg-4">
-                                            <input type="text" class="form-control" name="loginName" disabled/>
+                                            <input type="text" class="form-control" name="loginName"/>
                                         </div>
+                                        <div class="col-lg-4"><p class="help-block">只能是4-16位字母，数字，下划线组成</p></div>
                                     </div>
+                                    
+                                    <div class="form-group">
+                                    	<label class="col-lg-2 control-label">登陆密码<font color="red"> *</font></label>
+                                        <div class="col-lg-3">
+                                            <input type="password" class="form-control" name="passwd"/>
+                                        </div>
+                                        <div class="col-lg-4"><p class="help-block">登陆密码长度必须在6-16个字符以内</p></div>
+							        </div>
+							        
+							         <div class="form-group">
+                                    	<label class="col-lg-2 control-label">确认登陆密码<font color="red"> *</font></label>
+                                        <div class="col-lg-3">
+                                            <input type="password" class="form-control" name="comfirmPasswd"/>
+                                        </div>
+							        </div>
                                     
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">用户昵称<font color="red"> *</font></label>
@@ -124,12 +140,47 @@
     <script src="/assets/js/validation/formValidation.min.js"></script>
     <script src="/assets/js/validation/framework/bootstrap.min.js"></script>
 	<script src="/assets/js/toastr/toastr.js"></script>
-	<script src="/assets/js/jquery.formautofill.min.js"></script>
 	<script src="/assets/js/select2/select2.js"></script>
 <script>
 	$(document).ready(function() {
 		$('#html5Form').formValidation({
 			fields: {
+				loginName: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '登陆账号不能为空'
+	                    },
+	                    regexp: {
+	                        regexp: "^[a-zA-Z0-9_]{4,16}$",
+	                        message: '登陆账号格式不合法'
+	                    },
+	                    remote: {
+		                    url: '/system/notRepeatLoginName.jhtml',
+		                    message: '登陆账号已存在',
+		                    delay: 500
+		                }
+	                }
+	            },
+	            passwd: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '登陆密码不能为空'
+	                    },
+	                    stringLength: {
+	                        min: 6,
+	                        max: 16,
+	                        message: '登陆密码长度必须在6-16个字符以内'
+	                    }
+	                }
+	            },
+	            comfirmPasswd: {
+	                validators: {
+	                    identical: {
+	                    	field: 'passwd',
+	                        message: '确认登陆密码不一致'
+	                    }
+	                }
+	            },
 	            nickname: {
 	                validators: {
 	                    notEmpty: {
@@ -167,6 +218,7 @@
 
             // Use Ajax to submit form data
             $.post($form.attr('action'), $form.serialize(), function(result) {
+            console.log(result);
                 if(result.state.code==200){
 	        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
 	        		setTimeout(function () {window.location = "/system/userList.jhtml";}, 1500);
@@ -175,27 +227,9 @@
 	        	}
             }, 'json');
         });
-        
-		// 构建表单数据	
-		var formData = {			
-         	"id":${(systemUser.id)!'null'},
-			"loginName":"${(systemUser.loginName)!''}",
-			"userType":${(systemUser.userType)!0},
-			"nickname":"${(systemUser.nickname)!''}",
-			"telephone":"${(systemUser.telephone)!''}",
-			"roleIds": [<#list systemUser.roleIds?split(",") as roleId>${roleId}<#if roleId_has_next>,</#if></#list>]
-        };
-        
-		// 自动填充表单
-        $("#html5Form").autofill(formData);
-        
-        // 角色多选组件
+		
+		// 角色多选组件
         $('#roleIds').select2();
-        
-        // 超级系统管理员和商户户主不可以编辑角色
-        if(formData.userType==1 || formData.userType==3){
-        	$('#roleIds').attr("disabled",true);
-        }
 	});
 </script>
 </body>
