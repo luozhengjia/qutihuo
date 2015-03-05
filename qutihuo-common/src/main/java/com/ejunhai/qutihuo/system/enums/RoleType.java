@@ -6,8 +6,8 @@ package com.ejunhai.qutihuo.system.enums;
  * @author parcel
  */
 public enum RoleType {
-	
-	system(1, "系统默认"), custom(2, "自定义");
+
+	ssa(1, "超级系统管理员"), sma(2, "商户户主"), sa(3, "系统管理员");
 
 	private RoleType(Integer flag, String title) {
 		this.flag = flag;

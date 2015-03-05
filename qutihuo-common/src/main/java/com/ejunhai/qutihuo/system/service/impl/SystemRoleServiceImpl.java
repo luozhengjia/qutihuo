@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.ejunhai.qutihuo.system.dao.SystemRoleMapper;
 import com.ejunhai.qutihuo.system.dto.SystemRoleDto;
-import com.ejunhai.qutihuo.system.enums.RoleType;
 import com.ejunhai.qutihuo.system.model.SystemRole;
 import com.ejunhai.qutihuo.system.service.SystemRoleService;
 
@@ -34,7 +33,6 @@ public class SystemRoleServiceImpl implements SystemRoleService {
 
 	@Override
 	public void insert(SystemRole systemRole) {
-		systemRole.setRoleType(RoleType.custom.getValue());
 		systemRole.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		systemRoleMapper.insert(systemRole);
 	}

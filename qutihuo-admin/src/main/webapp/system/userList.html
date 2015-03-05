@@ -238,7 +238,7 @@
         $(".J_lockUser").on('click', function () {
         	var dataParam = $(this).attr('data-param');
         	bootbox.confirm({
-		        message: '你确定锁定该用户？',
+		        message: '锁定用户后该用户将无法登陆!<br/><br/>你确定锁定该用户？',
 		        title: "提示",
 		        callback: function(result) {  
 		            if (result) {

@@ -54,10 +54,20 @@
     
     <select id="querySystemRoleCount" resultType="java.lang.Integer">
     	select count(1) from tb_system_role
+    	<where>
+    	    <if test="roleType != null and roleType !=''"> and role_type = #{roleType} </if>
+    		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
+    		<if test="roleName!=null and roleName!=''"> and role_name like CONCAT('%',#{roleName},'%')</if>
+		</where>
     </select>
     
     <select id="querySystemRoleList" resultMap="SystemRoleMapper">
     	select <include refid="Base_Column_List" /> from tb_system_role
+    	<where>
+    		<if test="roleType != null and roleType !=''"> and role_type = #{roleType} </if>
+    		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
+    		<if test="roleName!=null and roleName!=''"> and role_name like CONCAT('%',#{roleName},'%')</if>
+		</where>
     	limit #{offset},#{pageSize} 
     </select>
     

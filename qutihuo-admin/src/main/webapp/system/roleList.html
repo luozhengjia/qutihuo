@@ -91,9 +91,6 @@
                                             <td>
                                             	<button type="button" class="btn btn-info btn-xs J_editrole"><i class="fa fa-edit"></i> 编辑</button>
                                                 <a href="/system/toAuthorize.jhtml?roleId=${item.id?c}" class="btn btn-success btn-xs edit"><i class="fa fa-wrench"></i> 授权</a>
-                                                <#if item.roleType!=RoleType.system.value>
-                                                <button type="button" class="btn btn-danger btn-xs delete J_delete" data-param='{"id":${item.id?c}}'><i class="fa fa-trash-o"></i> 删除</button>
-                                                </#if>
 											</td>
                                         </tr>
                                         </#list>
@@ -148,27 +145,6 @@
     <script src="/assets/js/jquery.formautofill.min.js"></script>
     
     <script>
-    	// 删除角色
-        $(".J_delete").on('click', function () {
-        	var dataParam = $(this).attr('data-param');
-        	bootbox.confirm({
-		        message: '你确定删除该条数据？',
-		        title: "提示",
-		        callback: function(result) {  
-		            if (result) {
-	                    $.post('/system/deleteRole.jhtml', JSON.parse(dataParam), function(result) {
-			                if(result.state.code==200){
-				        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-				        		setTimeout(function () {window.location = "/system/roleList.jhtml";}, 1500);
-				        	}else{
-				        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
-				        	}
-			            }, 'json');
-	                }
-		        }
-	        });
-	    });
-        
         // 新增角色
         $(".J_addrole").on('click', function () {
         	bootbox.dialog({
@@ -231,13 +207,11 @@
 	        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
 	        		setTimeout(function () {window.location = "/system/roleList.jhtml";}, 1500);
 	        	}else{
-	        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+	        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 	        	}
             }, 'json');
         });
 		
-        // 角色授权
-        
     </script>
 </body>
 </html>

@@ -24,6 +24,7 @@ import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.system.dto.SystemPrivilageDto;
 import com.ejunhai.qutihuo.system.dto.SystemRoleDto;
 import com.ejunhai.qutihuo.system.dto.SystemUserDto;
+import com.ejunhai.qutihuo.system.enums.RoleType;
 import com.ejunhai.qutihuo.system.enums.UserState;
 import com.ejunhai.qutihuo.system.enums.UserType;
 import com.ejunhai.qutihuo.system.model.SystemAction;
@@ -94,6 +95,7 @@ public class SystemUserController extends BaseController {
 
 		// 获取可以分配给用户的角色列表
 		SystemRoleDto systemRoleDto = new SystemRoleDto();
+		systemRoleDto.setRoleType(RoleType.sa.getValue());
 		systemRoleDto.setMerchantId(merchantId);
 		systemRoleDto.setOffset(0);
 		systemRoleDto.setPageSize(Integer.MAX_VALUE);
@@ -108,9 +110,12 @@ public class SystemUserController extends BaseController {
 	@RequestMapping("/addUser")
 	@ResponseBody
 	public String addUser(HttpServletRequest request, SystemUserDto systemUserDto) {
-		JunhaiAssert.notNull(systemUserDto.getLoginName(), "登陆账号不能为空");
-		Integer merchantId = SessionManager.get(request).getMerchantId();
+		JunhaiAssert.notBlank(systemUserDto.getLoginName(), "登陆账号不能为空");
+		JunhaiAssert.notBlank(systemUserDto.getPasswd(), "登陆密码不能为空");
+		JunhaiAssert.notBlank(systemUserDto.getNickname(), "用户昵称不能为空不能为空");
+		JunhaiAssert.notBlank(systemUserDto.getTelephone(), "手机号码不能为空");
 
+		Integer merchantId = SessionManager.get(request).getMerchantId();
 		SystemUser systemUser = new SystemUser();
 		systemUser.setNickname(systemUserDto.getNickname());
 		systemUser.setTelephone(systemUserDto.getTelephone());
@@ -143,6 +148,9 @@ public class SystemUserController extends BaseController {
 	@ResponseBody
 	public String editUser(HttpServletRequest request, SystemUserDto systemUserDto) {
 		JunhaiAssert.notNull(systemUserDto.getId(), "用户Id不能为空");
+		JunhaiAssert.notBlank(systemUserDto.getNickname(), "用户昵称不能为空不能为空");
+		JunhaiAssert.notBlank(systemUserDto.getTelephone(), "手机号码不能为空");
+
 		Integer merchantId = SessionManager.get(request).getMerchantId();
 		SystemUser systemUser = systemUserService.read(systemUserDto.getId());
 		JunhaiAssert.isTrue(merchantId == null || merchantId.equals(systemUser.getMerchantId()), "id无效");
@@ -209,6 +217,7 @@ public class SystemUserController extends BaseController {
 
 	@RequestMapping("/roleList")
 	public String roleList(HttpServletRequest request, SystemRoleDto systemRoleDto, ModelMap modelMap) {
+		systemRoleDto.setMerchantId(SessionManager.get(request).getMerchantId());
 		Integer iCount = systemRoleService.querySystemRoleCount(systemRoleDto);
 		Pagination pagination = new Pagination(systemRoleDto.getPageNo(), iCount);
 
@@ -225,28 +234,27 @@ public class SystemUserController extends BaseController {
 
 	@RequestMapping("/saveRole")
 	@ResponseBody
-	public String saveRole(HttpServletRequest request, SystemRole systemRole) {
-		JunhaiAssert.notBlank(systemRole.getRoleName(), "角色名不能为空");
+	public String saveRole(HttpServletRequest request, SystemRoleDto systemRoleDto) {
+		JunhaiAssert.notBlank(systemRoleDto.getRoleName(), "角色名不能为空");
 
-		// 同个商户下角色名称不可以重复
-
-		if (systemRole.getId() != null && systemRole.getId() > 0) {
-			systemRoleService.update(systemRole);
-		} else {
-			systemRoleService.insert(systemRole);
+		// 验证用户是否有操作权限
+		SystemRole systemRole = new SystemRole();
+		if (systemRoleDto.getId() != null) {
+			Integer merchantId = SessionManager.get(request).getMerchantId();
+			systemRole = systemRoleService.read(systemRoleDto.getId());
+			JunhaiAssert.isTrue(merchantId == null || merchantId.equals(systemRole.getMerchantId()), "id无效");
 		}
-		return jsonSuccess();
-	}
 
-	@RequestMapping("/deleteRole")
-	@ResponseBody
-	public String deleteRole(HttpServletRequest request, SystemRole systemRole) {
-		JunhaiAssert.notNull(systemRole.getId(), "id不能为空");
+		// 新增或编辑角色
+		systemRole.setRoleName(systemRoleDto.getRoleName());
+		if (systemRoleDto.getId() == null) {
+			systemRole.setRoleType(RoleType.sa.getValue());
+			systemRole.setMerchantId(SessionManager.get(request).getMerchantId());
+			systemRoleService.insert(systemRole);
+		} else {
+			systemRoleService.update(systemRole);
+		}
 
-		// 已分配的角色不可以删除
-		systemRoleService.delete(systemRole.getId());
-
-		// 需连带删除
 		return jsonSuccess();
 	}
 

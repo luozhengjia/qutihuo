@@ -27,7 +27,7 @@ public class MerchantDto extends Merchant {
 	/**
 	 * 手机号码
 	 */
-	private String telephone;
+	private String mobile;
 
 	/**
 	 * 用户头像
@@ -78,12 +78,12 @@ public class MerchantDto extends Merchant {
 		this.nickname = nickname;
 	}
 
-	public String getTelephone() {
-		return telephone;
+	public String getMobile() {
+		return mobile;
 	}
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 	public String getPictureUrl() {
