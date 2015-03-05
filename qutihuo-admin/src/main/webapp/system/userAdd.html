@@ -220,7 +220,6 @@
 
             // Use Ajax to submit form data
             $.post($form.attr('action'), $form.serialize(), function(result) {
-            console.log(result);
                 if(result.state.code==200){
 	        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
 	        		setTimeout(function () {window.location = "/system/userList.jhtml";}, 1500);

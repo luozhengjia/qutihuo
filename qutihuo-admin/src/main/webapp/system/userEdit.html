@@ -179,12 +179,12 @@
         
 		// 构建表单数据	
 		var formData = {			
-         	"id":${(systemUser.id)!'null'},
+         	"id":${(systemUser.id?c)!'null'},
 			"loginName":"${(systemUser.loginName)!''}",
 			"userType":${(systemUser.userType)!0},
 			"nickname":"${(systemUser.nickname)!''}",
 			"telephone":"${(systemUser.telephone)!''}",
-			"roleIds": [<#list systemUser.roleIds?split(",") as roleId>${roleId}<#if roleId_has_next>,</#if></#list>]
+			"roleIds": [<#list systemUser.roleIds?split(",") as roleId>${roleId?c}<#if roleId_has_next>,</#if></#list>]
         };
         
 		// 自动填充表单

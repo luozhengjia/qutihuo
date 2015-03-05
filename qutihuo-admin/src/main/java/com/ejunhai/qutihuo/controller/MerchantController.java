@@ -118,9 +118,9 @@ public class MerchantController extends BaseController {
 		return jsonSuccess();
 	}
 
-	@RequestMapping("/editmerchant")
+	@RequestMapping("/editMerchant")
 	@ResponseBody
-	public String editmerchant(HttpServletRequest request, MerchantDto merchantDto) {
+	public String editMerchant(HttpServletRequest request, MerchantDto merchantDto) {
 		JunhaiAssert.notNull(merchantDto.getId(), "商户ID不能为空");
 		JunhaiAssert.notBlank(merchantDto.getMerchantName(), "商户名称不能为空");
 		Merchant merchant = merchantService.read(merchantDto.getId());
