@@ -1,5 +1,8 @@
 package com.ejunhai.qutihuo.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -72,13 +75,18 @@ public class LoginController extends BaseController {
 	}
 
 	@RequestMapping("/forbidden")
-	@ResponseBody
-	public String forbidden(HttpServletRequest request, HttpServletResponse response) {
+	public String forbidden(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 处理异步请求-重定向到统一异常处理
-		if (!FrontUtil.isAjax(request)) {
-			return "redirect:/login.jhtml";
+		if (FrontUtil.isAjax(request)) {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter writer = response.getWriter();
+			Integer errorCode = ErrorType.SYSTEM_FORBIDDEN.getValue();
+			String errorMsg = ErrorType.SYSTEM_FORBIDDEN.getTitle();
+			writer.write(FrontUtil.renderJson(errorCode, errorMsg, null));
+			writer.flush();
+			return null;
 		}
 
-		return jsonFailed(ErrorType.SYSTEM_FORBIDDEN.getValue(), ErrorType.SYSTEM_FORBIDDEN.getTitle());
+		return "redirect:/login.jhtml";
 	}
 }

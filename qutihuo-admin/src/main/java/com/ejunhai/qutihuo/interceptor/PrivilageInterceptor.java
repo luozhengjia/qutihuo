@@ -17,6 +17,7 @@ import com.ejunhai.qutihuo.system.service.SystemActionService;
 import com.ejunhai.qutihuo.system.service.SystemPrivilageService;
 import com.ejunhai.qutihuo.system.utils.SystemActionUtil;
 import com.ejunhai.qutihuo.system.utils.SystemPrivilageUtil;
+import com.ejunhai.qutihuo.utils.FrontUtil;
 import com.ejunhai.qutihuo.utils.SessionManager;
 
 public class PrivilageInterceptor implements HandlerInterceptor {
@@ -32,7 +33,7 @@ public class PrivilageInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
-		if (SessionManager.get(request) == null || request.getRequestURI().indexOf("/forbidden.jhtml") > -1) {
+		if (SessionManager.get(request) == null || FrontUtil.isExcludeUrl(request.getRequestURI())) {
 			return true;
 		}
 

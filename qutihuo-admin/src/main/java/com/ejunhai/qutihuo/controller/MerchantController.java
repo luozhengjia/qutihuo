@@ -27,6 +27,7 @@ import com.ejunhai.qutihuo.system.model.SystemUser;
 import com.ejunhai.qutihuo.system.service.SystemRoleService;
 import com.ejunhai.qutihuo.system.service.SystemUserService;
 import com.ejunhai.qutihuo.system.utils.SystemRoleUtil;
+import com.ejunhai.qutihuo.utils.SessionManager;
 
 @Controller
 @RequestMapping("merchant")
@@ -135,5 +136,15 @@ public class MerchantController extends BaseController {
 		merchant.setAddress(merchantDto.getAddress());
 		merchantService.update(merchant);
 		return jsonSuccess();
+	}
+
+	@RequestMapping("/profile")
+	public String profile(HttpServletRequest request, ModelMap modelMap) {
+		Integer merchantId = SessionManager.get(request).getMerchantId();
+		JunhaiAssert.notNull(merchantId, "商户ID不能为空");
+
+		Merchant merchant = merchantService.read(merchantId);
+		modelMap.put("merchant", merchant);
+		return "merchant/profile";
 	}
 }

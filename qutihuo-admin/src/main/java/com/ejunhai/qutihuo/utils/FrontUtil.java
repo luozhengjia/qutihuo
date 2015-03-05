@@ -13,6 +13,17 @@ import com.google.gson.GsonBuilder;
 public class FrontUtil {
 
 	protected static final Gson gson = new GsonBuilder().serializeNulls().disableHtmlEscaping().create();
+	
+	private static String[] excludeUrls = { "/login.jhtml", "/authentication.jhtml", "/logout.jhtml", "/forbidden.jhtml" };
+	
+	public static boolean isExcludeUrl(String curUrl){
+		for (String url : excludeUrls) {
+			if (curUrl.indexOf(url) > -1) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public static boolean isAjax(HttpServletRequest request) {
 		String xRequestedWith = request.getHeader("X-Requested-With");
