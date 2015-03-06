@@ -41,6 +41,12 @@
             </list>  
         </property>  
     </bean>  
+    
+    <!-- 类似"类"的继承关系,并不限继承层次 -->
+    <bean id="blockDirective" class="com.ejunhai.qutihuo.common.freemarker.directive.BlockDirective"/>
+	<bean id="extendsDirective" class="com.ejunhai.qutihuo.common.freemarker.directive.ExtendsDirective"/>
+	<bean id="overrideDirective" class="com.ejunhai.qutihuo.common.freemarker.directive.OverrideDirective"/>
+	<bean id="superDirective" class="com.ejunhai.qutihuo.common.freemarker.directive.SuperDirective"/>
 	
 	<!-- 模板配置 -->
 	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -59,6 +65,10 @@
 			<map>
 				<entry key="BasePath" value="/"/>
 				<entry key="JS_VERSION" value="JunHai_v1.1.1" />
+				<entry key="extends" value-ref="extendsDirective"></entry>
+                <entry key="override" value-ref="overrideDirective"></entry>
+                <entry key="block" value-ref="blockDirective"></entry>
+                <entry key="super" value-ref="superDirective"></entry>
 			</map>
 		</property>
 	</bean>
