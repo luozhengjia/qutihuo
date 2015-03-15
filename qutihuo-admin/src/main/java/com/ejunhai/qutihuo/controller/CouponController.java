@@ -70,8 +70,6 @@ public class CouponController extends BaseController {
 	public String toCouponSchema(HttpServletRequest request, Integer couponSchemaId, ModelMap modelMap) {
 		if (couponSchemaId != null) {
 			CouponSchema couponSchema = couponSchemaService.read(couponSchemaId);
-			Integer merchantId = SessionManager.get(request).getMerchantId();
-			JunhaiAssert.isTrue(couponSchema.getMerchantId().equals(merchantId), "id无效");
 			modelMap.put("couponSchema", couponSchema);
 		}
 

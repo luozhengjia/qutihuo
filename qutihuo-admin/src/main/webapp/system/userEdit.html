@@ -1,203 +1,144 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Dashboard</title>
-
-    <meta name="description" content="Dashboard" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon">
-
-    <!--Basic Styles-->
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="/assets/css/weather-icons.min.css" rel="stylesheet" />
-
-    <!--Beyond styles-->
-    <link id="beyond-link" href="/assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/css/typicons.min.css" rel="stylesheet" />
-    <link href="/assets/css/animate.min.css" rel="stylesheet" />
-
-    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-    <script src="/assets/js/skins.js"></script>
-   
-</head>
-
-<body>
-    <!-- Navbar -->
-    <#include "/common/navbar.html">
-    <!-- /Navbar -->
-    
-    <!-- Main Container -->
-    <div class="main-container container-fluid">
-        <!-- Page Container -->
-        <div class="page-container">
-            <!-- Page Sidebar -->
-            <#include "/common/menu.html">
-            <!-- /Page Sidebar -->
-            
-            <!-- Page Content -->
-            <div class="page-content">
-            
-                <!-- Page Breadcrumb -->
-                <div class="page-breadcrumbs">
-                    <ul class="breadcrumb">
-                        <li>
-                            <i class="fa fa-home"></i> 
-                            <a href="#">系统管理</a>
-                        </li>
-                        <li><a href="/system/userList.jhtml">用户列表</a></li>
-                        <li>编辑用户</li>
-                    </ul>
-                </div>
-                <!-- /Page Breadcrumb -->
-                
-                <div class="page-body">
-                    <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-                        <div class="col-xs-12 col-md-12">
-                            <div class="well with-header with-footer">
-                                <div class="header">
-                                	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>编辑用户</b>
-                                </div>
-                            
-								<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/system/editUser.jhtml">
-									<input type="hidden" name="id"/>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">登陆账号<font color="red"> *</font></label>
-                                        <div class="col-lg-4">
-                                            <input type="text" class="form-control" name="loginName" disabled/>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">用户昵称<font color="red"> *</font></label>
-                                        <div class="col-lg-4">
-                                            <input type="text" class="form-control" name="nickname"/>
-                                        </div>
-                                        <div class="col-lg-4"><p class="help-block">如：董掌柜</p></div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">手机号码<font color="red"> *</font></label>
-                                        <div class="col-lg-4">
-                                            <input type="text" class="form-control" name="telephone"/>
-                                        </div>
-                                        <div class="col-lg-4"><p class="help-block"></p></div>
-                                    </div>
-                                    
-									<div class="form-group" data-topic="iconCss">
-                                        <label class="col-lg-2 control-label">用户角色</label>
-                                        <div class="col-lg-6">
-                                        	<select id="roleIds" multiple="multiple" name="roleIds" style="width:100%;">
-	                                        	<#list systemRoleList as item >
-	                                        		<option value="${item.id}" />${item.roleName}
-	                                        	</#list>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-4"><p class="help-block"></p></div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <div class="col-lg-2 col-lg-offset-2">
-                                        	 <button type="submit" class="btn btn-success">确认</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-        
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Page Content -->
-        </div>
-        <!-- /Page Container -->
-        <!-- Main Container -->
+<@override name="page-content">  
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i> 
+                <a href="#">系统管理</a>
+            </li>
+            <li><a href="/system/userList.jhtml">用户列表</a></li>
+            <li>编辑用户</li>
+        </ul>
     </div>
+    
+    <div class="page-body">
+        <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            <div class="col-xs-12 col-md-12">
+                <div class="well with-header with-footer">
+                    <div class="header">
+                    	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>编辑用户</b>
+                    </div>
+                
+					<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/system/editUser.jhtml">
+						<input type="hidden" name="id"/>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">登陆账号<font color="red"> *</font></label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="loginName" disabled/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">用户昵称<font color="red"> *</font></label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="nickname"/>
+                            </div>
+                            <div class="col-lg-4"><p class="help-block">如：董掌柜</p></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">手机号码<font color="red"> *</font></label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="telephone"/>
+                            </div>
+                            <div class="col-lg-4"><p class="help-block"></p></div>
+                        </div>
+                        
+						<div class="form-group" data-topic="iconCss">
+                            <label class="col-lg-2 control-label">用户角色</label>
+                            <div class="col-lg-6">
+                            	<select id="roleIds" multiple="multiple" name="roleIds" style="width:100%;">
+                                	<#list systemRoleList as item >
+                                		<option value="${item.id}" />${item.roleName}
+                                	</#list>
+                                </select>
+                            </div>
+                            <div class="col-lg-4"><p class="help-block"></p></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="col-lg-2 col-lg-offset-2">
+                            	 <button type="submit" class="btn btn-success">确认</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-    <!--Basic Scripts-->
-    <script src="/assets/js/jquery-2.0.3.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-
-    <!--Beyond Scripts-->
-    <script src="/assets/js/beyond.min.js"></script>
-    <script src="/assets/js/validation/formValidation.min.js"></script>
-    <script src="/assets/js/validation/framework/bootstrap.min.js"></script>
-	<script src="/assets/js/toastr/toastr.js"></script>
-	<script src="/assets/js/jquery.formautofill.min.js"></script>
-	<script src="/assets/js/select2/select2.js"></script>
-<script>
-	$(document).ready(function() {
-		$('#html5Form').formValidation({
-			fields: {
-	            nickname: {
-	                validators: {
-	                    notEmpty: {
-	                        message: '用户昵称不能为空'
-	                    },
-	                    stringLength: {
-	                        min: 2,
-	                        max: 16,
-	                        message: '用户昵称长度必须在2-16个字符以内'
-	                    }
-	                }
-	            },
-	            telephone: {
-	                validators: {
-	                    notEmpty: {
-	                        message: '手机号码不能为空'
-	                    },
-	                    phone: {
-	                    	country:"CN",
-	                        message: '手机号码格式不对'
-	                    }
-	                }
-	            }
+            </div>
+        </div>
+    </div>
+</@override>
+<@override name="custom-script">
+	<script>
+		$(document).ready(function() {
+			$('#html5Form').formValidation({
+				fields: {
+		            nickname: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '用户昵称不能为空'
+		                    },
+		                    stringLength: {
+		                        min: 2,
+		                        max: 16,
+		                        message: '用户昵称长度必须在2-16个字符以内'
+		                    }
+		                }
+		            },
+		            telephone: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '手机号码不能为空'
+		                    },
+		                    phone: {
+		                    	country:"CN",
+		                        message: '手机号码格式不对'
+		                    }
+		                }
+		            }
+		        }
+			})        
+			.on('success.form.fv', function(e) {
+	            // Prevent form submission
+	            e.preventDefault();
+	
+	            // Get the form instance
+	            var $form = $(e.target);
+	
+	            // Get the FormValidation instance
+	            var bv = $form.data('formValidation');
+	
+	            // Use Ajax to submit form data
+	            $.post($form.attr('action'), $form.serialize(), function(result) {
+	                if(result.state.code==200){
+		        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+		        		setTimeout(function () {window.location = "/system/userList.jhtml";}, 1500);
+		        	}else{
+		        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+		        	}
+	            }, 'json');
+	        });
+	        
+			// 构建表单数据	
+			var formData = {			
+	         	"id":${(systemUser.id?c)!'null'},
+				"loginName":"${(systemUser.loginName)!''}",
+				"userType":${(systemUser.userType)!0},
+				"nickname":"${(systemUser.nickname)!''}",
+				"telephone":"${(systemUser.telephone)!''}",
+				"roleIds": [<#list systemUser.roleIds?split(",") as roleId>${roleId}<#if roleId_has_next>,</#if></#list>]
+	        };
+	        
+			// 自动填充表单
+	        $("#html5Form").autofill(formData);
+	        
+	        // 角色多选组件
+	        $('#roleIds').select2();
+	        
+	        // 超级系统管理员和商户户主不可以编辑角色
+	        if(formData.userType==1 || formData.userType==3){
+	        	$('#roleIds').attr("disabled",true);
 	        }
-		})        
-		.on('success.form.fv', function(e) {
-            // Prevent form submission
-            e.preventDefault();
-
-            // Get the form instance
-            var $form = $(e.target);
-
-            // Get the FormValidation instance
-            var bv = $form.data('formValidation');
-
-            // Use Ajax to submit form data
-            $.post($form.attr('action'), $form.serialize(), function(result) {
-                if(result.state.code==200){
-	        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-	        		setTimeout(function () {window.location = "/system/userList.jhtml";}, 1500);
-	        	}else{
-	        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
-	        	}
-            }, 'json');
-        });
-        
-		// 构建表单数据	
-		var formData = {			
-         	"id":${(systemUser.id?c)!'null'},
-			"loginName":"${(systemUser.loginName)!''}",
-			"userType":${(systemUser.userType)!0},
-			"nickname":"${(systemUser.nickname)!''}",
-			"telephone":"${(systemUser.telephone)!''}",
-			"roleIds": [<#list systemUser.roleIds?split(",") as roleId>${roleId}<#if roleId_has_next>,</#if></#list>]
-        };
-        
-		// 自动填充表单
-        $("#html5Form").autofill(formData);
-        
-        // 角色多选组件
-        $('#roleIds').select2();
-        
-        // 超级系统管理员和商户户主不可以编辑角色
-        if(formData.userType==1 || formData.userType==3){
-        	$('#roleIds').attr("disabled",true);
-        }
-	});
-</script>
-</body>
-</html>
+		});
+	</script>
+</@override>
+<@extends name="/common/base.html"/>  

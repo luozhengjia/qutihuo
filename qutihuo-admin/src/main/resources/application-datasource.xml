@@ -12,9 +12,9 @@
 	
 		<bean id="dataSource_master" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass"><value>com.mysql.jdbc.Driver</value></property>
-		<property name="jdbcUrl"><value>jdbc:mysql://localhost:3306/qutihuo?useUnicode=true&amp;characterEncoding=utf-8</value></property>
-		<property name="user" ><value>root</value></property>
-		<property name="password"><value>123456</value></property>
+		<property name="jdbcUrl"><value>${mobile.db.master}</value></property>
+		<property name="user" ><value>${mobile.db.user}</value></property>
+		<property name="password"><value>${mobile.db.password}</value></property>
 
 		<property name="minPoolSize"><value>5</value></property>
 		<property name="maxPoolSize"><value>2000</value></property>

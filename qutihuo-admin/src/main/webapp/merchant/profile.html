@@ -1,88 +1,97 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Dashboard</title>
-
-    <meta name="description" content="Dashboard" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon">
-
-    <!--Basic Styles-->
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="/assets/css/weather-icons.min.css" rel="stylesheet" />
-
-    <!--Beyond styles-->
-    <link id="beyond-link" href="/assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/css/typicons.min.css" rel="stylesheet" />
-    <link href="/assets/css/animate.min.css" rel="stylesheet" />
-
-    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-    <script src="/assets/js/skins.js"></script>
-   
-</head>
-
-<body>
-    <!-- Navbar -->
-    <#include "/common/navbar.html">
-    <!-- /Navbar -->
+<@override name="page-content">  
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#">商户管理</a></li>
+            <li>商户信息</li>
+        </ul>
+    </div>
     
-    <!-- Main Container -->
-    <div class="main-container container-fluid">
-        <!-- Page Container -->
-        <div class="page-container">
-            <!-- Page Sidebar -->
-            <#include "/common/menu.html">
-            <!-- /Page Sidebar -->
-            
-            <!-- Page Content -->
-            <div class="page-content">
-            
-                <!-- Page Breadcrumb -->
-                <div class="page-breadcrumbs">
-                    <ul class="breadcrumb">
-                        <li>
-                            <i class="fa fa-home"></i> 
-                            <a href="#">商户管理</a>
-                        </li>
-                        <li>商户信息</li>
-                    </ul>
-                </div>
-                <!-- /Page Breadcrumb -->
-                
-                <div class="page-body">
-                    <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-                        <div class="col-xs-12 col-md-12">
-                            <div class="well with-header with-footer">
-                                
+    <div class="page-body">
+        <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            <div class="col-xs-12 col-md-12">
+                <div class="well with-header with-footer">
+                	<div class="header">
+                    	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>商户信息</b>
+                    </div>
+                    
+                    <form id="html5Form" method="post" class="form-horizontal" method="POST" action="/merchant/editMerchant.jhtml">
+						<input type="hidden" name="id"/>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">商户名称</label>
+                            <div class="col-lg-5">
+                            	<span class="form-control">${merchant.merchantName}<span>
                             </div>
                         </div>
-                    </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">主营业务</label>
+                            <div class="col-lg-4">
+                            	<span class="form-control">${merchant.businessLine}<span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">商户等级</label>
+                            <div class="col-lg-4">
+                            	<span class="form-control">${merchant.merchantLevel}<span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">注册时间</label>
+                            <div class="col-lg-4">
+                            	<span class="form-control">${merchant.openTime}<span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">剩余短信数量</label>
+                            <div class="col-lg-2">
+                            	<span class="form-control">${merchant.availableSmsNum}<span>
+                            </div>
+                            <div class="col-lg-2">
+                            	<button type="submit" class="btn btn-info">充值</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">备案号</label>
+                            <div class="col-lg-4">
+                            	<span class="form-control">${merchant.recordNumber}<span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">公司联系人</label>
+                            <div class="col-lg-3">
+                            	<span class="form-control">${merchant.contacts}<span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">公司联系电话</label>
+                            <div class="col-lg-3">
+                            	<span class="form-control">${merchant.telephone}<span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">公司联系地址</label>
+                            <div class="col-lg-6">
+                            	<span class="form-control">${merchant.address}<span>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <!-- /Page Content -->
         </div>
-        <!-- /Page Container -->
-        <!-- Main Container -->
     </div>
-
-    <!--Basic Scripts-->
-    <script src="/assets/js/jquery-2.0.3.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-
-    <!--Beyond Scripts-->
-    <script src="/assets/js/beyond.min.js"></script>
-    <script src="/assets/js/validation/formValidation.min.js"></script>
-    <script src="/assets/js/validation/framework/bootstrap.min.js"></script>
-	<script src="/assets/js/toastr/toastr.js"></script>
-	<script src="/assets/js/select2/select2.js"></script>
+</@override>
+<@override name="custom-script">
+	<script>
+		$(document).ready(function() {
 	
-<script>
-	$(document).ready(function() {
-
-	});
-</script>
-</body>
-</html>
+		});
+	</script>
+</@override>
+<@extends name="/common/base.html"/>  

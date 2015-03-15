@@ -1,204 +1,142 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Dashboard</title>
-
-    <meta name="description" content="Dashboard" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon">
-
-    <!--Basic Styles-->
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="/assets/css/weather-icons.min.css" rel="stylesheet" />
-
-    <!--Beyond styles-->
-    <link id="beyond-link" href="/assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/css/typicons.min.css" rel="stylesheet" />
-    <link href="/assets/css/animate.min.css" rel="stylesheet" />
-
-    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-    <script src="/assets/js/skins.js"></script>
-   
-</head>
-
-<body>
-    <!-- Navbar -->
-    <#include "/common/navbar.html">
-    <!-- /Navbar -->
-    
-    <!-- Main Container -->
-    <div class="main-container container-fluid">
-        <!-- Page Container -->
-        <div class="page-container">
-            <!-- Page Sidebar -->
-            <#include "/common/menu.html">
-            <!-- /Page Sidebar -->
-            
-            <!-- Page Content -->
-            <div class="page-content">
-            
-                <!-- Page Breadcrumb -->
-                <div class="page-breadcrumbs">
-                    <ul class="breadcrumb">
-                        <li>
-                            <i class="fa fa-home"></i> 
-                            <a href="#">商户管理</a>
-                        </li>
-                        <li><a href="/system/userList.jhtml">商户列表</a></li>
-                        <li>编辑商户</li>
-                    </ul>
-                </div>
-                <!-- /Page Breadcrumb -->
-                
-                <div class="page-body">
-                    <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-                        <div class="col-xs-12 col-md-12">
-                            <div class="well with-header with-footer">
-                                <div class="header">
-                                	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>编辑商户</b>
-                                </div>
-                            
-								<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/merchant/editMerchant.jhtml">
-									<input type="hidden" name="id"/>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">商户名称<font color="red"> *</font></label>
-                                        <div class="col-lg-5">
-                                            <input type="text" class="form-control" name="merchantName"/>
-                                        </div>
-                                        <div class="col-lg-4"><p class="help-block">如：武汉壹骏海实业有限公司</p></div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">主营业务<font color="red"> *</font></label>
-                                        <div class="col-lg-4">
-                                            <input type="text" class="form-control" name="businessLine"/>
-                                        </div>
-                                        <div class="col-lg-4"><p class="help-block">如：水产|农产品</p></div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">备案号<font color="red"> *</font></label>
-                                        <div class="col-lg-4">
-                                            <input type="text" class="form-control" name="recordNumber"/>
-                                        </div>
-                                        <div class="col-lg-4"><p class="help-block">如：鄂ICP备12011799号-1</p></div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">公司联系人</label>
-                                        <div class="col-lg-3">
-                                            <input type="text" class="form-control" name="contacts"/>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">公司联系电话</label>
-                                        <div class="col-lg-3">
-                                            <input type="text" class="form-control" name="telephone"/>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">公司联系地址</label>
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" name="address"/>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <div class="col-lg-2 col-lg-offset-2">
-                                        	 <button type="submit" class="btn btn-success">确认</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-        
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Page Content -->
-        </div>
-        <!-- /Page Container -->
-        <!-- Main Container -->
+<@override name="page-content">  
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#">商户管理</a></li>
+            <li><a href="/system/userList.jhtml">商户列表</a></li>
+            <li>编辑商户</li>
+        </ul>
     </div>
+    
+    <div class="page-body">
+        <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            <div class="col-xs-12 col-md-12">
+                <div class="well with-header with-footer">
+                    <div class="header">
+                    	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>编辑商户</b>
+                    </div>
+                
+					<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/merchant/editMerchant.jhtml">
+						<input type="hidden" name="id"/>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">商户名称<font color="red"> *</font></label>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control" name="merchantName"/>
+                            </div>
+                            <div class="col-lg-4"><p class="help-block">如：武汉壹骏海实业有限公司</p></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">主营业务<font color="red"> *</font></label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="businessLine"/>
+                            </div>
+                            <div class="col-lg-4"><p class="help-block">如：水产|农产品</p></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">备案号<font color="red"> *</font></label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" name="recordNumber"/>
+                            </div>
+                            <div class="col-lg-4"><p class="help-block">如：鄂ICP备12011799号-1</p></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">公司联系人</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" name="contacts"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">公司联系电话</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" name="telephone"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">公司联系地址</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="address"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="col-lg-2 col-lg-offset-2">
+                            	 <button type="submit" class="btn btn-success">确认</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-    <!--Basic Scripts-->
-    <script src="/assets/js/jquery-2.0.3.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-
-    <!--Beyond Scripts-->
-    <script src="/assets/js/beyond.min.js"></script>
-    <script src="/assets/js/validation/formValidation.min.js"></script>
-    <script src="/assets/js/validation/framework/bootstrap.min.js"></script>
-    <script src="/assets/js/fuelux/spinner/fuelux.spinner.min.js"></script>
-	<script src="/assets/js/toastr/toastr.js"></script>
-	<script src="/assets/js/jquery.formautofill.min.js"></script>
-<script>
-	$(document).ready(function() {
-		$('#html5Form').formValidation({
-			fields: {
-	            merchantName: {
-	                validators: {
-	                    notEmpty: {
-	                        message: '商户名称不能为空'
-	                    }
-	                }
-	            },
-	            businessLine: {
-	                validators: {
-	                    notEmpty: {
-	                        message: '主营业务不能为空'
-	                    }
-	                }
-	            },
-	            recordNumber: {
-	                validators: {
-	                    notEmpty: {
-	                        message: '备案号不能为空'
-	                    }
-	                }
-	            }
-	        }
-		})        
-		.on('success.form.fv', function(e) {
-            // Prevent form submission
-            e.preventDefault();
-
-            // Get the form instance
-            var $form = $(e.target);
-
-            // Get the FormValidation instance
-            var bv = $form.data('formValidation');
-
-            // Use Ajax to submit form data
-            $.post($form.attr('action'), $form.serialize(), function(result) {
-                if(result.state.code==200){
-	        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-	        		setTimeout(function () {window.location = "/merchant/merchantList.jhtml";}, 1500);
-	        	}else{
-	        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
-	        	}
-            }, 'json');
-        });
-		
-		// 构建表单数据	
-		var formData = {			
-         	"id":${(merchant.id?c)!''},
-			"merchantName":"${(merchant.merchantName)!''}",
-			"businessLine":"${(merchant.businessLine)!''}",
-			"recordNumber":"${(merchant.recordNumber)!''}",
-			"contacts":"${(merchant.contacts)!''}",
-			"telephone":"${(merchant.telephone)!''}", 
-			"address":"${(merchant.address)!''}"
-        };
-        
-		// 自动填充表单
-        $("#html5Form").autofill(formData);
-	});
-</script>
-</body>
-</html>
+            </div>
+        </div>
+    </div>
+</@override>
+<@override name="custom-script">
+	<script>
+		$(document).ready(function() {
+			$('#html5Form').formValidation({
+				fields: {
+		            merchantName: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '商户名称不能为空'
+		                    }
+		                }
+		            },
+		            businessLine: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '主营业务不能为空'
+		                    }
+		                }
+		            },
+		            recordNumber: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '备案号不能为空'
+		                    }
+		                }
+		            }
+		        }
+			})        
+			.on('success.form.fv', function(e) {
+	            // Prevent form submission
+	            e.preventDefault();
+	
+	            // Get the form instance
+	            var $form = $(e.target);
+	
+	            // Get the FormValidation instance
+	            var bv = $form.data('formValidation');
+	
+	            // Use Ajax to submit form data
+	            $.post($form.attr('action'), $form.serialize(), function(result) {
+	                if(result.state.code==200){
+		        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+		        		setTimeout(function () {window.location = "/merchant/merchantList.jhtml";}, 1500);
+		        	}else{
+		        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+		        	}
+	            }, 'json');
+	        });
+			
+			// 构建表单数据	
+			var formData = {			
+	         	"id":${(merchant.id?c)!''},
+				"merchantName":"${(merchant.merchantName)!''}",
+				"businessLine":"${(merchant.businessLine)!''}",
+				"recordNumber":"${(merchant.recordNumber)!''}",
+				"contacts":"${(merchant.contacts)!''}",
+				"telephone":"${(merchant.telephone)!''}", 
+				"address":"${(merchant.address)!''}"
+	        };
+	        
+			// 自动填充表单
+	        $("#html5Form").autofill(formData);
+		});
+	</script>
+</@override>
+<@extends name="/common/base.html"/>  

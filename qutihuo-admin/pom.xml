@@ -10,6 +10,7 @@
 	<packaging>war</packaging>
 
 	<properties>
+		<env>dev</env>
 		<cxf.version>2.2.3</cxf.version>
 		<spring.version>3.1.4.RELEASE</spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -57,33 +58,17 @@
 
 	</dependencies>
 
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<mobile.db.master>localhost:3306/qutihuo</mobile.db.master>
-				<mobile.db.user>root</mobile.db.user>
-				<mobile.db.password>123456</mobile.db.password>
-				<log4j.file.path>${basedir}\logs</log4j.file.path>
-			</properties>
-		</profile>
-
-		<profile>
-			<id>prod</id>
-			<properties>
-				<mobile.db.master>rdsbrqmjj2iemyq.mysql.rds.aliyuncs.com/ejunhai</mobile.db.master>
-				<mobile.db.user>ejunhai</mobile.db.user>
-				<mobile.db.password>u2i433osfs</mobile.db.password>
-				<log4j.file.path>/alidata/log</log4j.file.path>
-			</properties>
-		</profile>
-	</profiles>
-
 	<build>
-		<finalName>qutihuo-admin</finalName>
+		<filters>
+			<filter>src/main/resources/application-${env}.properties</filter>
+		</filters>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

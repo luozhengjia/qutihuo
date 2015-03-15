@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>去提货公共服务平台</title>
+
+    <meta name="description" content="Dashboard" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon">
+
+    <!--Basic Styles-->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/assets/css/weather-icons.min.css" rel="stylesheet" />
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="/assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/typicons.min.css" rel="stylesheet" />
+    <link href="/assets/css/animate.min.css" rel="stylesheet" />
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="/assets/js/skins.js"></script>
+</head>
+
+<body>
+    <#include "/common/navbar.html">
+    
+    <div class="main-container container-fluid">
+        <div class="page-container">
+        
+            <#include "/common/menu.html">
+            
+            <div class="page-content">
+            	<@block name="page-content"></@block>
+            </div>
+        </div>
+    </div>
+
+    <!--Basic Scripts-->
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="/assets/js/beyond.min.js"></script>
+    <script src="/assets/js/base.junhai.js"></script>
+    <script src="/assets/js/bootbox/bootbox.js"></script>
+    <script src="/assets/js/toastr/toastr.js"></script>
+    <script src="/assets/js/validation/formValidation.min.js"></script>
+    <script src="/assets/js/validation/framework/bootstrap.min.js"></script>
+    <script src="/assets/js/jquery.formautofill.min.js"></script>
+    <script src="/assets/js/select2/select2.js"></script>
+    <script src="/assets/js/fuelux/spinner/fuelux.spinner.min.js"></script>
+    
+    <@block name="custom-script"></@block>
+</body>
+</html>
