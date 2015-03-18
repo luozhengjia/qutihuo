@@ -77,7 +77,7 @@
         <property name="location" value="classpath:staticClass.properties" />
     </bean>
     
-    <bean id="freemarkerStaticModels" class="com.ejunhai.qutihuo.common.utils.FreemarkerStaticModels" factory-method="getInstance">
+    <bean id="freemarkerStaticModels" class="com.ejunhai.qutihuo.common.freemarker.FreemarkerStaticModels" factory-method="getInstance">
         <property name="staticModels" ref="freemarkerStatic"/>
     </bean>
 	

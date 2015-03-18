@@ -1,4 +1,4 @@
-package com.ejunhai.qutihuo.common.utils;
+package com.ejunhai.qutihuo.common.freemarker;
 
 import java.util.HashMap;
 import java.util.Properties;
