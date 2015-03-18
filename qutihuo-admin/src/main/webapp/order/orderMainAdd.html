@@ -1,45 +1,4 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>Dashboard</title>
-
-    <meta name="description" content="Dashboard" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon">
-
-    <!--Basic Styles-->
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/assets/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="/assets/css/weather-icons.min.css" rel="stylesheet" />
-
-    <!--Beyond styles-->
-    <link id="beyond-link" href="/assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/css/typicons.min.css" rel="stylesheet" />
-    <link href="/assets/css/animate.min.css" rel="stylesheet" />
-
-    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-    <script src="/assets/js/skins.js"></script>
-   
-</head>
-
-<body>
-    <!-- Navbar -->
-    <#include "/common/navbar.html">
-    <!-- /Navbar -->
-    
-    <!-- Main Container -->
-    <div class="main-container container-fluid">
-        <!-- Page Container -->
-        <div class="page-container">
-            <!-- Page Sidebar -->
-            <#include "/common/menu.html">
-            <!-- /Page Sidebar -->
-            
-            <!-- Page Content -->
-            <div class="page-content">
-            
+﻿<@override name="page-content">  
                 <!-- Page Breadcrumb -->
                 <div class="page-breadcrumbs">
                     <ul class="breadcrumb">
@@ -131,24 +90,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- /Page Content -->
-        </div>
-        <!-- /Page Container -->
-        <!-- Main Container -->
-    </div>
-
-    <!--Basic Scripts-->
-    <script src="/assets/js/jquery-2.0.3.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src="/assets/js/datetime/bootstrap-datepicker.js"></script>
-    <!--Beyond Scripts-->
-    <script src="/assets/js/beyond.min.js"></script>
-    <script src="/assets/js/validation/formValidation.min.js"></script>
-    <script src="/assets/js/validation/framework/bootstrap.min.js"></script>
-    <script src="/assets/js/fuelux/spinner/fuelux.spinner.min.js"></script>
-	<script src="/assets/js/toastr/toastr.js"></script>
-	<script src="/assets/js/jquery.formautofill.min.js"></script>
+</@override>
+<@override name="custom-script">
 <script>
 	$('.date-picker').datepicker();
 
@@ -216,5 +159,5 @@
 		
 	});
 </script>
-</body>
-</html>
+</@override>
+<@extends name="/common/base.html"/>  
