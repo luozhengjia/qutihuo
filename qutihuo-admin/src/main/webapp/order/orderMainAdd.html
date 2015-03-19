@@ -19,7 +19,15 @@
                                 <div class="header">
                                 	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>新增订单</b>
                                 </div>
-                            
+                            	
+                            	<div id="uploader" class="wu-example">
+									    <!--用来存放文件信息-->
+									    <div id="thelist" class="uploader-list"></div>
+									    <div class="btns">
+									        <div id="picker">选择文件</div>
+									        <button id="ctlBtn" class="btn btn-default">开始上传</button>
+									    </div>
+									</div>
 								<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/orderMain/saveOrderMain.jhtml">
 									<input type="hidden" name="id"/>
                                     <div class="form-group">
@@ -158,6 +166,31 @@
         });
 		
 	});
+
+	var uploader = WebUploader.create({
+
+	    // 选完文件后，是否自动上传。
+	    auto: true,
+
+	    // swf文件路径
+	    swf: '/assets/webuploader/Uploader.swf',
+
+	    // 文件接收服务端。
+	    server: 'http://localhost:8080/imageUpload',
+
+	    // 选择文件的按钮。可选。
+	    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+	    pick: '#filePicker',
+
+	    // 只允许选择图片文件。
+	    accept: {
+	        title: 'Images',
+	        extensions: 'gif,jpg,jpeg,bmp,png',
+	        mimeTypes: 'image/*'
+	    }
+	});
+
+	
 </script>
 </@override>
 <@extends name="/common/base.html"/>  
