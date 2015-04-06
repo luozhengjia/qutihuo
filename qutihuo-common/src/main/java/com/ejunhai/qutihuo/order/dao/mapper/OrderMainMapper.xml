@@ -56,78 +56,57 @@
         where ID = #{id,jdbcType=INTEGER}
     </select>
     
+    <select id="getOrderMainByOrderMainNo" resultMap="OrderMainMapper">
+        select 
+        <include refid="Base_Column_List" />
+        from tb_order_main
+        where order_main_no = #{orderMainNo,jdbcType=VARCHAR}
+    </select>
+    
     <insert id="insert" parameterType="com.ejunhai.qutihuo.order.model.OrderMain" useGeneratedKeys="true" keyProperty="id" >
         insert into tb_order_main (<include refid="Base_Column_List" />)
         values (
-        #{id,jdbcType=INTEGER},
-        #{orderMainNo,jdbcType=VARCHAR},
-        #{couponNumber,jdbcType=VARCHAR},
-        #{merchantId,jdbcType=INTEGER},
-        #{state,jdbcType=TINYINT},
-        #{payAmount,jdbcType=DECIMAL},
-        #{orderDate,jdbcType=VARCHAR},
-        #{consignee,jdbcType=VARCHAR},
-        #{telephone,jdbcType=VARCHAR},
-        #{provinceCode,jdbcType=VARCHAR},
-        #{cityCode,jdbcType=VARCHAR},
-        #{areaCode,jdbcType=VARCHAR},
-        #{detailAddress,jdbcType=VARCHAR},
-        #{logisticsCompany,jdbcType=VARCHAR},
-        #{expressOrderNo,jdbcType=VARCHAR},
-        #{deliverTime,jdbcType=TIMESTAMP},
-        #{isSendSms,jdbcType=TINYINT},
-        #{isPrintExpress,jdbcType=TINYINT},
-        #{source,jdbcType=TINYINT},
-        #{remark,jdbcType=VARCHAR},
-        now()
+	        #{id,jdbcType=INTEGER},
+	        #{orderMainNo,jdbcType=VARCHAR},
+	        #{couponNumber,jdbcType=VARCHAR},
+	        #{merchantId,jdbcType=INTEGER},
+	        #{state,jdbcType=TINYINT},
+	        #{payAmount,jdbcType=DECIMAL},
+	        #{orderDate,jdbcType=VARCHAR},
+	        #{consignee,jdbcType=VARCHAR},
+	        #{telephone,jdbcType=VARCHAR},
+	        #{provinceCode,jdbcType=VARCHAR},
+	        #{cityCode,jdbcType=VARCHAR},
+	        #{areaCode,jdbcType=VARCHAR},
+	        #{detailAddress,jdbcType=VARCHAR},
+	        #{logisticsCompany,jdbcType=VARCHAR},
+	        #{expressOrderNo,jdbcType=VARCHAR},
+	        #{deliverTime,jdbcType=TIMESTAMP},
+	        #{isSendSms,jdbcType=TINYINT},
+	        #{isPrintExpress,jdbcType=TINYINT},
+	        #{source,jdbcType=TINYINT},
+	        #{remark,jdbcType=VARCHAR},
+	        now()
         )
     </insert>
     
     <update id="update" parameterType="com.ejunhai.qutihuo.order.model.OrderMain" >
         update tb_order_main
         <set>
-            <if test="state != null">
-            	state = #{state,jdbcType=TINYINT},
-            </if>
-            <if test="orderDate != null">
+            state = #{state,jdbcType=TINYINT},
             order_date = #{orderDate,jdbcType=VARCHAR},
-             </if>
-              <if test="consignee != null">
             consignee = #{consignee,jdbcType=VARCHAR},
-              </if>
-               <if test="telephone != null">
             telephone = #{telephone,jdbcType=VARCHAR},
-             </if>
-             <if test="provinceCode != null">
             province_code = #{provinceCode,jdbcType=VARCHAR},
-            </if>
-            <if test="cityCode != null">
             city_code = #{cityCode,jdbcType=VARCHAR},
-            </if>
-            <if test="areaCode != null">
             area_code = #{areaCode,jdbcType=VARCHAR},
-            </if>
-            <if test="detailAddress != null">
             detail_address = #{detailAddress,jdbcType=VARCHAR},
-            </if>
-            <if test="logisticsCompany != null">
             logistics_company = #{logisticsCompany,jdbcType=VARCHAR},
-            </if>
-            <if test="expressOrderNo != null">
             express_order_no = #{expressOrderNo,jdbcType=VARCHAR},
-            </if>
-            <if test="deliverTime != null">
             deliver_time = #{deliverTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="isSendSms != null">
             is_send_sms = #{isSendSms,jdbcType=TINYINT},
-            </if>
-            <if test="isPrintExpress != null">
             is_print_express = #{isPrintExpress,jdbcType=TINYINT},
-            </if>
-            <if test="remark != null">
             remark = #{remark,jdbcType=VARCHAR},
-            </if>
         </set>
         where ID = #{id,jdbcType=INTEGER}
     </update>
@@ -138,12 +117,12 @@
     </delete>
     
     <select id="queryOrderMainCount" resultType="java.lang.Integer">
-    		select count(1) from tb_order_main
+    	select count(1) from tb_order_main
     </select>
     
     <select id="queryOrderMainList" resultMap="OrderMainMapper">
-    		select <include refid="Base_Column_List" /> from tb_order_main
-    		limit #{offset},#{pageSize} 
+    	select <include refid="Base_Column_List" /> from tb_order_main
+    	limit #{offset},#{pageSize} 
     </select>
     
 </mapper>

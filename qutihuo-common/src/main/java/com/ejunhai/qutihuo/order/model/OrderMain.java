@@ -6,7 +6,6 @@ import java.sql.Timestamp;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
-import com.ejunhai.qutihuo.common.base.JsonDateSerializer10;
 import com.ejunhai.qutihuo.common.base.JsonDateSerializer19;
 
 /**

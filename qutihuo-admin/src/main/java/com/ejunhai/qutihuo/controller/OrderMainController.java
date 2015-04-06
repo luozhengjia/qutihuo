@@ -9,26 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ejunhai.qutihuo.common.base.BaseController;
 import com.ejunhai.qutihuo.common.base.Pagination;
-import com.ejunhai.qutihuo.errors.JunhaiAssert;
-import com.ejunhai.qutihuo.order.dto.LogisticsCompanyDto;
 import com.ejunhai.qutihuo.order.dto.OrderMainDto;
-import com.ejunhai.qutihuo.order.enums.OrderState;
-import com.ejunhai.qutihuo.order.model.LogisticsCompany;
 import com.ejunhai.qutihuo.order.model.OrderMain;
-import com.ejunhai.qutihuo.order.service.LogisticsCompanyService;
 import com.ejunhai.qutihuo.order.service.OrderMainService;
+import com.ejunhai.qutihuo.utils.SessionManager;
 
-/**
- * 
- * 订单管理
- * 
- * @date 2015-1-26 下午3:49:36
- * @version 0.1.0 
- */
 @Controller
 @RequestMapping("orderMain")
 public class OrderMainController extends BaseController {
@@ -36,18 +24,9 @@ public class OrderMainController extends BaseController {
 	@Resource
 	private OrderMainService orderMainService;
 
-	@Resource
-	private LogisticsCompanyService logisticsCompanyService;
-
-	/**
-	 * 订单列表
-	 * @param request
-	 * @param orderMainDto
-	 * @param modelMap
-	 * @return
-	 */
 	@RequestMapping("/orderMainList")
 	public String orderMainList(HttpServletRequest request, OrderMainDto orderMainDto, ModelMap modelMap) {
+		orderMainDto.setMerchantId(SessionManager.get(request).getMerchantId());
 		Integer iCount = orderMainService.queryOrderMainCount(orderMainDto);
 		Pagination pagination = new Pagination(orderMainDto.getPageNo(), iCount);
 
@@ -65,173 +44,4 @@ public class OrderMainController extends BaseController {
 		return "order/orderMainList";
 	}
 
-	/**
-	 * 订单新增
-	 * @param request
-	 * @param orderMain
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping("/orderMainAdd")
-	public String orderMainAdd(HttpServletRequest request, OrderMain orderMain, ModelMap modelMap) {
-		return "order/orderMainAdd";
-	}
-	
-	/**
-	 * 订单详情
-	 * @param request
-	 * @param orderMain
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping("/orderMainDetail")
-	public String orderMainDetail(HttpServletRequest request, OrderMain orderMain, ModelMap modelMap) {
-		if (orderMain.getId() != null) {
-			orderMain = orderMainService.read(orderMain.getId());
-		}
-
-		modelMap.put("orderMain", orderMain);
-		return "order/orderMainEdit";
-	}
-
-	/**
-	 * 获取订单详情
-	 * @param request
-	 * @param orderMain
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping("/getOrderMain")
-	@ResponseBody
-	public String getOrderMain(HttpServletRequest request, OrderMain orderMain, ModelMap modelMap) {
-		if (orderMain.getId() != null) {
-			orderMain = orderMainService.read(orderMain.getId());
-		}
-
-		modelMap.put("orderMain", orderMain);
-		return jsonSuccess(modelMap);
-	}
-
-	/**
-	 * 打印快递单
-	 * @param request
-	 * @param orderMain
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping("/printOrder")
-	@ResponseBody
-	public String printOrder(HttpServletRequest request, String expressOrderNo,int id, String lcCode, ModelMap modelMap) {
-		OrderMain orderMain = orderMainService.read(id);
-		modelMap.put("orderMain", orderMain);
-		LogisticsCompanyDto logisticsCompanyDto = new LogisticsCompanyDto();
-		logisticsCompanyDto.setLcCode(lcCode);
-		LogisticsCompany logisticsCompany = logisticsCompanyService.findLogisticsCompany(logisticsCompanyDto);
-		//替换需要打印快递单信息
-		
-		modelMap.put("lc", logisticsCompany);
-		//修改订单打印和快递单号
-		OrderMain updateOrderMain =  new OrderMain();
-		updateOrderMain.setId(id);
-		updateOrderMain.setIsPrintExpress(1);
-		updateOrderMain.setExpressOrderNo(expressOrderNo);
-		orderMainService.update(updateOrderMain);
-		
-		return jsonSuccess(modelMap);
-	}
-
-	/**
-	 * 去打印快递单
-	 * @param request
-	 * @param orderMain
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping("/orderMainPrint")
-	public String orderMainPrint(HttpServletRequest request, OrderMain orderMain, ModelMap modelMap) {
-		if (orderMain.getId() != null) {
-			orderMain = orderMainService.read(orderMain.getId());
-		}
-		LogisticsCompanyDto logisticsCompanyDto = new LogisticsCompanyDto();
-		logisticsCompanyDto.setOffset(0);
-		logisticsCompanyDto.setPageSize(100);
-		List<LogisticsCompany> logisticsCompanyList = logisticsCompanyService
-				.queryLogisticsCompanyList(logisticsCompanyDto);
-		modelMap.put("lcList", logisticsCompanyList);
-		modelMap.put("orderMain", orderMain);
-		return "order/orderMainPrint";
-	}
-
-	/**
-	 * 新增或修改订单
-	 * @param request
-	 * @param orderMain
-	 * @return
-	 */
-	@RequestMapping("/saveOrderMain")
-	@ResponseBody
-	public String saveOrderMain(HttpServletRequest request, OrderMain orderMain) {
-		//JunhaiAssert.notBlank(orderMain.getActionName(), "操作名不能为空");
-		if (orderMain.getId() != null && orderMain.getId() > 0) {
-			orderMainService.update(orderMain);
-		} else {
-			orderMainService.insert(orderMain);
-		}
-		return jsonSuccess();
-	}
-
-	/**
-	 * 删除订单
-	 * @param request
-	 * @param orderMain
-	 * @return
-	 */
-	@RequestMapping("/deleteOrderMain")
-	@ResponseBody
-	public String deleteOrderMain(HttpServletRequest request, OrderMain orderMain) {
-		JunhaiAssert.notNull(orderMain.getId(), "id不能为空");
-		orderMainService.delete(orderMain.getId());
-		return jsonSuccess();
-	}
-
-	/**
-	 * 订单发货
-	 * @param request
-	 * @param orderMain
-	 * @return
-	 */
-	@RequestMapping("/orderDeliver")
-	@ResponseBody
-	public String orderDeliver(HttpServletRequest request, OrderMain orderMain) {
-		JunhaiAssert.notNull(orderMain, "参数不能为空");
-		//修改订单发货状态
-		OrderMain updateOrderMain =  new OrderMain();
-		updateOrderMain.setId(orderMain.getId());
-		updateOrderMain.setState(OrderState.DELIVERD.getValue());
-		orderMainService.update(updateOrderMain);
-		return jsonSuccess();
-	}
-	
-	
-	/**
-	 * 发送短信
-	 * @param request
-	 * @param orderMain
-	 * @return
-	 */
-	@RequestMapping("/orderSendSMS")
-	@ResponseBody
-	public String orderSendSMS(HttpServletRequest request, OrderMain orderMain) {
-		JunhaiAssert.notNull(orderMain, "参数不能为空");
-		//TODO 是否需要判断已经发送过短信
-		orderMain = orderMainService.read(orderMain.getId());
-		//SmsUtil.sendSms(orderMain.getTelephone(), "短信通知");
-		//修改订单发货状态
-		OrderMain updateOrderMain =  new OrderMain();
-		updateOrderMain.setId(orderMain.getId());
-		updateOrderMain.setIsSendSms(1);
-		orderMainService.update(updateOrderMain);
-		return jsonSuccess();
-	}
-	
 }

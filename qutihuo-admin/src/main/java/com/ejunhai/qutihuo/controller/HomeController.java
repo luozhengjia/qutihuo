@@ -15,4 +15,6 @@ public class HomeController {
         modelMap.put("couponNumber", 123456);
         return "index";
     }
+    
+    
 }

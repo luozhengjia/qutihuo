@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <title>骏海水产大闸蟹预定系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://ejunhai.qiniudn.com/bootstrap.min.css">
+    <link rel="stylesheet" href="http://ejunhai.qiniudn.com/bootstrap-validator.min.css">
+  </head>
+  
+  <body>
+	<div class="container">
+		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+		  <ol class="carousel-indicators">
+		    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+		  </ol>
+		
+		  <div class="carousel-inner">
+		    <div class="item active">
+		      <img src="http://ejunhai.qiniudn.com/banner.jpg" alt="...">
+		      <div class="carousel-caption">
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<br/>
+		
+		<div class="panel panel-info">
+		  <div class="panel-heading text-center"><strong>欢迎登入骏海水产预定系统</strong></div>
+		  <div class="panel-body">
+		  	<form id="loginForm" class="form-horizontal" method="POST" action="${BasePath}/login.jhtml">
+		  	  <div id="valate_msg_tip" class="alert alert-danger alert-dismissable" style="display: none;">
+		  	  	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  	  </div>
+			  <div class="form-group">
+			    <div  class="col-xs-12">
+			      <input type="text" name="couponNumber" value="${couponNumber!""}" class="form-control" placeholder="券号">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <div class="col-xs-12">
+			       <input type="password" name="couponPassword" class="form-control" placeholder="密码">
+			    </div>	
+			  </div>
+			  <div class="form-group">
+			    <div class="col-xs-6">
+			      <input type="text" name="validateCode" class="form-control" placeholder="验证码">
+			    </div>	
+			    <div class="col-xs-4">
+			      <img id="validateCodeImage" src="${BasePath}/servlet/imageValidate" title="点击换验证码" style="height:32px;width:48px;cursor:pointer">
+			    </div>
+			  </div>
+			  <div>
+	      		<button type="submit" class="btn btn-info btn-lg btn-block"><strong>进入预约</strong></button>
+	    	  </div>
+	    	</form>
+	    	
+		  </div>
+		</div>
+		
+		<#include "/common/footer.ftl" >
+	</div>
+	
+    <script src="http://ejunhai.qiniudn.com/jquery-1.10.2.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/bootstrap.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/bootstrap-validator.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/MD5.js"></script>
+    <script>
+		$(document).ready(function() {
+			$('#validateCodeImage').click(function() {  
+				$('#validateCodeImage').attr("src","${BasePath}/servlet/imageValidate?"+Math.random());
+			}); 
+			
+			$('input').focus(function() { 
+				$('#valate_msg_tip').hide("slow");
+			});
+			
+			$('#loginForm').bootstrapValidator({
+				live: 'enabled',
+		        fields: {
+		        	couponNumber: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '请输入优惠券号码'
+		                    },
+		                    digits:{
+		                    	message: '优惠券号码无效'
+		                    }
+		                }
+		            },
+		            couponPassword: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '请输入优惠券密码'
+		                    }
+		                }
+		            },
+		            validateCode: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '请输入验证码'
+		                    }
+		                }
+		            }
+		        },
+		        submitHandler: function(validator, form, submitButton) {
+		        	$.post("${BasePath}/login.jhtml", {
+		        		"couponNumber":$("input[name='couponNumber']").val(),
+						"couponPassword": hex_md5($("input[name='couponPassword']").val().toUpperCase()),
+						"validateCode":$("input[name='validateCode']").val()
+		        	},
+				   	function(data){
+				    	if(data.state.code!=200){
+				    		form.find('.alert').html(data.state.msg).show();
+				    		$('#validateCodeImage').attr("src","${BasePath}/servlet/imageValidate?"+Math.random());
+				    	}else{
+				    		location.href ='${BasePath}/dispatchCenter.jhtml';
+				    	}
+				   	}, "json");
+		        }
+		    });
+		});
+	</script>
+  </body>
+</html>

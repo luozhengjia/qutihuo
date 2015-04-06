@@ -141,6 +141,7 @@ public class CouponServiceImpl implements CouponService {
 
 		coupon.setOrderNumber(orderNumber);
 		coupon.setUseTime(new Timestamp(System.currentTimeMillis()));
+		coupon.setState(CouponState.used.getValue());
 		couponMapper.useCoupon(coupon);
 
 		CouponSchema couponSchema = couponSchemaService.read(coupon.getCouponSchemaId());

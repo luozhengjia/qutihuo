@@ -1,111 +1,85 @@
-﻿<@override name="page-content">  
-                <!-- Page Breadcrumb -->
-                <div class="page-breadcrumbs">
-                    <ul class="breadcrumb">
-                        <li><i class="fa fa-home"></i><a href="#">订单管理</a></li>
-                        <li>订单列表</li>
-                    </ul>
-                </div>
-                <!-- /Page Breadcrumb -->
-                
-                <div class="page-body">
-                    <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-                        <div class="col-xs-12 col-md-12">
-                            <div class="well with-header with-footer">
-                                <div class="header">
-	                                <div class="col-xs-10">
-	                                	<form class="form-inline" role="form">
-										    <div class="form-group">
-										        <label class="sr-only" for="exampleInputEmail2">订单编号</label>
-										        <input type="text"  name="orderMainNo" class="form-control" value="${(orderMainDto.orderMainNo)!''}" placeholder="按订单号过滤">
-										    </div>
-										    <button type="submit" class="btn">搜索</button>
-										</form>
-		                            </div>
-		                            <div class="col-xs-2">
-		                                <div class = "pull-right">
-											<a class="btn btn-success" href="/orderMain/orderMainAdd.jhtml">新增操作</a>
-		                                </div>
-		                            </div>
-                                </div>
-                            
-                                <table class="table table-hover table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th >
-												<input type="checkbox"> 
-											</th>
-                                            <th>订单号</th>
-                                            <th>优惠券号</th>
-                                            <th>商户ID</th>
-                                            <th>订单金额</th>                                  
-                                            <th>预定日期</th>
-                                            <th>收货人</th>
-                                            <th>联系电话</th>
-                                            <th>收货省市区</th>
-                                            <th>发货状态</th>
-                                            <th>打印状态</th>
-                                            <th>操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <#list orderMainList as item >
-                                        <tr>
-                                        	<td><input type=checkbox ></td>
-                                            <td>${item.orderMainNo}</td>
-                                            <td>${item.couponNumber}</td>
-                                            <td>${item.merchantId}</td>
-                                            <td>${item.payAmount?c}</td>
-                                            <td>${item.orderDate}</td>
-                                            <td>${item.consignee}</td>
-                                            <td>${item.telephone}</td>
-                                            <td></td>
-                                            <td>${OrderState.get(item.state).getTitle()}</td>
-                                            <td>${OrderPrint.get(item.isPrintExpress).getTitle()}</td>
-                                            <td>
-                                                <a href="/orderMain/orderMainDetail.jhtml?id=${item.id?c}" class="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 编辑</a>
-                                                <a href="/orderMain/orderMainPrint.jhtml?id=${item.id?c}" class="btn btn-info btn-xs edit"><i class="glyphicon glyphicon-print"></i>打印</a>
-                                                <button type="button" class="btn btn-danger btn-xs delete J_delete" data-param='{"id":${item.id?c}}'><i class="fa fa-trash-o"></i> 删除</button>
-											</td>
-                                        </tr>
-                                        </#list>
-                                    </tbody>
-                                </table>
-        
-                                <div class="footer">
-                                    <div class="col-xs-4">总记录数：${pagination.totalCount?c} </div>
-                                    <div class="col-xs-8">
-                                        <#include "/common/pagination.html">
-                                    </div>
-                               </div>
-                            </div>
-        
+<@override name="page-content">  
+	<div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#">订单管理</a></li>
+            <li>订单列表</li>
+        </ul>
+    </div>
+    
+    <div class="page-body">
+        <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            <div class="col-xs-12 col-md-12">
+                <div class="well with-header with-footer">
+                    <div class="header">
+                        <div class="col-xs-10">
+                        	<form class="form-inline" role="form">
+							    <div class="form-group">
+							        <input type="text"  name="orderMainNo" class="form-control" value="${(orderMainDto.orderMainNo)!''}" placeholder="按订单号过滤">
+							        <input type="text"  name="couponNumber" class="form-control" value="${(orderMainDto.orderDate)!''}" placeholder="按礼品卡过滤">
+							        <input type="text"  name="orderDate" class="form-control" value="${(orderMainDto.orderDate)!''}" placeholder="按预约日期过滤">
+							        <select name="state" class="form-control">
+										<option value="">按状态过滤</option>
+										<#list OrderState.values() as item >
+											<option value="${item.value}" <#if orderMainDto.state?? && orderMainDto.state==item.value>selected</#if>>${item.title}</option> 
+										</#list>
+                                    </select>
+							    </div>
+							    <button type="submit" class="btn">搜索</button>
+							</form>
                         </div>
                     </div>
+                
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>订单号</th>
+                                <th>礼品卡码</th>
+                                <th>预约日期</th>
+                                <th>订单金额</th>
+                                <th>收货人</th>
+                                <th>联系电话</th>
+                                <th>下单日期</th>
+                                <th>发货状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <#list orderMainList as item >
+                            <tr>
+                            	<td>${item.id?c}</td>
+                    			<td>${item.orderMainNo}</td>
+                    			<td>${item.couponNumber}</td>
+                    			<td>${item.orderDate}</td>
+                    			<td>${item.payAmount}</td>
+                    			<td>${item.consignee}</td>
+                    			<td>${item.telephone}</td>
+                    			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
+                    			<td>${OrderState.get(item.state).getTitle()}</td>
+                    			<td>
+                    				<#if item.state==1>
+                    					<a class="btn btn-success btn-xs" href="/coupon/exportCoupons.jhtml?couponSchemaId=${item.id?c}"><i class="glyphicon glyphicon-transfer"></i> 发货</a>
+                    				</#if>
+                    				<a class="btn btn-info btn-xs" href="/coupon/toCouponSchema.jhtml?couponSchemaId=${item.id?c}"><i class="fa fa-eye"></i> 查看</a>
+                    			</td>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table>
+
+                    <div class="footer">
+                        <div class="col-xs-4">总记录数：${pagination.totalCount?c} </div>
+                        <div class="col-xs-8">
+                            <#include "/common/pagination.html">
+                        </div>
+                   </div>
                 </div>
+
+            </div>
+        </div>
+    </div>
 </@override>
 <@override name="custom-script">
     
-    <script>
-	    bootbox.setDefaults({locale:"zh_CN"});
-        $(".J_delete").on('click', function () {
-        	var dataParam = $(this).attr('data-param');
-        	bootbox.confirm({
-		        message: '你确定删除该条数据？',
-		        title: "提示",
-		        callback: function(result) {  
-		            if (result) {
-	                    $.post('/system/deleteAction.jhtml', JSON.parse(dataParam), function(result) {
-			                if(result.state.code==200){
-				        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-				        	}else{
-				        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
-				        	}
-			            }, 'json');
-	                }
-		        }
-	        });
-	    });
-    </script>
 </@override>
 <@extends name="/common/base.html"/>  

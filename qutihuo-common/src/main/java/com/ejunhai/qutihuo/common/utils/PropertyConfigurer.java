@@ -23,7 +23,7 @@ public class PropertyConfigurer extends PropertyPlaceholderConfigurer {
 		}
 	}
 
-	public static Object getContextProperty(String name) {
-		return ctxPropertiesMap.get(name);
+	public static String getContextProperty(String name) {
+		return (String) ctxPropertiesMap.get(name);
 	}
 }

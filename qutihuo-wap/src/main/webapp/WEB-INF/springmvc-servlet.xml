@@ -17,53 +17,70 @@
 	<!-- 开启自动切面代理 -->
 	<aop:aspectj-autoproxy />
 
-	<!-- 系统异常处理 -->
-	<bean class="com.ejunhai.junhaimall.framework.exception.DefaultHandlerExceptionResolver">
-		<property name="exceptionMappings">
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	
+	<bean id="exceptionHandler" class="com.ejunhai.qutihuo.interceptor.DefaultExceptionResolver"/> 
+	
+	<mvc:interceptors>  
+    	<bean class="com.ejunhai.qutihuo.interceptor.AuthenticationInterceptor" />  
+    </mvc:interceptors> 
+	
+    <!-- 设置编码  -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">  
+        <property name="messageConverters">  
+            <list>  
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">  
+                    <property name="supportedMediaTypes">  
+                        <list>  
+                            <value>text/html;charset=UTF-8</value>  
+                        </list>  
+                    </property>  
+                </bean>  
+            </list>  
+        </property>  
+    </bean>  
+    
+	<!-- 模板配置 -->
+	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath"  value="/" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="freemarkerSettings">
 			<props>
-				<prop key="com.ejunhai.junhaimall.framework.exception.ClientException">
-					forward:/clientException.sc
-				</prop>
-				<prop key="java.lang.Exception">forward:/systemError.sc </prop>
+				<prop key="template_update_delay">0</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="default_encoding">UTF-8</prop>
 			</props>
 		</property>
-	</bean>
-
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
-
-	<bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basename" value="JunhaiMall" />
-	</bean>
-
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-		<property name="messageConverters">
-			<list>
-				<bean
-					class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
-				<bean
-					class="org.springframework.http.converter.StringHttpMessageConverter">
-					<property name="supportedMediaTypes">
-						<list>
-							<value>text/plain;charset=UTF-8</value>
-						</list>
-					</property>
-				</bean>
-				<bean class="org.springframework.http.converter.ResourceHttpMessageConverter" />
-				<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
-				<bean class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter" />
-				<bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" />
-			</list>
+		
+		<!-- 全局变量部分 -->
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="BasePath" value=""/>
+				<entry key="JS_VERSION" value="JunHai_v1.1.1" />
+			</map>
 		</property>
 	</bean>
-
+	
+	<bean id="freemarkerStatic" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="classpath:staticClass.properties" />
+    </bean>
+    
+    <bean id="freemarkerStaticModels" class="com.ejunhai.qutihuo.common.freemarker.FreemarkerStaticModels" factory-method="getInstance">
+        <property name="staticModels" ref="freemarkerStatic"/>
+    </bean>
+	
+	<bean id="ftlviewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		 <property name="cache" value="true"/>
+		<property name="prefix" value="" />
+		<property name="suffix" value=".html"/>
+		<property name="attributesMap" ref="freemarkerStaticModels"/>
+	</bean>
+	
 	<!-- 配置对文件上传的支持 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
 	<mvc:annotation-driven />
 
 </beans>
-
-
-
-

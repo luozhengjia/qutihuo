@@ -101,7 +101,7 @@
         update tb_coupon
         <set>
             state = #{state,jdbcType=SMALLINT},
-            use_order_number = #{useOrderNumber,jdbcType=VARCHAR},
+            order_number = #{orderNumber,jdbcType=VARCHAR},
             use_time = #{useTime,jdbcType=TIMESTAMP}
         </set>
         where id = #{id}

@@ -12,7 +12,7 @@
 
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>qutihuo.admin.root</param-value>
+		<param-value>qutihuo.wap.root</param-value>
 	</context-param>
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>
@@ -25,10 +25,9 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath*:/applicationContext.xml
+			classpath*:/application-context.xml
 		</param-value>
 	</context-param>
-
 
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -68,10 +67,9 @@
 		<url-pattern>*.jhtml</url-pattern>
 	</servlet-mapping>
 
-	<!-- 图片验证码 -->
 	<servlet>
 		<servlet-name>ImageValidate</servlet-name>
-		<servlet-class>com.ejunhai.junhaimall.framework.util.ImageValidate</servlet-class>
+		<servlet-class>com.ejunhai.qutihuo.utils.ImageValidate</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ImageValidate</servlet-name>
@@ -84,10 +82,10 @@
 
 	<error-page>
 		<error-code>404</error-code>
-		<location>/404.html</location>
+		<location>/errors/error-404.html</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/500.html</location>
+		<location>/errors/error-500.html</location>
 	</error-page>
 </web-app>

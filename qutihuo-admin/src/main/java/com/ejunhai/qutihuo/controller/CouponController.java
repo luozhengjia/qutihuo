@@ -88,6 +88,7 @@ public class CouponController extends BaseController {
 		// 验证用户是否有操作权限
 		CouponSchema couponSchema = new CouponSchema();
 		Integer merchantId = SessionManager.get(request).getMerchantId();
+		JunhaiAssert.notNull(merchantId, "只有商户才能创建优惠券方案");
 		if (couponSchemaDto.getId() != null) {
 			couponSchema = couponSchemaService.read(couponSchemaDto.getId());
 			JunhaiAssert.isTrue(merchantId == null || merchantId.equals(couponSchema.getMerchantId()), "id无效");

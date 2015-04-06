@@ -9,7 +9,7 @@ public class JunhaiAssert {
 		if (message == null || message.length == 0) {
 			message = OBJ;
 		}
-		throw new BusinessException(error.getValue(), error.getTitle());
+		throw new BusinessException(error.getValue(), String.valueOf(message[0]));
 	}
 
 	/**

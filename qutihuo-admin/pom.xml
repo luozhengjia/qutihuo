@@ -55,12 +55,16 @@
 			<artifactId>qutihuo-common</artifactId>
 			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
-
+		<dependency>
+		    <groupId>com.qiniu</groupId>
+		    <artifactId>qiniu-java-sdk</artifactId>
+		    <version>[6.1.7, 6.999]</version>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<filters>
-			<filter>src/main/resources/application-${env}.properties</filter>
+			<filter>src/main/resources/environment/application-${env}.properties</filter>
 		</filters>
 		<resources>
 			<resource>
