@@ -58,9 +58,9 @@
                     			<td>${OrderState.get(item.state).getTitle()}</td>
                     			<td>
                     				<#if item.state==1>
-                    					<a class="btn btn-success btn-xs" href="/coupon/exportCoupons.jhtml?couponSchemaId=${item.id?c}"><i class="glyphicon glyphicon-transfer"></i> 发货</a>
+                    					<button type="button" class="btn btn-success btn-xs J_activate" data-param='{"orderMainNo":${item.orderMainNo}}'><i class="glyphicon glyphicon-transfer"></i> 发货</button>
                     				</#if>
-                    				<a class="btn btn-info btn-xs" href="/coupon/toCouponSchema.jhtml?couponSchemaId=${item.id?c}"><i class="fa fa-eye"></i> 查看</a>
+                    				<a class="btn btn-info btn-xs" href="/orderMain/toOrderMain.jhtml?orderMainNo=${item.orderMainNo}"><i class="fa fa-eye"></i> 查看</a>
                     			</td>
                             </tr>
                             </#list>

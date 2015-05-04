@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.qutihuo.aftersale.dao.AfterSaleRequMapper" >
+    <resultMap id="AfterSaleRequMap" type="com.ejunhai.qutihuo.aftersale.model.AfterSaleRequ" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="urls" property="urls" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="SMALLINT" />
+        <result column="order_main_no" property="orderMainNo" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="deal_time" property="dealTime" jdbcType="TIMESTAMP" />
+        <result column="deal_info" property="dealInfo" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        id,
+        urls,
+        description,
+        state,
+        order_main_no,
+        create_time,
+        deal_time,
+        deal_info
+    </sql>
+    
+    <select id="read" resultMap="AfterSaleRequMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from tb_after_sale_requ
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <select id="getAfterSaleRequByOrderMainNo" parameterType="String" resultMap="AfterSaleRequMap">
+  		SELECT * FROM tb_after_sale_requ where order_main_no=#{orderMainNo}
+  	</select>
+    
+    <insert id="insert" parameterType="com.ejunhai.qutihuo.aftersale.model.AfterSaleRequ" useGeneratedKeys="true" keyProperty="id" >
+        insert into tb_after_sale_requ (<include refid="Base_Column_List" />)
+        values (
+	        #{id,jdbcType=INTEGER},
+	        #{urls,jdbcType=VARCHAR},
+	        #{description,jdbcType=VARCHAR},
+	        #{state,jdbcType=SMALLINT},
+	        #{orderMainNo,jdbcType=VARCHAR},
+	        #{createTime,jdbcType=TIMESTAMP},
+	        #{dealTime,jdbcType=TIMESTAMP},
+	        #{dealInfo,jdbcType=VARCHAR}
+        )
+    </insert>
+    
+    <update id="update" parameterType="com.ejunhai.qutihuo.aftersale.model.AfterSaleRequ" >
+        update tb_after_sale_requ
+        <set>
+            urls = #{urls,jdbcType=VARCHAR},
+            description = #{description,jdbcType=VARCHAR},
+            state = #{state,jdbcType=SMALLINT},
+            order_main_no = #{orderMainNo,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            deal_time = #{dealTime,jdbcType=TIMESTAMP},
+            deal_info = #{dealInfo,jdbcType=VARCHAR}
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <select id="queryAfterSaleRequCount" resultType="java.lang.Integer">
+    	select count(1) from tb_after_sale_requ
+    </select>
+    
+    <select id="queryAfterSaleRequList" resultMap="AfterSaleRequMap">
+    	select <include refid="Base_Column_List" /> from tb_after_sale_requ
+			limit #{offset},#{pageSize}
+    </select>
+    
+</mapper>

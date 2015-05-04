@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ejunhai.qutihuo.coupon.dto.CouponDto;
 import com.ejunhai.qutihuo.coupon.model.Coupon;
+import com.ejunhai.qutihuo.coupon.model.CouponSchema;
 
 /**
  * 

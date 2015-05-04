@@ -137,4 +137,13 @@
         where id = #{couponSchemaId}
     </update>
     
+    <select id="getCouponSchemaListByOrderNos" resultMap="CouponSchemaMapper">
+    	select <include refid="Base_Column_List" /> tb_coupon_schema 
+    	where id in (select coupon_schema_id from tb_coupon where order_number in(
+    		<foreach collection="list" item="orderNo" index="index" separator="," >  
+		        #{orderNo}
+		    </foreach>
+    	))
+    </select>
+    
 </mapper>

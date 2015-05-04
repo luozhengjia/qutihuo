@@ -78,4 +78,11 @@ public interface CouponSchemaMapper {
 	 */
 	public void updateCouponUseNum(@Param("couponSchemaId") Integer couponSchemaId, @Param("useNum") Integer useNum);
 
+	/**
+	 * 根据订单号获取优惠券模板列表
+	 * 
+	 * @param orderNoList
+	 * @return
+	 */
+	public List<CouponSchema> getCouponSchemaListByOrderNos(List<String> orderNoList);
 }

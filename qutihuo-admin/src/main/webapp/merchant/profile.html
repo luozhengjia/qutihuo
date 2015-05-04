@@ -17,39 +17,39 @@
                     <form id="html5Form" method="post" class="form-horizontal" method="POST" action="/merchant/editMerchant.jhtml">
 						<input type="hidden" name="id"/>
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">商户名称</label>
+                            <label class="col-sm-2 control-label">商户名称</label>
                             <div class="col-lg-5">
-                            	<span class="form-control">${merchant.merchantName}<span>
+                            	<p class="form-control">${merchant.merchantName}</p>
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="col-lg-2 control-label">主营业务</label>
                             <div class="col-lg-4">
-                            	<span class="form-control">${merchant.businessLine}<span>
+                            	<p class="form-control">${merchant.businessLine}</p>
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="col-lg-2 control-label">商户等级</label>
                             <div class="col-lg-4">
-                            	<span class="form-control">${merchant.merchantLevel}<span>
+                            	<p class="form-control">金牌商户</p>
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="col-lg-2 control-label">注册时间</label>
                             <div class="col-lg-4">
-                            	<span class="form-control">${merchant.openTime}<span>
+                            	<p class="form-control">${merchant.openTime}</p>
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="col-lg-2 control-label">剩余短信数量</label>
-                            <div class="col-lg-2">
-                            	<span class="form-control">${merchant.availableSmsNum}<span>
+                            <div class="col-xs-3">
+                            	<span class="form-control">${merchant.availableSmsNum} 条</span>
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-xs-3">
                             	<button type="submit" class="btn btn-info">充值</button>
                             </div>
                         </div>
@@ -57,28 +57,28 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">备案号</label>
                             <div class="col-lg-4">
-                            	<span class="form-control">${merchant.recordNumber}<span>
+                            	<p class="form-control">${merchant.recordNumber}</p>
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="col-lg-2 control-label">公司联系人</label>
                             <div class="col-lg-3">
-                            	<span class="form-control">${merchant.contacts}<span>
+                            	<p class="form-control">${merchant.contacts}</p>
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="col-lg-2 control-label">公司联系电话</label>
                             <div class="col-lg-3">
-                            	<span class="form-control">${merchant.telephone}<span>
+                            	<p class="form-control">${merchant.telephone}</p>
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="col-lg-2 control-label">公司联系地址</label>
                             <div class="col-lg-6">
-                            	<span class="form-control">${merchant.address}<span>
+                            	<p class="form-control">${merchant.address}</p>
                             </div>
                         </div>
                     </form>

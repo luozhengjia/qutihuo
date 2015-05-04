@@ -1,0 +1,77 @@
+<@override name="page-content">  
+	<div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#">订单管理</a></li>
+            <li>售后申请列表</li>
+        </ul>
+    </div>
+    
+    <div class="page-body">
+        <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            <div class="col-xs-12 col-md-12">
+                <div class="well with-header with-footer">
+                    <div class="header">
+                        <div class="col-xs-10">
+                        	<form class="form-inline" role="form">
+							    <div class="form-group">
+							        <input type="text"  name="orderMainNo" class="form-control" value="${(afterSaleRequDto.orderMainNo)!''}" placeholder="按订单号过滤">
+							        <select name="state" class="form-control">
+										<option value="">按状态过滤</option>
+										<#list RequState.values() as item >
+											<option value="${item.value}" <#if afterSaleRequDto.state?? && afterSaleRequDto.state==item.value>selected</#if>>${item.title}</option> 
+										</#list>
+                                    </select>
+							    </div>
+							    <button type="submit" class="btn">搜索</button>
+							</form>
+                        </div>
+                    </div>
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>订单号</th>
+                                <th width="50%">申请描述</th>
+                                <th>申请时间</th>
+                                <th>处理时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <#list afterSaleRequList as item >
+                            <tr>
+                            	<td>${item.id?c}</td>
+                    			<td>${item.orderMainNo}</td>
+                    			<td>${item.description}</td>
+                    			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
+                    			<td>${item.dealTime?string('yyyy-MM-dd HH:mm')}</td>
+                    			<td>${RequState.get(item.state).getTitle()}</td>
+                    			<td>
+                    				<#if item.state==0>
+                    					<a class="btn btn-success btn-xs" href="/coupon/exportCoupons.jhtml?couponSchemaId=${item.id?c}"><i class="glyphicon glyphicon-transfer"></i> 处理</a>
+                    				<#else>
+                    					<a class="btn btn-info btn-xs" href="/coupon/toCouponSchema.jhtml?couponSchemaId=${item.id?c}"><i class="fa fa-eye"></i> 查看</a>
+                    				</#if>
+                    			</td>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table>
+
+                    <div class="footer">
+                        <div class="col-xs-4">总记录数：${pagination.totalCount?c} </div>
+                        <div class="col-xs-8">
+                            <#include "/common/pagination.html">
+                        </div>
+                   </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</@override>
+<@override name="custom-script">
+    
+</@override>
+<@extends name="/common/base.html"/>  

@@ -1,10 +1,12 @@
 package com.ejunhai.qutihuo.coupon.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import com.ejunhai.qutihuo.coupon.dao.CouponSchemaMapper;
@@ -65,5 +67,13 @@ public class CouponSchemaServiceImpl implements CouponSchemaService {
 	@Override
 	public void updateCouponUseNum(Integer couponSchemaId, Integer useNum) {
 		couponSchemaMapper.updateCouponUseNum(couponSchemaId, useNum);
+	}
+
+	@Override
+	public List<CouponSchema> getCouponSchemaListByOrderNos(List<String> orderNoList) {
+		if (CollectionUtils.isEmpty(orderNoList)) {
+			return new ArrayList<CouponSchema>();
+		}
+		return couponSchemaMapper.getCouponSchemaListByOrderNos(orderNoList);
 	}
 }

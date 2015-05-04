@@ -1,6 +1,5 @@
 package com.ejunhai.qutihuo.order.service.impl;
 
-import java.awt.geom.Area;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -8,7 +7,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.ejunhai.qutihuo.coupon.enums.CouponState;
 import com.ejunhai.qutihuo.coupon.model.Coupon;
 import com.ejunhai.qutihuo.coupon.model.CouponSchema;
 import com.ejunhai.qutihuo.coupon.service.CouponSchemaService;
@@ -18,7 +16,6 @@ import com.ejunhai.qutihuo.order.enums.OrderState;
 import com.ejunhai.qutihuo.order.model.OrderMain;
 import com.ejunhai.qutihuo.order.service.OrderMainService;
 import com.ejunhai.qutihuo.order.utils.OrderUtil;
-import com.ejunhai.qutihuo.system.model.SystemArea;
 import com.ejunhai.qutihuo.system.service.SystemAreaService;
 
 /**

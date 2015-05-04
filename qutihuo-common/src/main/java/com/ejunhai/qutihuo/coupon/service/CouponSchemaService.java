@@ -76,4 +76,12 @@ public interface CouponSchemaService {
 	 * @param useNum
 	 */
 	public void updateCouponUseNum(Integer couponSchemaId, Integer useNum);
+
+	/**
+	 * 根据订单号获取优惠券模板列表
+	 * 
+	 * @param orderNoList
+	 * @return
+	 */
+	public List<CouponSchema> getCouponSchemaListByOrderNos(List<String> orderNoList);
 }

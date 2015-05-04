@@ -11,7 +11,7 @@ jQuery.fn.imgUploader = function(options) {
 	var uploadBtn = $('#'+uploadBtnId).closest("ul").find('.btn-upload');
 	if(input.val().length > 0){
 		$.each( input.val().split(","), function(i, n){
-			uploadBtn.before('<li><button type="button" class="close">&times;</button><img class="loaded-img" width="140px" height="140px" src="' + n + '"/></li>')
+			uploadBtn.before('<li><button class="close">×</button><img class="loaded-img" width="140px" height="140px" src="' + n + '"/></li>')
 		});
 	}
 	

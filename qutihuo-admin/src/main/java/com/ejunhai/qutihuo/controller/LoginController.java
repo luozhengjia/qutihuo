@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,22 +42,21 @@ public class LoginController extends BaseController {
 	@RequestMapping("authentication")
 	@ResponseBody
 	public String authentication(String loginName, String password, String validateCode, HttpServletRequest request) {
-		JunhaiAssert.notNull(loginName, "用户账号不能为空");
-		JunhaiAssert.notNull(password, "用户密码不能为空");
-		JunhaiAssert.notNull(validateCode, "验证码不能为空");
+		JunhaiAssert.notBlank(loginName, "用户账号不能为空");
+		JunhaiAssert.notBlank(password, "用户密码不能为空");
+		JunhaiAssert.notBlank(validateCode, "验证码不能为空");
 
 		// 验证验证码
-		// String serverValidateCode = (String)
-		// request.getSession().getAttribute(null);
-		// JunhaiAssert.isTrue(validateCode.equals(serverValidateCode),
-		// ErrorType.SYSTEM_USER_VALIDATE_CODE_INVALID);
+		String sValidateCode = (String) request.getSession().getAttribute(FrontUtil.LOGIN_VALIDATE_IMAGE);
+		JunhaiAssert.isTrue(validateCode.equals(sValidateCode), "验证码无效");
 
 		// 验证用户账号
 		SystemUser systemUser = systemUserService.getSystemUserByLoginName(loginName);
 		JunhaiAssert.notNull(systemUser, ErrorType.SYSTEM_USER_LOGIN_NAME_INVALID);
 
 		// 验证用户密码
-		JunhaiAssert.isTrue(systemUser.getPasswd().equals(password), ErrorType.SYSTEM_USER_LOGIN_PWD_INVALID);
+		String userPasswd = DigestUtils.md5Hex(systemUser.getPasswd().toUpperCase());
+		JunhaiAssert.isTrue(userPasswd.equals(password), ErrorType.SYSTEM_USER_LOGIN_PWD_INVALID);
 
 		// 验证用户状态
 		JunhaiAssert.isFalse(UserState.lock.getValue().equals(systemUser.getState()), ErrorType.SYSTEM_USER_STATE_LOCK);

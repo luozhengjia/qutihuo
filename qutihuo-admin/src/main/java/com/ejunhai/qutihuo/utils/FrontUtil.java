@@ -14,6 +14,8 @@ public class FrontUtil {
 
 	protected static final Gson gson = new GsonBuilder().serializeNulls().disableHtmlEscaping().create();
 	
+	public static final String LOGIN_VALIDATE_IMAGE = "LOGIN_VALIDATE_IMAGE";
+	
 	private static String[] excludeUrls = { "/login.jhtml", "/authentication.jhtml", "/logout.jhtml", "/forbidden.jhtml", "/imageUpload.jhtml" };
 	
 	public static boolean isExcludeUrl(String curUrl){

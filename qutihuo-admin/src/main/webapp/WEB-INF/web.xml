@@ -67,6 +67,15 @@
 		<servlet-name>springmvc</servlet-name>
 		<url-pattern>*.jhtml</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ImageValidate</servlet-name>
+		<servlet-class>com.ejunhai.qutihuo.utils.ImageValidate</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ImageValidate</servlet-name>
+		<url-pattern>/servlet/imageValidate</url-pattern>
+	</servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>index.jhtml</welcome-file>

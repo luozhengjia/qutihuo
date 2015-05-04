@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ejunhai.qutihuo.common.base.BaseController;
 import com.ejunhai.qutihuo.common.base.Pagination;
+import com.ejunhai.qutihuo.coupon.model.Coupon;
+import com.ejunhai.qutihuo.coupon.model.CouponSchema;
+import com.ejunhai.qutihuo.coupon.service.CouponSchemaService;
+import com.ejunhai.qutihuo.coupon.service.CouponService;
+import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.order.dto.OrderMainDto;
 import com.ejunhai.qutihuo.order.model.OrderMain;
 import com.ejunhai.qutihuo.order.service.OrderMainService;
@@ -23,6 +28,12 @@ public class OrderMainController extends BaseController {
 
 	@Resource
 	private OrderMainService orderMainService;
+
+	@Resource
+	private CouponSchemaService couponSchemaService;
+
+	@Resource
+	private CouponService couponService;
 
 	@RequestMapping("/orderMainList")
 	public String orderMainList(HttpServletRequest request, OrderMainDto orderMainDto, ModelMap modelMap) {
@@ -44,4 +55,18 @@ public class OrderMainController extends BaseController {
 		return "order/orderMainList";
 	}
 
+	@RequestMapping("/toOrderMain")
+	public String toOrderMain(HttpServletRequest request, String orderMainNo, ModelMap modelMap) {
+		JunhaiAssert.notBlank(orderMainNo, "订单号码不能为空");
+		OrderMain orderMain = orderMainService.getOrderMainByOrderMainNo(orderMainNo);
+		JunhaiAssert.notNull(orderMain, "订单号码无效");
+
+		// 获取券详情信息
+		Coupon coupon = couponService.getCouponByNo(orderMain.getCouponNumber());
+		CouponSchema couponSchema = couponSchemaService.read(coupon.getCouponSchemaId());
+
+		modelMap.put("orderMain", orderMain);
+		modelMap.put("couponSchema", couponSchema);
+		return "order/orderMainEdit";
+	}
 }

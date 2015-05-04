@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>Dashboard</title>
+    <title>去提货公共服务平台</title>
 
     <meta name="description" content="Dashboard" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon">
 
     <!--Basic Styles-->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -21,45 +21,100 @@
 
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
     <script src="/assets/js/skins.js"></script>
+    <style>
+    	.top{height:100px; background-color:#fff;}
+		.top_info{width:1000px; margin:0 auto; height:68px; }
+		.logo{margin-top:17px; width:253px; height:68px; float:left; }
+    	.banner{ 
+    		width:100%; 
+    		min-width:1000px;
+    		height:438px; 
+    		margin:0 auto;  
+    		background-position:center center; 
+    		position:relative;
+    		background-repeat:no-repeat;
+    		background-color:#e8e7e7;
+    		background-image:url(http://tm.dhb.net.cn/images/banner_1.jpg); 
+    	}
+    	
+    	.login{
+    		width:340px; 
+    		height:360px;
+    		right:160px; 
+    		top:35px; 
+    		position:absolute;
+    		padding:0px 20px 20px 20px;
+    		background-image:url(http://tm.dhb.net.cn/images/login_bg.png);
+    	}
+    	
+    	.login h1{
+    		color:#f6f6f6;
+    		font-size:16px; 
+    		line-height:28px;
+    		margin-bottom:24px;
+    	}
+    </style>
 </head>
 
-<body>
-    <div class="login-container animated fadeInDown">
-        <div class="loginbox bg-white">
-            <div class="loginbox-title">SIGN IN</div>
-            <div class="loginbox-social">
-                <div class="social-title ">Connect with Your Social Accounts</div>
-                <div class="social-buttons">
-                    <a href="" class="button-facebook">
-                        <i class="social-icon fa fa-facebook"></i>
-                    </a>
-                    <a href="" class="button-twitter">
-                        <i class="social-icon fa fa-twitter"></i>
-                    </a>
-                    <a href="" class="button-google">
-                        <i class="social-icon fa fa-google-plus"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="loginbox-or">
-                <div class="or-line"></div>
-                <div class="or">OR</div>
-            </div>
-            <form id="loginForm" method="post" class="form-horizontal" method="POST" action="authentication.jhtml">
-            <div class="loginbox-textbox">
-                <input type="text" name="loginName" class="form-control" placeholder="用户名" />
-            </div>
-            <div class="loginbox-textbox">
-                <input type="password" name="password" class="form-control" placeholder="用户密码" />
-            </div>
-            <div class="loginbox-textbox">
-                <input type="text" name="validateCode" class="form-control" placeholder="验证码" />
-            </div>
-            <div class="loginbox-submit">
-                <input type="submit" class="btn btn-primary btn-block" value="登录">
-            </div>
-            </form>
-        </div>
+<body style="background-color:#fff;">
+    <div class="main-container container-fluid">
+    
+    	<div class="top">
+	    	<div class="top_info">
+	    		<div class="logo" ><img src="http://tm.dhb.net.cn/images/logo.jpg" /></div>
+	        </div>
+	    </div>
+    
+    	<div class="banner">
+    		<div class="login">
+    			<h1><strong>去提货 - 公共提货平台（管理入口）<strong></h1>
+    			
+    			<form id="loginForm" class="form-horizontal" method="POST" action="authentication.jhtml">
+			  		<div id="valate_msg_tip" class="alert alert-danger alert-dismissable" style="display: none;">
+			  	  		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			  	  	</div>
+			  	  
+				  	<div class="form-group">
+				    	<div  class="col-xs-12">
+				      		<span class="input-icon">
+				      			<input type="text" name="loginName" class="form-control" placeholder="用户名">
+                                <i class="glyphicon glyphicon-user"></i>
+                            </span>
+				    	</div>
+				  	</div>
+				  	
+				  	<div class="form-group">
+				    	<div class="col-xs-12">
+				    		<span class="input-icon">
+				      			<input type="password" name="password" class="form-control" placeholder="用户密码">
+                                <i class="glyphicon glyphicon-lock"></i>
+                            </span>
+				    	</div>	
+				  	</div>
+				  	
+				  	<div class="form-group">
+				    	<div class="col-xs-6">
+				      		<input type="text" name="validateCode" class="form-control" placeholder="验证码">
+				    	</div>	
+				    	<div class="col-xs-4">
+				      		<img id="validateCodeImage" src="/servlet/imageValidate" title="点击换验证码" style="height:32px;width:48px;cursor:pointer">
+				    	</div>
+				   </div>
+				   
+				   <div>
+		      			<button type="submit" class="btn btn-info btn-lg btn-block"><strong>登 录</strong></button>
+		    	   </div>
+	    		</form>
+    		</div>
+    	</div>
+    	
+    	<div style="height:70px;padding-top:20px;">
+			<p style="text-align:center;font-size:12px;color:#969696;">
+            	Copyright&copy;&nbsp;2015&nbsp;&nbsp;7tihuo.com&nbsp;&nbsp;All&nbsp;Rights&nbsp;Reserved&nbsp;&nbsp;武汉壹骏海实业有限公司 &nbsp;&nbsp;版权所有&nbsp;&nbsp;鄂ICP备12011799号-1<br />
+				使用 <a href="http://www.google.cn/intl/zh-CN/chrome/browser/?installdataindex=chinabookmarkcontrol&brand=CHUN" target="_blank">Chrome</a> 或 <a href="http://www.firefox.com.cn/" target="_blank">Firefox</a> 浏览器访问本系统会获得最佳体验  <a href="desktop.shtml" >保存到桌面↓</a> 
+			</p>
+    	</div>
+    	
     </div>
 
     <!--Basic Scripts-->
@@ -68,14 +123,48 @@
 
     <!--Beyond Scripts-->
     <script src="/assets/js/beyond.min.js"></script>
+    <script src="/assets/js/base.junhai.js"></script>
     <script src="/assets/js/validation/formValidation.min.js"></script>
     <script src="/assets/js/validation/framework/bootstrap.min.js"></script>
-	<script src="/assets/js/toastr/toastr.js"></script>
+     <script src="http://ejunhai.qiniudn.com/MD5.js"></script>
     
     <script>
 		$(document).ready(function() {	
 		
-			$('#loginForm').formValidation().on('success.form.fv', function(e) {
+			$('#validateCodeImage').click(function() {  
+				$('#validateCodeImage').attr("src","/servlet/imageValidate?"+Math.random());
+			}); 
+			
+			$('input').focus(function() { 
+				$('#valate_msg_tip').hide("slow");
+			});
+		
+			$('#loginForm').formValidation({
+				live: 'enabled',
+				fields: {
+		            loginName: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '用户名不能为空'
+		                    }
+		                }
+		            },
+		            password: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '用户密码不能为空'
+		                    }
+		                }
+		            },
+		            validateCode :{
+		            	validators: {
+		                    notEmpty: {
+		                        message: '验证码不能为空'
+		                    }
+		                }
+		            }
+		        }
+			}).on('success.form.fv', function(e) {
 		        // Prevent form submission
 		        e.preventDefault();
 		
@@ -83,17 +172,22 @@
 		        var $form = $(e.target);
 		
 		        // Get the FormValidation instance
-		        var bv = $form.data('formValidation');
+		        // var bv = $form.data('formValidation');
 		
 		        // Use Ajax to submit form data
-		        $.post($form.attr('action'), $form.serialize(), function(result) {
-		            if(result.state.code==200){
-		            	window.location = "/index.jhtml";
-		        	}else{
-		        		alert(result.state.msg);
-		        		bv.disableSubmitButtons(false);
-		        	}
-		        }, 'json');
+		        $.post("authentication.jhtml", {
+	        		"loginName":$("input[name='loginName']").val(),
+					"password": hex_md5($("input[name='password']").val().toUpperCase()),
+					"validateCode":$("input[name='validateCode']").val()
+	        	},
+			   	function(data){
+			    	if(data.state.code!=200){
+			    		$form.find('.alert').html(data.state.msg).show();
+			    		$('#validateCodeImage').attr("src","/servlet/imageValidate?"+Math.random());
+			    	}else{
+			    		location.href ='index.jhtml';
+			    	}
+			   	}, "json");
 		    });
 		});
 	</script>
