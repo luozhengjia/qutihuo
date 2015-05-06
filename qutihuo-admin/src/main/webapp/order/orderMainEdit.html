@@ -15,8 +15,8 @@
                     	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>查看订单</b>
                     </div>
                 
-					<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/orderMain/saveOrderMain.jhtml">
-						<input type="hidden" name="id"/>
+					<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/orderMain/changeConsigneeInfo.jhtml">
+						<input type="hidden" name="id" value="${orderMain.id}"/>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">订单编号</label>
                             <div class="col-lg-3">
@@ -134,6 +134,57 @@
 			    districtValidator($("#areaCode").val());
 			});
 		});
+		
+		$('#html5Form').formValidation({
+			fields: {
+	            consignee: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '请输入收货人姓名'
+	                    }
+	                }
+	            },
+	            telephone: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '请输入收货人手机号码'
+	                    },
+	                    regexp: {
+	                        regexp: /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|2|3|5|6|7|8|9])\d{8}$/,
+	                        message: '手机号码无效'
+	                    }
+	                }
+	            },
+	            detailAddress: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '请输入详细地址'
+	                    }
+	                }
+	            }
+	        }
+		})        
+		.on('success.form.fv', function(e) {
+            // Prevent form submission
+            e.preventDefault();
+            
+            // Get the form instance
+            var $form = $(e.target);
+
+            // Get the FormValidation instance
+            var bv = $form.data('formValidation');
+            
+            // Use Ajax to submit form data
+            $.post($form.attr('action'), $form.serialize(), function(result) {
+                if(result.state.code==200){
+	        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+	        		setTimeout(function () {window.location = "/orderMain/orderMainList.jhtml";}, 1500);
+	        	}else{
+	        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+	        	}
+            }, 'json');
+        });
 	</script>
+		
 </@override>
 <@extends name="/common/base.html"/>  

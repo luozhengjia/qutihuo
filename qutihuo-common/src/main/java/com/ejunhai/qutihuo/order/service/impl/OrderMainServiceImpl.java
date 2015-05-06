@@ -11,6 +11,7 @@ import com.ejunhai.qutihuo.coupon.model.Coupon;
 import com.ejunhai.qutihuo.coupon.model.CouponSchema;
 import com.ejunhai.qutihuo.coupon.service.CouponSchemaService;
 import com.ejunhai.qutihuo.coupon.service.CouponService;
+import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.order.dao.OrderMainMapper;
 import com.ejunhai.qutihuo.order.enums.OrderState;
 import com.ejunhai.qutihuo.order.model.OrderMain;
@@ -22,9 +23,7 @@ import com.ejunhai.qutihuo.system.service.SystemAreaService;
  * OrderMain Service 实现类
  * 
  * @author parcel
- * 
  * @date 2014-12-10 21:36:31
- * 
  */
 @Service("orderMainService")
 public class OrderMainServiceImpl implements OrderMainService {
@@ -91,6 +90,19 @@ public class OrderMainServiceImpl implements OrderMainService {
 		// 发送短信
 
 		return orderMain;
+	}
+
+	@Override
+	public void changeConsigneeInfo(OrderMain orderMain) {
+		OrderMain oldOrderMain = this.read(orderMain.getId());
+		JunhaiAssert.notNull(oldOrderMain, "订单ID无效");
+
+		oldOrderMain.setConsignee(orderMain.getConsignee());
+		oldOrderMain.setTelephone(orderMain.getTelephone());
+		oldOrderMain.setProvinceCode(orderMain.getProvinceCode());
+		oldOrderMain.setCityCode(orderMain.getCityCode());
+		oldOrderMain.setAreaCode(orderMain.getAreaCode());
+		this.orderMainMapper.update(oldOrderMain);
 	}
 
 }

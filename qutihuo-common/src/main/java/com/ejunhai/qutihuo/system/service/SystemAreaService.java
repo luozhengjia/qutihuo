@@ -1,7 +1,5 @@
 package com.ejunhai.qutihuo.system.service;
 
-import java.util.List;
-
 import com.ejunhai.qutihuo.system.model.SystemArea;
 
 /**

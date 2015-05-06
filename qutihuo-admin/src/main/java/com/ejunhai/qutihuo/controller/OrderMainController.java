@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ejunhai.qutihuo.common.base.BaseController;
 import com.ejunhai.qutihuo.common.base.Pagination;
@@ -68,5 +69,13 @@ public class OrderMainController extends BaseController {
 		modelMap.put("orderMain", orderMain);
 		modelMap.put("couponSchema", couponSchema);
 		return "order/orderMainEdit";
+	}
+	
+	@RequestMapping("/changeConsigneeInfo")
+	@ResponseBody
+    public String changeConsigneeInfo(OrderMain orderMain, ModelMap modelMap) throws Exception {
+	    orderMainService.changeConsigneeInfo(orderMain);
+	    
+	    return jsonSuccess();
 	}
 }
