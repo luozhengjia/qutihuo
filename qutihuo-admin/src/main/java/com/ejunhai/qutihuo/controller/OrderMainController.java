@@ -58,7 +58,7 @@ public class OrderMainController extends BaseController {
 
 	@RequestMapping("/toOrderMain")
 	public String toOrderMain(HttpServletRequest request, String orderMainNo, ModelMap modelMap) {
-		JunhaiAssert.notBlank(orderMainNo, "订单号码不能为空");
+
 		OrderMain orderMain = orderMainService.getOrderMainByOrderMainNo(orderMainNo);
 		JunhaiAssert.notNull(orderMain, "订单号码无效");
 
@@ -70,12 +70,22 @@ public class OrderMainController extends BaseController {
 		modelMap.put("couponSchema", couponSchema);
 		return "order/orderMainEdit";
 	}
-	
+
 	@RequestMapping("/changeConsigneeInfo")
 	@ResponseBody
-    public String changeConsigneeInfo(OrderMain orderMain, ModelMap modelMap) throws Exception {
-	    orderMainService.changeConsigneeInfo(orderMain);
-	    
-	    return jsonSuccess();
+	public String changeConsigneeInfo(OrderMain orderMain, ModelMap modelMap) throws Exception {
+		orderMainService.changeConsigneeInfo(orderMain);
+
+		return jsonSuccess();
+	}
+
+	@RequestMapping("/deliver")
+	@ResponseBody
+	public String deliverOrderMain(OrderMain orderMain, ModelMap modelMap) throws Exception {
+		JunhaiAssert.notNull(orderMain.getLogisticsCompany(), "物流公司不能为空");
+		JunhaiAssert.notNull(orderMain.getExpressOrderNo(), "快递单号不能为空");
+
+		orderMainService.deliverOrderMain(orderMain);
+		return jsonSuccess();
 	}
 }

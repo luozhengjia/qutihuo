@@ -105,4 +105,19 @@ public class OrderMainServiceImpl implements OrderMainService {
 		this.orderMainMapper.update(oldOrderMain);
 	}
 
+	@Override
+	public void deliverOrderMain(OrderMain orderMain) {
+		OrderMain oldOrderMain = this.read(orderMain.getId());
+		JunhaiAssert.notNull(oldOrderMain, "订单ID无效");
+
+		oldOrderMain.setLogisticsCompany(orderMain.getLogisticsCompany());
+		oldOrderMain.setExpressOrderNo(orderMain.getExpressOrderNo());
+		oldOrderMain.setState(OrderState.DELIVERD.getValue());
+		oldOrderMain.setDeliverTime(new Timestamp(System.currentTimeMillis()));
+		this.orderMainMapper.update(oldOrderMain);
+
+		// 发送短信
+
+	}
+
 }

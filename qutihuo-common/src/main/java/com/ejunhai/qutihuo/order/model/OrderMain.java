@@ -96,7 +96,6 @@ public class OrderMain implements Serializable {
     /**
      * 发货时间
      */
-    @JsonSerialize(using = JsonDateSerializer19.class)
     private Timestamp deliverTime;
 
     /**

@@ -46,7 +46,7 @@
                         </thead>
                         <tbody>
                             <#list orderMainList as item >
-                            <tr>
+                            <tr data-formData='{"id":${item.id},"orderMainNo":"${item.orderMainNo}","logisticsCompany":1}'>
                             	<td>${item.id?c}</td>
                     			<td>${item.orderMainNo}</td>
                     			<td>${item.couponNumber}</td>
@@ -58,7 +58,7 @@
                     			<td>${OrderState.get(item.state).getTitle()}</td>
                     			<td>
                     				<#if item.state==1>
-                    					<button type="button" class="btn btn-success btn-xs J_activate" data-param='{"orderMainNo":${item.orderMainNo}}'><i class="glyphicon glyphicon-transfer"></i> 发货</button>
+                    					<button type="button" class="btn btn-success btn-xs J_deliver"><i class="glyphicon glyphicon-transfer"></i> 发货</button>
                     				</#if>
                     				<a class="btn btn-info btn-xs" href="/orderMain/toOrderMain.jhtml?orderMainNo=${item.orderMainNo}"><i class="fa fa-eye"></i> 查看</a>
                     			</td>
@@ -78,8 +78,102 @@
             </div>
         </div>
     </div>
+    
+    <form id="html5Form" class="form-horizontal" role="form" method="POST" style="display: none;" action="/orderMain/deliver.jhtml">
+    	<input type="hidden" name="id"/>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">订单号</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="orderMainNo" disabled>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-3 control-label">物流公司<font color="red"> *</font></label>
+            <div class="col-sm-7">
+            	<select name="logisticsCompany">
+					<#list LogisticsCompany.values() as item >
+						<option value="${item.value}">${item.title}</option> 
+					</#list>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-3 control-label">快递单号<font color="red"> *</font></label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="expressOrderNo">
+            </div>
+        </div>
+        
+        <div class="form-group">
+	        <div class="col-xs-5 col-xs-offset-3">
+            	<button type="submit" class="btn btn-success">确认</button>
+	        </div>
+	    </div>
+    </form>
 </@override>
 <@override name="custom-script">
-    
+    <script>
+		$(document).ready(function() {
+	        // 订单发货
+	        $(".J_deliver").on('click', function () {
+	        	var formData = JSON.parse($(this).parent().parent().attr('data-formData'));
+	        	bootbox.dialog({
+	                title: '订单发货',
+	                message: $('#html5Form'),
+	                show: false
+	            })
+	            .on('shown.bs.modal', function() {
+	            	$('#html5Form').show().formValidation('resetForm', true); 
+	            	$("#html5Form").autofill(formData);
+	            })
+	            .on('hide.bs.modal', function(e) {
+	            	$('#html5Form').hide().appendTo('body');
+	            })
+	            .modal('show');
+	        });
+	        
+	        // 订单发货
+	        $('#html5Form').formValidation({
+				fields: {
+					logisticsCompany: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '物流公司不能为空'
+		                    }
+		                }
+		            },
+		            expressOrderNo: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '快递单号不能为空'
+		                    }
+		                }
+		            }
+		        }
+			})        
+			.on('success.form.fv', function(e) {
+	            // Prevent form submission
+	            e.preventDefault();
+	
+	            // Get the form instance
+	            var $form = $(e.target);
+	
+	            // Get the FormValidation instance
+	            var bv = $form.data('formValidation');
+	
+	            // Use Ajax to submit form data
+	            $.post($form.attr('action'), $form.serialize(), function(result) {
+	                if(result.state.code==200){
+		        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+		        		setTimeout(function () {window.location = "/orderMain/orderMainList.jhtml";}, 1500);
+		        	}else{
+		        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+		        	}
+	            }, 'json');
+	        });
+        });
+	</script>
 </@override>
 <@extends name="/common/base.html"/>  
