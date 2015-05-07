@@ -49,9 +49,9 @@
                     			<td>${RequState.get(item.state).getTitle()}</td>
                     			<td>
                     				<#if item.state==0>
-                    					<a class="btn btn-success btn-xs" href="/coupon/exportCoupons.jhtml?couponSchemaId=${item.id?c}"><i class="glyphicon glyphicon-transfer"></i> 处理</a>
+                    					<a class="btn btn-success btn-xs" href="/orderMain/toAfterSaleRequ.jhtml?afterSaleRequId=${item.id?c}"><i class="fa fa-eye"></i> 处理</a>
                     				<#else>
-                    					<a class="btn btn-info btn-xs" href="/coupon/toCouponSchema.jhtml?couponSchemaId=${item.id?c}"><i class="fa fa-eye"></i> 查看</a>
+                    					<a class="btn btn-info btn-xs" href="/orderMain/toAfterSaleRequ.jhtml?afterSaleRequId=${item.id?c}"><i class="fa fa-eye"></i> 查看</a>
                     				</#if>
                     			</td>
                             </tr>

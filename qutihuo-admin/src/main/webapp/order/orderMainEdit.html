@@ -22,20 +22,9 @@
                             <div class="col-lg-3">
                                 <p class="form-control">${orderMain.orderMainNo}</p>
                             </div>
-                            <label class="col-lg-2 control-label">订单金额</label>
-                            <div class="col-lg-3">
-                                <p class="form-control">${orderMain.payAmount}</p>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                        	<label class="col-lg-2 control-label">礼品券编号</label>
+                            <label class="col-lg-2 control-label">礼品券编号</label>
                             <div class="col-lg-3">
                                 <p class="form-control">${orderMain.orderMainNo}</p>
-                            </div>
-                            <label class="col-lg-2 control-label">预约日期</label>
-                            <div class="col-lg-3">
-                                <p class="form-control">${orderMain.orderDate}</p>
                             </div>
                         </div>
                         
@@ -45,16 +34,14 @@
                             	<p class="form-control">${couponSchema.couponName}</p>
 							</div>
                         </div>
-                            
+                        
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">礼品介绍</label>
-                            <div class="col-lg-8">
-                                <textarea class="form-control" name="remark" rows="3" disabled>${couponSchema.remark}</textarea>
+                            <label class="col-lg-2 control-label">预约日期</label>
+                            <div class="col-lg-3">
+                                <p class="form-control">${orderMain.orderDate}</p>
                             </div>
                         </div>
-                        
-                        <hr class="wide" />
-                        
+                            
                         <div class="form-group">
                             <label class="col-lg-2 control-label">收货人姓名<font color="red"> *</font></label>
                             <div class="col-lg-3">
@@ -88,11 +75,26 @@
 							</div>
                         </div>
                         
+                        <#if orderMain.state==2>
+                        <div class="form-group">
+                        	<label class="col-lg-2 control-label">物流公司</label>
+                            <div class="col-lg-3">
+                                <p class="form-control">${LogisticsCompany.get(orderMain.logisticsCompany?eval).title}</p>
+                            </div>
+                            <label class="col-lg-2 control-label">快递单号</label>
+                            <div class="col-lg-3">
+                                <p class="form-control">${orderMain.expressOrderNo}</p>
+                            </div>
+                        </div>
+                        </#if>
+                        
+                        <#if orderMain.state==1>
                         <div class="form-group">
                             <div class="col-lg-2 col-lg-offset-2">
                             	 <button type="submit" class="btn btn-success">确认</button>
                             </div>
                         </div>
+                        </#if>
                     </form>
                 </div>
 

@@ -1,0 +1,90 @@
+<@override name="page-content">  
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#">订单管理</a></li>
+            <li><a href="/orderMain/orderMainList.jhtml">售后申请列表</a></li>
+            <li>售后处理</li>
+        </ul>
+    </div>
+    
+	<div class="page-body">
+        <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            <div class="col-xs-12 col-md-12">
+                <div class="well with-header with-footer">
+                    <div class="header">
+                    	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>售后处理</b>
+                    </div>
+                
+					<form id="html5Form" method="post" class="form-horizontal" method="POST">
+						<input type="hidden" name="id" value="${afterSaleRequ.id}"/>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">订单编号</label>
+                            <div class="col-lg-3">
+                                <p class="form-control">${orderMain.orderMainNo}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">礼品券名称</label>
+                            <div class="col-lg-6">
+                            	<p class="form-control">${couponSchema.couponName}</p>
+							</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">申请售后时间</label>
+                            <div class="col-lg-4">
+                            	<p class="form-control">${afterSaleRequ.createTime?string('yyyy-MM-dd mm')}</p>
+							</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">售后申请说明</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" name="remark" rows="5" disabled>${afterSaleRequ.description}</textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">售后申请凭证</label>
+                            <div class="col-lg-10">
+                            	<ul class="list-inline">
+                            		<#list afterSaleRequ.urls?split(",") as url>
+                            			<li class="btn-upload"><img src="${url}" width="220px"/></li>
+                            		</#list>
+                            	</ul>
+							</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">售后处理说明</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" name="remark" rows="5" <#if afterSaleRequ.state!=0>disabled</#if>>${afterSaleRequ.dealInfo!''}</textarea>
+                            </div>
+                        </div>
+                        
+                        <#if afterSaleRequ.state==0>
+                        <div class="form-group">
+                            <div class="col-lg-4 col-lg-offset-2">
+                            	 <button type="button" class="btn btn-danger">拒绝申请</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            	 <button type="button" class="btn btn-success">下补货单</button>
+                            </div>
+                        </div>
+                        </#if>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</@override>
+<@override name="custom-script">
+   	<script>
+		$(document).ready(function() {
+	        
+
+        });
+	</script>
+		
+</@override>
+<@extends name="/common/base.html"/>  
