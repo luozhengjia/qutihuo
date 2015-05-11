@@ -47,6 +47,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>qutihuo-admin</finalName>
 		<filters>
 			<filter>src/main/resources/environment/application-${env}.properties</filter>
 		</filters>
