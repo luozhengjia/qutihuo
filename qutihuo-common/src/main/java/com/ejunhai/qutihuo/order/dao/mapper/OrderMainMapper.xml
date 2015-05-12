@@ -122,10 +122,24 @@
     
     <select id="queryOrderMainCount" resultType="java.lang.Integer">
     	select count(1) from tb_order_main
+    	<where>
+    		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
+    		<if test="orderMainNo != null and orderMainNo !=''"> and order_main_no = #{orderMainNo} </if>
+    		<if test="couponNumber != null and couponNumber !=''">and coupon_number =#{couponNumber} </if>
+    		<if test="orderDate != null and orderDate !=''"> and order_date = #{orderDate} </if>
+  			<if test="state != null">and state=#{state} </if>
+		</where>
     </select>
     
     <select id="queryOrderMainList" resultMap="OrderMainMapper">
     	select <include refid="Base_Column_List" /> from tb_order_main
+    	<where>
+    		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
+    		<if test="orderMainNo != null and orderMainNo !=''"> and order_main_no = #{orderMainNo} </if>
+    		<if test="couponNumber != null and couponNumber !=''">and coupon_number =#{couponNumber} </if>
+    		<if test="orderDate != null and orderDate !=''"> and order_date = #{orderDate} </if>
+  			<if test="state != null">and state=#{state} </if>
+		</where>
     	limit #{offset},#{pageSize} 
     </select>
     

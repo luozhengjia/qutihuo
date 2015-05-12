@@ -70,24 +70,22 @@
     <select id="querySystemActionCount" resultType="java.lang.Integer">
     	select count(1) from tb_system_action
     	<where>
-    		<if test="actionName!=null and actionName!=''">
-				and action_name like CONCAT('%',#{actionName},'%')
-			</if>
-	    	<if test="actionType!=null and actionType!=''">
-				and action_type = #{actionType,jdbcType=INTEGER} 
-			</if>
+    		<if test="actionName!=null and actionName!=''"> and action_name like CONCAT('%',#{actionName},'%')</if>
+	    	<if test="actionType!=null and actionType!=''"> and action_type = #{actionType,jdbcType=INTEGER}</if>
+	    	<if test="parentId!=null and parentId!=''"> 
+	    		and (parent_id = #{parentId,jdbcType=INTEGER} or id = #{parentId,jdbcType=INTEGER})
+	    	</if>
 		</where>
     </select>
     
     <select id="querySystemActionList" resultMap="SystemActionMapper">
     	select <include refid="Base_Column_List" /> from tb_system_action 
     	<where>
-    		<if test="actionName!=null and actionName!=''">
-				and action_name like CONCAT('%',#{actionName},'%')
-			</if>
-	    	<if test="actionType!=null and actionType!=''">
-				and action_type = #{actionType,jdbcType=INTEGER} 
-			</if>
+    		<if test="actionName!=null and actionName!=''"> and action_name like CONCAT('%',#{actionName},'%')</if>
+	    	<if test="actionType!=null and actionType!=''"> and action_type = #{actionType,jdbcType=INTEGER}</if>
+	    	<if test="parentId!=null and parentId!=''"> 
+	    		and (parent_id = #{parentId,jdbcType=INTEGER} or id = #{parentId,jdbcType=INTEGER})
+	    	</if>
 		</where>
 		order by weight asc
     	limit #{offset},#{pageSize} 

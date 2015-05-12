@@ -85,6 +85,7 @@
     	<where>
     		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
     		<if test="loginName!=null and loginName!=''"> and login_name like CONCAT('%',#{loginName},'%')</if>
+    		<if test="nickname!=null and nickname!=''"> and nickname like CONCAT('%',#{nickname},'%')</if>
 		</where>
     </select>
     
@@ -93,6 +94,7 @@
     	<where>
     		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
     		<if test="loginName!=null and loginName!=''"> and login_name like CONCAT('%',#{loginName},'%')</if>
+    		<if test="nickname!=null and nickname!=''"> and nickname like CONCAT('%',#{nickname},'%')</if>
 		</where>
 		limit #{offset},#{pageSize} 
     </select>

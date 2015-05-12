@@ -14,8 +14,10 @@
 	                    <div class="col-xs-10">
 	                    	<form class="form-inline" role="form">
 							    <div class="form-group">
-							        <label class="sr-only" for="exampleInputEmail2">操作名称</label>
 							        <input type="text"  name="actionName" class="form-control" value="${(systemActionDto.actionName)!''}" placeholder="按操作名过滤">
+							    </div>
+							    <div class="form-group">
+							        <input type="text"  name="parentId" class="form-control" value="${(systemActionDto.parentId)!''}" placeholder="按父节点ID过滤">
 							    </div>
 							    <button type="submit" class="btn">搜索</button>
 							</form>
