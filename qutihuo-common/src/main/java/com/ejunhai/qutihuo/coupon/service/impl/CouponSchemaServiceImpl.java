@@ -65,8 +65,8 @@ public class CouponSchemaServiceImpl implements CouponSchemaService {
 	}
 
 	@Override
-	public void updateCouponUseNum(Integer couponSchemaId, Integer useNum) {
-		couponSchemaMapper.updateCouponUseNum(couponSchemaId, useNum);
+	public void updateCouponUseNum(Integer couponSchemaId, Integer hasUseNum) {
+		couponSchemaMapper.updateCouponUseNum(couponSchemaId, hasUseNum);
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import com.ejunhai.qutihuo.coupon.model.CouponSchema;
 import com.ejunhai.qutihuo.coupon.service.CouponSchemaService;
 import com.ejunhai.qutihuo.coupon.service.CouponService;
 import com.ejunhai.qutihuo.errors.JunhaiAssert;
+import com.ejunhai.qutihuo.order.enums.OrderSource;
 import com.ejunhai.qutihuo.order.model.OrderMain;
 import com.ejunhai.qutihuo.order.service.OrderMainService;
 import com.ejunhai.qutihuo.utils.LoginUtil;
@@ -89,6 +90,7 @@ public class OrderController extends BaseController {
 			return "redirect:toSubscribe.jhtml";
 		}
 
+		orderMain.setSource(OrderSource.PHONE.getValue());
 		orderMain = orderMainService.createOrderMain(coupon, orderMain);
 
 		// 更新coupon状态

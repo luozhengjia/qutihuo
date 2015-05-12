@@ -13,6 +13,7 @@ import com.ejunhai.qutihuo.coupon.service.CouponSchemaService;
 import com.ejunhai.qutihuo.coupon.service.CouponService;
 import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.order.dao.OrderMainMapper;
+import com.ejunhai.qutihuo.order.enums.OrderPrint;
 import com.ejunhai.qutihuo.order.enums.OrderState;
 import com.ejunhai.qutihuo.order.model.OrderMain;
 import com.ejunhai.qutihuo.order.service.OrderMainService;
@@ -82,6 +83,9 @@ public class OrderMainServiceImpl implements OrderMainService {
 		orderMain.setCouponNumber(coupon.getCouponNumber());
 		orderMain.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		orderMain.setState(OrderState.NO_DELIVER.getValue());
+		String provinceCityArea = systemAreaService.getProvinceCityArea(orderMain.getAreaCode());
+		orderMain.setProvinceCityArea(provinceCityArea);
+		orderMain.setIsPrintExpress(OrderPrint.NO_PRINT.getValue());
 		orderMainMapper.insert(orderMain);
 
 		// 更新优惠券状态
@@ -102,6 +106,8 @@ public class OrderMainServiceImpl implements OrderMainService {
 		oldOrderMain.setProvinceCode(orderMain.getProvinceCode());
 		oldOrderMain.setCityCode(orderMain.getCityCode());
 		oldOrderMain.setAreaCode(orderMain.getAreaCode());
+		String provinceCityArea = systemAreaService.getProvinceCityArea(orderMain.getAreaCode());
+		oldOrderMain.setProvinceCityArea(provinceCityArea);
 		this.orderMainMapper.update(oldOrderMain);
 	}
 

@@ -13,6 +13,7 @@
         <result column="province_code" property="provinceCode" jdbcType="VARCHAR" />
         <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
         <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+        <result column="province_city_area" property="provinceCityArea" jdbcType="VARCHAR" />
         <result column="detail_address" property="detailAddress" jdbcType="VARCHAR" />
         <result column="logistics_company" property="logisticsCompany" jdbcType="VARCHAR" />
         <result column="express_order_no" property="expressOrderNo" jdbcType="VARCHAR" />
@@ -36,6 +37,7 @@
         province_code,
         city_code,
         area_code,
+        province_city_area,
         detail_address,
         logistics_company,
         express_order_no,
@@ -68,6 +70,7 @@
         #{provinceCode,jdbcType=VARCHAR},
         #{cityCode,jdbcType=VARCHAR},
         #{areaCode,jdbcType=VARCHAR},
+        #{provinceCityArea,jdbcType=VARCHAR},
         #{detailAddress,jdbcType=VARCHAR},
         #{logisticsCompany,jdbcType=VARCHAR},
         #{expressOrderNo,jdbcType=VARCHAR},
@@ -94,6 +97,7 @@
             province_code = #{provinceCode,jdbcType=VARCHAR},
             city_code = #{cityCode,jdbcType=VARCHAR},
             area_code = #{areaCode,jdbcType=VARCHAR},
+            province_city_area = #{provinceCityArea,jdbcType=VARCHAR},
             detail_address = #{detailAddress,jdbcType=VARCHAR},
             logistics_company = #{logisticsCompany,jdbcType=VARCHAR},
             express_order_no = #{expressOrderNo,jdbcType=VARCHAR},

@@ -16,280 +16,293 @@ import com.ejunhai.qutihuo.common.base.JsonDateSerializer19;
  */
 public class OrderMain implements Serializable {
 
-    private static final long serialVersionUID = 2140487853674378601L;
+	private static final long serialVersionUID = 2140487853674378601L;
 
-    /**
+	/**
      * 
      */
-    private Integer id;
+	private Integer id;
 
-    /**
-     * 主订单号
-     */
-    private String orderMainNo;
+	/**
+	 * 主订单号
+	 */
+	private String orderMainNo;
 
-    /**
-     * 优惠券码
-     */
-    private String couponNumber;
+	/**
+	 * 优惠券码
+	 */
+	private String couponNumber;
 
-    /**
-     * 商户ID
-     */
-    private Integer merchantId;
+	/**
+	 * 商户ID
+	 */
+	private Integer merchantId;
 
-    /**
-     * 订单状态
-     */
-    private Integer state;
+	/**
+	 * 订单状态
+	 */
+	private Integer state;
 
-    /**
-     * 订单金额
-     */
-    private BigDecimal payAmount;
+	/**
+	 * 订单金额
+	 */
+	private BigDecimal payAmount;
 
-    /**
-     * 预定日期
-     */
-    private String orderDate;
+	/**
+	 * 预定日期
+	 */
+	private String orderDate;
 
-    /**
-     * 收货人
-     */
-    private String consignee;
+	/**
+	 * 收货人
+	 */
+	private String consignee;
 
-    /**
-     * 联系电话
-     */
-    private String telephone;
+	/**
+	 * 联系电话
+	 */
+	private String telephone;
 
-    /**
-     * 省编码
-     */
-    private String provinceCode;
+	/**
+	 * 省编码
+	 */
+	private String provinceCode;
 
-    /**
-     * 市编码
-     */
-    private String cityCode;
+	/**
+	 * 市编码
+	 */
+	private String cityCode;
 
-    /**
-     * 区编码
-     */
-    private String areaCode;
+	/**
+	 * 区编码
+	 */
+	private String areaCode;
 
-    /**
-     * 详细地址
-     */
-    private String detailAddress;
+	/**
+	 * 省市区
+	 */
+	private String provinceCityArea;
 
-    /**
-     * 物流公司
-     */
-    private String logisticsCompany;
+	/**
+	 * 详细地址
+	 */
+	private String detailAddress;
 
-    /**
-     * 快递单号
-     */
-    private String expressOrderNo;
+	/**
+	 * 物流公司
+	 */
+	private String logisticsCompany;
 
-    /**
-     * 发货时间
-     */
-    private Timestamp deliverTime;
+	/**
+	 * 快递单号
+	 */
+	private String expressOrderNo;
 
-    /**
-     * 是否已发短信
-     */
-    private Integer isSendSms;
+	/**
+	 * 发货时间
+	 */
+	private Timestamp deliverTime;
 
-    /**
-     * 是否已打印快递单
-     */
-    private Integer isPrintExpress;
+	/**
+	 * 是否已发短信
+	 */
+	private Integer isSendSms;
 
-    /**
-     * 订单来源 1 后台下单 2 pc下单 3 wap下单
-     */
-    private Integer source;
+	/**
+	 * 是否已打印快递单
+	 */
+	private Integer isPrintExpress;
 
-    /**
-     * 订单备注
-     */
-    private String remark;
+	/**
+	 * 订单来源 1 后台下单 2 pc下单 3 wap下单
+	 */
+	private Integer source;
 
-    /**
-     * 下单时间
-     */
+	/**
+	 * 订单备注
+	 */
+	private String remark;
+
+	/**
+	 * 下单时间
+	 */
 	@JsonSerialize(using = JsonDateSerializer19.class)
-    private Timestamp createTime;
+	private Timestamp createTime;
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public String getOrderMainNo() {
-        return orderMainNo;
-    }
+	public String getOrderMainNo() {
+		return orderMainNo;
+	}
 
-    public void setOrderMainNo(String orderMainNo) {
-        this.orderMainNo = orderMainNo;
-    }
+	public void setOrderMainNo(String orderMainNo) {
+		this.orderMainNo = orderMainNo;
+	}
 
-    public String getCouponNumber() {
-        return couponNumber;
-    }
+	public String getCouponNumber() {
+		return couponNumber;
+	}
 
-    public void setCouponNumber(String couponNumber) {
-        this.couponNumber = couponNumber;
-    }
+	public void setCouponNumber(String couponNumber) {
+		this.couponNumber = couponNumber;
+	}
 
-    public Integer getMerchantId() {
-        return merchantId;
-    }
+	public Integer getMerchantId() {
+		return merchantId;
+	}
 
-    public void setMerchantId(Integer merchantId) {
-        this.merchantId = merchantId;
-    }
+	public void setMerchantId(Integer merchantId) {
+		this.merchantId = merchantId;
+	}
 
-    public Integer getState() {
-        return state;
-    }
+	public Integer getState() {
+		return state;
+	}
 
-    public void setState(Integer state) {
-        this.state = state;
-    }
+	public void setState(Integer state) {
+		this.state = state;
+	}
 
-    public BigDecimal getPayAmount() {
-        return payAmount;
-    }
+	public BigDecimal getPayAmount() {
+		return payAmount;
+	}
 
-    public void setPayAmount(BigDecimal payAmount) {
-        this.payAmount = payAmount;
-    }
+	public void setPayAmount(BigDecimal payAmount) {
+		this.payAmount = payAmount;
+	}
 
-    public String getOrderDate() {
-        return orderDate;
-    }
+	public String getOrderDate() {
+		return orderDate;
+	}
 
-    public void setOrderDate(String orderDate) {
-        this.orderDate = orderDate;
-    }
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
+	}
 
-    public String getConsignee() {
-        return consignee;
-    }
+	public String getConsignee() {
+		return consignee;
+	}
 
-    public void setConsignee(String consignee) {
-        this.consignee = consignee;
-    }
+	public void setConsignee(String consignee) {
+		this.consignee = consignee;
+	}
 
-    public String getTelephone() {
-        return telephone;
-    }
+	public String getTelephone() {
+		return telephone;
+	}
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 
-    public String getProvinceCode() {
-        return provinceCode;
-    }
+	public String getProvinceCode() {
+		return provinceCode;
+	}
 
-    public void setProvinceCode(String provinceCode) {
-        this.provinceCode = provinceCode;
-    }
+	public void setProvinceCode(String provinceCode) {
+		this.provinceCode = provinceCode;
+	}
 
-    public String getCityCode() {
-        return cityCode;
-    }
+	public String getCityCode() {
+		return cityCode;
+	}
 
-    public void setCityCode(String cityCode) {
-        this.cityCode = cityCode;
-    }
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
 
-    public String getAreaCode() {
-        return areaCode;
-    }
+	public String getAreaCode() {
+		return areaCode;
+	}
 
-    public void setAreaCode(String areaCode) {
-        this.areaCode = areaCode;
-    }
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
 
-    public String getDetailAddress() {
-        return detailAddress;
-    }
+	public String getProvinceCityArea() {
+		return provinceCityArea;
+	}
 
-    public void setDetailAddress(String detailAddress) {
-        this.detailAddress = detailAddress;
-    }
+	public void setProvinceCityArea(String provinceCityArea) {
+		this.provinceCityArea = provinceCityArea;
+	}
 
-    public String getLogisticsCompany() {
-        return logisticsCompany;
-    }
+	public String getDetailAddress() {
+		return detailAddress;
+	}
 
-    public void setLogisticsCompany(String logisticsCompany) {
-        this.logisticsCompany = logisticsCompany;
-    }
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+	}
 
-    public String getExpressOrderNo() {
-        return expressOrderNo;
-    }
+	public String getLogisticsCompany() {
+		return logisticsCompany;
+	}
 
-    public void setExpressOrderNo(String expressOrderNo) {
-        this.expressOrderNo = expressOrderNo;
-    }
+	public void setLogisticsCompany(String logisticsCompany) {
+		this.logisticsCompany = logisticsCompany;
+	}
 
-    public Timestamp getDeliverTime() {
-        return deliverTime;
-    }
+	public String getExpressOrderNo() {
+		return expressOrderNo;
+	}
 
-    public void setDeliverTime(Timestamp deliverTime) {
-        this.deliverTime = deliverTime;
-    }
+	public void setExpressOrderNo(String expressOrderNo) {
+		this.expressOrderNo = expressOrderNo;
+	}
 
-    public Integer getIsSendSms() {
-        return isSendSms;
-    }
+	public Timestamp getDeliverTime() {
+		return deliverTime;
+	}
 
-    public void setIsSendSms(Integer isSendSms) {
-        this.isSendSms = isSendSms;
-    }
+	public void setDeliverTime(Timestamp deliverTime) {
+		this.deliverTime = deliverTime;
+	}
 
-    public Integer getIsPrintExpress() {
-        return isPrintExpress;
-    }
+	public Integer getIsSendSms() {
+		return isSendSms;
+	}
 
-    public void setIsPrintExpress(Integer isPrintExpress) {
-        this.isPrintExpress = isPrintExpress;
-    }
+	public void setIsSendSms(Integer isSendSms) {
+		this.isSendSms = isSendSms;
+	}
 
-    public Integer getSource() {
-        return source;
-    }
+	public Integer getIsPrintExpress() {
+		return isPrintExpress;
+	}
 
-    public void setSource(Integer source) {
-        this.source = source;
-    }
+	public void setIsPrintExpress(Integer isPrintExpress) {
+		this.isPrintExpress = isPrintExpress;
+	}
 
-    public String getRemark() {
-        return remark;
-    }
+	public Integer getSource() {
+		return source;
+	}
 
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
+	public void setSource(Integer source) {
+		this.source = source;
+	}
 
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
+	public String getRemark() {
+		return remark;
+	}
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
 
 }

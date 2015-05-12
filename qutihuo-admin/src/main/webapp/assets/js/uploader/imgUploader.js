@@ -26,7 +26,7 @@ jQuery.fn.imgUploader = function(options) {
     var uploader = Qiniu.uploader({
     	'runtimes': 'html5,flash,html4',
     	'browse_button': uploadBtnId,
-    	'uptoken_url':'http://localhost:8080/getUptoken.jhtml',
+    	'uptoken_url':'/getUptoken.jhtml',
     	'domain':'http://7xig2s.com1.z0.glb.clouddn.com/',
     	'max_file_size':'2mb',
     	'flash_swf_url':'/assets/js/uploader/Moxie.swf',

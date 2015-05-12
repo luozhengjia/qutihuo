@@ -32,6 +32,13 @@
                         </div>
                         
                         <div class="form-group">
+                            <label class="col-lg-2 control-label">礼品卡面值<font color="red"> *</font></label>
+                            <div class="col-lg-2">
+                            	<input type="text" class="form-control"e="parValue"/>
+							</div>
+                        </div>
+                        
+                        <div class="form-group">
                             <label for="reservation" class="col-lg-2 control-label">有效期<font color="red"> *</font></label>
                             <div class="col-lg-5">
                             	<div class="input-group">
@@ -93,6 +100,7 @@
 			var formData = {			
 	         	"id":${(couponSchema.id)!'null'},
 				"couponName":"${(couponSchema.couponName)!''}",
+				"parValue":"${(couponSchema.parValue)!''}",
 				"iconUrl":"${(couponSchema.iconUrl)!''}",
 				"useStartdate":"${(couponSchema.useStartdate?string('yyyy-MM-dd 00:00'))!''}",
 				"useEnddate":"${(couponSchema.useEnddate?string('yyyy-MM-dd 23:59'))!''}",
@@ -125,6 +133,13 @@
 		                validators: {
 		                    notEmpty: {
 		                        message: '礼品卡名称不能为空'
+		                    }
+		                }
+		            },
+		            parValue: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '礼品卡面值不能为空'
 		                    }
 		                }
 		            },

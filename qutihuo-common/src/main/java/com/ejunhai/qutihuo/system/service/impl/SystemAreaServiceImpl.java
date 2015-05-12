@@ -26,4 +26,18 @@ public class SystemAreaServiceImpl implements SystemAreaService {
 	public SystemArea getAreaByNo(String no) {
 		return systemAreaMapper.getAreaByNo(no);
 	}
+
+	@Override
+	public String getProvinceCityArea(String areaNo) {
+		// 将areaNo拆分出省市区编码
+		String cityNo = areaNo.substring(0, areaNo.lastIndexOf("-"));
+		String provinceNo = cityNo.substring(0, cityNo.lastIndexOf("-"));
+		
+		// 拼出省市区
+		StringBuffer sb = new StringBuffer();
+		sb.append(this.getAreaByNo(provinceNo).getName());
+		sb.append(this.getAreaByNo(cityNo).getName());
+		sb.append(this.getAreaByNo(areaNo).getName());
+		return sb.toString();
+	}
 }

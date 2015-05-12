@@ -15,7 +15,7 @@
     </resultMap>
     
     <select id="getAreaByNo" parameterType="String" resultMap="SystemAreaMapper">
-  		SELECT * FROM tbl_system_area where no=#{no}
+  		SELECT * FROM tb_system_area where no=#{no}
   	</select>
     
 </mapper>

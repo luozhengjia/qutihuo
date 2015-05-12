@@ -80,6 +80,7 @@ public class CouponController extends BaseController {
 	@ResponseBody
 	public String saveCouponSchema(HttpServletRequest request, CouponSchemaDto couponSchemaDto) {
 		JunhaiAssert.notBlank(couponSchemaDto.getCouponName(), "礼品卡名称不能为空");
+		JunhaiAssert.notNull(couponSchemaDto.getParValue(), "礼品卡面值不能为空");
 		JunhaiAssert.notBlank(couponSchemaDto.getIconUrl(), "礼品卡图标不能为空");
 		JunhaiAssert.notNull(couponSchemaDto.getUseStartdate(), "礼品卡开始时间不能为空");
 		JunhaiAssert.notNull(couponSchemaDto.getUseStartdate(), "礼品卡结束时间不能为空");
@@ -96,6 +97,7 @@ public class CouponController extends BaseController {
 
 		// 设置参数
 		couponSchema.setCouponName(couponSchemaDto.getCouponName());
+		couponSchema.setParValue(couponSchemaDto.getParValue());
 		couponSchema.setIconUrl(couponSchemaDto.getIconUrl());
 		couponSchema.setUseStartdate(couponSchemaDto.getUseStartdate());
 		couponSchema.setUseEnddate(couponSchemaDto.getUseEnddate());

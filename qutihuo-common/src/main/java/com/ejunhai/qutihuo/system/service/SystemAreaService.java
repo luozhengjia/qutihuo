@@ -21,4 +21,12 @@ public interface SystemAreaService {
 	 */
 	public SystemArea getAreaByNo(String no);
 
+	/**
+	 * 根据区域编号获取省市区
+	 * 
+	 * @param areaNo
+	 * @return
+	 */
+	public String getProvinceCityArea(String areaNo);
+
 }

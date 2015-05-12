@@ -76,7 +76,7 @@ public interface CouponSchemaMapper {
 	 * @param couponSchemaId
 	 * @param useNum
 	 */
-	public void updateCouponUseNum(@Param("couponSchemaId") Integer couponSchemaId, @Param("useNum") Integer useNum);
+	public void updateCouponUseNum(@Param("couponSchemaId") Integer couponSchemaId, @Param("hasUseNum") Integer hasUseNum);
 
 	/**
 	 * 根据订单号获取优惠券模板列表
