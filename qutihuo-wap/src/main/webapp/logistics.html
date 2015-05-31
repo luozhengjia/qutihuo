@@ -22,7 +22,7 @@
 		  <div class="panel-body">
 		  	<p>
 		  		<#list orderLogList as item >
-		  		<small>${item.createTime?string('yyyy-MM-dd HH:mm')}  ${item.behavioutDescribe!''}</small>
+		  		<small>${item.createTime?string('yyyy-MM-dd HH:mm')}  ${item.remark!''}</small>
 		  		<#if item_has_next><br></#if>
 			  </#list>
 		  	</p>
@@ -42,7 +42,7 @@
 		  <div class="panel-body">
 		  	<p>
 		  		<#list orderRepl.orderLogList as item >
-					<small>${item.createTime?string('yyyy-MM-dd HH:mm')}  ${item.behavioutDescribe!''}</small>
+					<small>${item.createTime?string('yyyy-MM-dd HH:mm')}  ${item.remark!''}</small>
 					<#if item_has_next><br></#if>
 				</#list>
 		  	</p>

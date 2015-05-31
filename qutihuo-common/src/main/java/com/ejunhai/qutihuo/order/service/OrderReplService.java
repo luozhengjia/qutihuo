@@ -51,7 +51,7 @@ public interface OrderReplService {
      * @param orderRepl
      * @return
      */
-    public Integer queryOrderReplCount(OrderRepl orderRepl);
+    public Integer queryOrderReplCount(OrderReplDto orderReplDto);
     
     /**
      * 查询OrderRepl列表

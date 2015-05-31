@@ -8,11 +8,14 @@ import java.sql.Timestamp;
  * 补货单表
  * 
  * @author parcel
- * @date 2014-12-10 21:36:31
+ * @date 2015-05-31 17:38:52
  */
 public class OrderRepl implements Serializable {
 
-	private static final long serialVersionUID = 4358156494509220173L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2223159409051017839L;
 
 	/**
      * 
@@ -28,6 +31,11 @@ public class OrderRepl implements Serializable {
 	 * 主订单号
 	 */
 	private String orderMainNo;
+
+	/**
+	 * 商户ID
+	 */
+	private Integer merchantId;
 
 	/**
 	 * 订单状态
@@ -141,6 +149,14 @@ public class OrderRepl implements Serializable {
 
 	public void setOrderMainNo(String orderMainNo) {
 		this.orderMainNo = orderMainNo;
+	}
+
+	public Integer getMerchantId() {
+		return merchantId;
+	}
+
+	public void setMerchantId(Integer merchantId) {
+		this.merchantId = merchantId;
 	}
 
 	public Integer getState() {
@@ -286,4 +302,5 @@ public class OrderRepl implements Serializable {
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
+
 }

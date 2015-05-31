@@ -1,0 +1,176 @@
+<@override name="page-content">  
+	<div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#">订单管理</a></li>
+            <li>补货单列表</li>
+        </ul>
+    </div>
+    
+    <div class="page-body">
+        <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            <div class="col-xs-12 col-md-12">
+                <div class="well with-header with-footer">
+                    <div class="header">
+                        <div class="col-xs-10">
+                        	<form class="form-inline" role="form">
+							    <div class="form-group">
+							    	<input type="text"  name="orderReplNo" class="form-control" value="${(orderReplDto.orderReplNo)!''}" placeholder="按补货单号过滤">
+							        <input type="text"  name="orderMainNo" class="form-control" value="${(orderReplDto.orderMainNo)!''}" placeholder="按订单号过滤">
+							        <select name="state" class="form-control">
+										<option value="">按状态过滤</option>
+										<#list OrderState.values() as item >
+											<option value="${item.value}" <#if orderReplDto.state?? && orderReplDto.state==item.value>selected</#if>>${item.title}</option> 
+										</#list>
+                                    </select>
+							    </div>
+							    <button type="submit" class="btn">搜索</button>
+							</form>
+                        </div>
+                    </div>
+                
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>订单号</th>
+                                <th>下单日期</th>
+                                <th>订单金额</th>
+                                <th>收货人</th>
+                                <th>联系电话</th>
+                                <th>发货状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <#list orderReplList as item >
+                            <tr data-formData='{"id":${item.id},"orderMainNo":"${item.orderMainNo}","logisticsCompany":1}'>
+                            	<td>${item.id?c}</td>
+                    			<td>${item.orderMainNo}</td>
+                    			<td>${item.couponNumber}</td>
+                    			<td>${item.orderDate}</td>
+                    			<td>${item.payAmount}</td>
+                    			<td>${item.consignee}</td>
+                    			<td>${item.telephone}</td>
+                    			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
+                    			<td>${OrderState.get(item.state).getTitle()}</td>
+                    			<td>
+                    				<#if item.state==1>
+                    					<button type="button" class="btn btn-success btn-xs J_deliver"><i class="glyphicon glyphicon-transfer"></i> 发货</button>
+                    				</#if>
+                    				<a class="btn btn-info btn-xs" href="/orderMain/toOrderMain.jhtml?orderMainNo=${item.orderMainNo}"><i class="fa fa-eye"></i> 查看</a>
+                    			</td>
+                            </tr>
+                            </#list>
+                        </tbody>
+                    </table>
+
+                    <div class="footer">
+                        <div class="col-xs-4">总记录数：${pagination.totalCount?c} </div>
+                        <div class="col-xs-8">
+                            <#include "/common/pagination.html">
+                        </div>
+                   </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <form id="html5Form" class="form-horizontal" role="form" method="POST" style="display: none;" action="/orderMain/deliver.jhtml">
+    	<input type="hidden" name="id"/>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">订单号</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="orderMainNo" disabled>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-3 control-label">物流公司<font color="red"> *</font></label>
+            <div class="col-sm-7">
+            	<select name="logisticsCompany">
+					<#list LogisticsCompany.values() as item >
+						<option value="${item.value}">${item.title}</option> 
+					</#list>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-3 control-label">快递单号<font color="red"> *</font></label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="expressOrderNo">
+            </div>
+        </div>
+        
+        <div class="form-group">
+	        <div class="col-xs-5 col-xs-offset-3">
+            	<button type="submit" class="btn btn-success">确认</button>
+	        </div>
+	    </div>
+    </form>
+</@override>
+<@override name="custom-script">
+    <script>
+		$(document).ready(function() {
+	        // 订单发货
+	        $(".J_deliver").on('click', function () {
+	        	var formData = JSON.parse($(this).parent().parent().attr('data-formData'));
+	        	bootbox.dialog({
+	                title: '订单发货',
+	                message: $('#html5Form'),
+	                show: false
+	            })
+	            .on('shown.bs.modal', function() {
+	            	$('#html5Form').show().formValidation('resetForm', true); 
+	            	$("#html5Form").autofill(formData);
+	            })
+	            .on('hide.bs.modal', function(e) {
+	            	$('#html5Form').hide().appendTo('body');
+	            })
+	            .modal('show');
+	        });
+	        
+	        // 订单发货
+	        $('#html5Form').formValidation({
+				fields: {
+					logisticsCompany: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '物流公司不能为空'
+		                    }
+		                }
+		            },
+		            expressOrderNo: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '快递单号不能为空'
+		                    }
+		                }
+		            }
+		        }
+			})        
+			.on('success.form.fv', function(e) {
+	            // Prevent form submission
+	            e.preventDefault();
+	
+	            // Get the form instance
+	            var $form = $(e.target);
+	
+	            // Get the FormValidation instance
+	            var bv = $form.data('formValidation');
+	
+	            // Use Ajax to submit form data
+	            $.post($form.attr('action'), $form.serialize(), function(result) {
+	                if(result.state.code==200){
+		        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+		        		setTimeout(function () {window.location = "/orderMain/orderMainList.jhtml";}, 1500);
+		        	}else{
+		        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+		        	}
+	            }, 'json');
+	        });
+        });
+	</script>
+</@override>
+<@extends name="/common/base.html"/>  

@@ -47,8 +47,8 @@ public class OrderReplServiceImpl implements OrderReplService {
 	}
 
 	@Override
-	public Integer queryOrderReplCount(OrderRepl orderRepl) {
-		return orderReplMapper.queryOrderReplCount(orderRepl);
+	public Integer queryOrderReplCount(OrderReplDto orderReplDto) {
+		return orderReplMapper.queryOrderReplCount(orderReplDto);
 	}
 
 	@Override
