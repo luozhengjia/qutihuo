@@ -15,7 +15,9 @@ import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.order.dao.OrderMainMapper;
 import com.ejunhai.qutihuo.order.enums.OrderPrint;
 import com.ejunhai.qutihuo.order.enums.OrderState;
+import com.ejunhai.qutihuo.order.model.OrderLog;
 import com.ejunhai.qutihuo.order.model.OrderMain;
+import com.ejunhai.qutihuo.order.service.OrderLogService;
 import com.ejunhai.qutihuo.order.service.OrderMainService;
 import com.ejunhai.qutihuo.order.utils.OrderUtil;
 import com.ejunhai.qutihuo.system.service.SystemAreaService;
@@ -40,6 +42,9 @@ public class OrderMainServiceImpl implements OrderMainService {
 
 	@Resource
 	private SystemAreaService systemAreaService;
+
+	@Resource
+	private OrderLogService orderLogService;
 
 	@Override
 	public OrderMain read(Integer id) {
@@ -93,6 +98,13 @@ public class OrderMainServiceImpl implements OrderMainService {
 
 		// 发送短信
 
+		// 记录订单处理日志
+		OrderLog orderLog = new OrderLog();
+		orderLog.setRemark("订单已预定成功，正在给您备货。");
+		orderLog.setOrderNo(orderMainNo);
+		orderLog.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		orderLogService.insert(orderLog);
+
 		return orderMain;
 	}
 
@@ -124,6 +136,12 @@ public class OrderMainServiceImpl implements OrderMainService {
 
 		// 发送短信
 
+		// 记录订单处理日志
+		OrderLog orderLog = new OrderLog();
+		String logiInfo = orderMain.getLogisticsCompany() + ",快递单号：" + orderMain.getExpressOrderNo();
+		orderLog.setRemark("订单已出库，请您留意签收。" + logiInfo);
+		orderLog.setOrderNo(orderMain.getOrderMainNo());
+		orderLogService.insert(orderLog);
 	}
 
 }

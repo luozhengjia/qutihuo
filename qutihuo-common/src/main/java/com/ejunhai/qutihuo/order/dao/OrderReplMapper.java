@@ -2,6 +2,7 @@ package com.ejunhai.qutihuo.order.dao;
 
 import java.util.List;
 
+import com.ejunhai.qutihuo.order.dto.OrderReplDto;
 import com.ejunhai.qutihuo.order.model.OrderRepl;
 
 /**
@@ -58,6 +59,5 @@ public interface OrderReplMapper {
      * @param orderRepl
      * @return
      */
-    public List<OrderRepl> queryOrderReplList(OrderRepl orderRepl);
-
+    public List<OrderRepl> queryOrderReplList(OrderReplDto orderReplDto);
 }

@@ -12,8 +12,8 @@
   <body style="padding-top: 70px;">
 	<div class="container">
 		<div class="navbar navbar-default navbar-fixed-top">
-			<span class="navbar-text col-xs-offset-2 col-xs-8" style="text-align:center;"><strong>欢迎登入骏海水产预定系统</strong></span>
-			<a href="${BasePath}/logout.jhtml" class="navbar-text col-xs-2" title="退出"><span class="glyphicon glyphicon-log-out"></span></a>
+			<span class="navbar-text col-xs-offset-2 col-xs-8 col-lg-7 text-center"><strong>欢迎登入骏海水产预定系统</strong></span>
+			<a href="${BasePath}/logout.jhtml" class="navbar-text col-xs-2 pull-right" title="退出"><span class="glyphicon glyphicon-log-out"></span></a>
       	</div>
       	
       	<#if createOrderSuccess??>
@@ -34,7 +34,7 @@
 				</div>
 			</div>
 		  </a>
-		  <a href="${BasePath}/logistics.jhtml" class="list-group-item">
+		  <a href="${BasePath}/toLogistics.jhtml" class="list-group-item">
 		  	<div class="media">
 				 <img src="${BasePath}/images/logistics.png" width="64px" height="64px" class="pull-left media-object" alt='' />
 				<div class="media-body">
@@ -43,11 +43,11 @@
 				</div>
 			</div>
 		  </a>
-		  <a href="${BasePath}/afterSaleCons.jhtml" class="list-group-item">
+		  <a href="${BasePath}/toAfterSaleRequ.jhtml" class="list-group-item">
 		  	<div class="media">
 				 <img src="${BasePath}/images/consult.png" width="64px" height="64px" class="pull-left media-object" alt='' />
 				<div class="media-body">
-					<h4 class="media-heading">咨询留言</h4> 
+					<h4 class="media-heading">售后申请</h4> 
 					<small>有任何问题都可以给我们留言.</small>
 				</div>
 			</div>
@@ -56,8 +56,8 @@
 		  	<div class="media">
 				 <img src="${BasePath}/images/apply.png" width="64px" height="64px" class="pull-left media-object" alt='' />
 				<div class="media-body">
-					<h4 class="media-heading">死蟹申请</h4> 
-					<small>请您拍照并说明原因，我们会尽快为您解决.</small>
+					<h4 class="media-heading">公司简介</h4> 
+					<small>中国领先的优质淡水水产品牌</small>
 				</div>
 			</div>
 		  </a>

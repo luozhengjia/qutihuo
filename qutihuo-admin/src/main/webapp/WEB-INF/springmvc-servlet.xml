@@ -57,6 +57,7 @@
 				<prop key="template_update_delay">0</prop>
 				<prop key="locale">zh_CN</prop>
 				<prop key="default_encoding">UTF-8</prop>
+				<prop key="object_wrapper">freemarker.ext.beans.BeansWrapper</prop>
 			</props>
 		</property>
 		

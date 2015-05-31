@@ -10,71 +10,77 @@
 	<div class="page-body">
         <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             <div class="col-xs-12 col-md-12">
-                <div class="well with-header with-footer">
-                    <div class="header">
-                    	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>新增用户</b>
+            	<div class="widget with-header">
+                    <div class="widget-header">
+                    	<span class="widget-caption"><i class="glyphicon glyphicon-edit"></i>&nbsp;<b>新增用户</b></span>
+                    	
+						<div class="widget-buttons">
+							<a href="${_referUrl!'/system/userList.jhtml'}" class="btn">&nbsp;&nbsp;<i class="typcn typcn-arrow-back"></i>&nbsp;&nbsp;</a>
+						</div>
                     </div>
-                
-					<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/system/addUser.jhtml">
-						<input type="hidden" name="id"/>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">登陆账号<font color="red"> *</font></label>
-                            <div class="col-lg-4">
-                                <input type="text" class="form-control" name="loginName"/>
-                            </div>
-                            <div class="col-lg-4"><p class="help-block">只能是4-16位字母，数字，下划线组成</p></div>
-                        </div>
-                        
-                        <div class="form-group">
-                        	<label class="col-lg-2 control-label">登陆密码<font color="red"> *</font></label>
-                            <div class="col-lg-3">
-                                <input type="password" class="form-control" name="passwd"/>
-                            </div>
-                            <div class="col-lg-4"><p class="help-block">登陆密码长度必须在6-16个字符以内</p></div>
-				        </div>
-				        
-				         <div class="form-group">
-                        	<label class="col-lg-2 control-label">确认登陆密码<font color="red"> *</font></label>
-                            <div class="col-lg-3">
-                                <input type="password" class="form-control" name="comfirmPasswd"/>
-                            </div>
-                            <div class="col-lg-4"><p class="help-block">重复输入登陆密码</p></div>
-				        </div>
-                        
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">用户昵称<font color="red"> *</font></label>
-                            <div class="col-lg-4">
-                                <input type="text" class="form-control" name="nickname"/>
-                            </div>
-                            <div class="col-lg-4"><p class="help-block">如：董掌柜</p></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">手机号码<font color="red"> *</font></label>
-                            <div class="col-lg-4">
-                                <input type="text" class="form-control" name="telephone"/>
-                            </div>
-                            <div class="col-lg-4"><p class="help-block"></p></div>
-                        </div>
-                        
-						<div class="form-group" data-topic="iconCss">
-                            <label class="col-lg-2 control-label">用户角色</label>
-                            <div class="col-lg-6">
-                            	<select id="roleIds" multiple="multiple" name="roleIds" style="width:100%;">
-                                	<#list systemRoleList as item >
-                                		<option value="${item.id}" />${item.roleName}
-                                	</#list>
-                                </select>
-                            </div>
-                            <div class="col-lg-4"><p class="help-block"></p></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="col-lg-2 col-lg-offset-2">
-                            	 <button type="submit" class="btn btn-success">确认</button>
-                            </div>
-                        </div>
-                    </form>
+                    
+                    <div class="widget-body">
+						<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/system/addUser.jhtml">
+							<input type="hidden" name="id"/>
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">登陆账号<font color="red"> *</font></label>
+	                            <div class="col-lg-4">
+	                                <input type="text" class="form-control" name="loginName"/>
+	                            </div>
+	                            <div class="col-lg-4"><p class="help-block">只能是4-16位字母，数字，下划线组成</p></div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                        	<label class="col-lg-2 control-label">登陆密码<font color="red"> *</font></label>
+	                            <div class="col-lg-3">
+	                                <input type="password" class="form-control" name="passwd"/>
+	                            </div>
+	                            <div class="col-lg-4"><p class="help-block">登陆密码长度必须在6-16个字符以内</p></div>
+					        </div>
+					        
+					         <div class="form-group">
+	                        	<label class="col-lg-2 control-label">确认登陆密码<font color="red"> *</font></label>
+	                            <div class="col-lg-3">
+	                                <input type="password" class="form-control" name="comfirmPasswd"/>
+	                            </div>
+	                            <div class="col-lg-4"><p class="help-block">重复输入登陆密码</p></div>
+					        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">用户昵称<font color="red"> *</font></label>
+	                            <div class="col-lg-4">
+	                                <input type="text" class="form-control" name="nickname"/>
+	                            </div>
+	                            <div class="col-lg-4"><p class="help-block">如：董掌柜</p></div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">手机号码<font color="red"> *</font></label>
+	                            <div class="col-lg-4">
+	                                <input type="text" class="form-control" name="telephone"/>
+	                            </div>
+	                            <div class="col-lg-4"><p class="help-block"></p></div>
+	                        </div>
+	                        
+							<div class="form-group" data-topic="iconCss">
+	                            <label class="col-lg-2 control-label">用户角色</label>
+	                            <div class="col-lg-6">
+	                            	<select id="roleIds" multiple="multiple" name="roleIds" style="width:100%;">
+	                                	<#list systemRoleList as item >
+	                                		<option value="${item.id}" />${item.roleName}
+	                                	</#list>
+	                                </select>
+	                            </div>
+	                            <div class="col-lg-4"><p class="help-block"></p></div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <div class="col-lg-2 col-lg-offset-2">
+	                            	 <button type="submit" class="btn btn-success">确认</button>
+	                            </div>
+	                        </div>
+	                    </form>
+	                </div>
                 </div>
 
             </div>

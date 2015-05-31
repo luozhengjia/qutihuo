@@ -168,7 +168,7 @@
 	             $.post($form.attr('action'), $form.serialize(), function(result) {
 	                if(result.state.code==200){
 		        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-		        		setTimeout(function () {window.location = "/system/userList.jhtml";}, 1500);
+		        		setTimeout(function () {location.reload();}, 1500);
 		        	}else{
 		        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 		        	}
@@ -186,7 +186,7 @@
 		                    $.post('/system/lockUser.jhtml', JSON.parse(dataParam), function(result) {
 				                if(result.state.code==200){
 					        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-					        		setTimeout(function () {window.location = "/system/userList.jhtml";}, 1500);
+					        		setTimeout(function () {location.reload();}, 1500);
 					        	}else{
 					        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 					        	}
@@ -208,7 +208,7 @@
 		                    $.post('/system/unlockUser.jhtml', JSON.parse(dataParam), function(result) {
 				                if(result.state.code==200){
 					        		Notify('操作成功!', 'bottom-right', '1500', 'success', 'fa-check', true);
-					        		setTimeout(function () {window.location = "/system/userList.jhtml";}, 1500);
+					        		setTimeout(function () {location.reload();}, 1500);
 					        	}else{
 					        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 					        	}

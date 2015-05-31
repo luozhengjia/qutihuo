@@ -78,7 +78,7 @@
 	</servlet-mapping>
 
 	<welcome-file-list>
-		<welcome-file>index.jhtml</welcome-file>
+		<welcome-file>login.jhtml</welcome-file>
 	</welcome-file-list>
 
 	<error-page>

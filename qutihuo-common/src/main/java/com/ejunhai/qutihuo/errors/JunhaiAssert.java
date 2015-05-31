@@ -3,13 +3,13 @@ package com.ejunhai.qutihuo.errors;
 import org.apache.commons.lang.StringUtils;
 
 public class JunhaiAssert {
-	private static final Object[] OBJ = new Object[] { "", "", "" };
 
 	private static void throwEx(ErrorType error, Object... message) {
-		if (message == null || message.length == 0) {
-			message = OBJ;
+		String msg = error.getTitle();
+		if (message != null && message.length > 0) {
+			msg = String.valueOf(message[0]);
 		}
-		throw new BusinessException(error.getValue(), String.valueOf(message[0]));
+		throw new BusinessException(error.getValue(), msg);
 	}
 
 	/**

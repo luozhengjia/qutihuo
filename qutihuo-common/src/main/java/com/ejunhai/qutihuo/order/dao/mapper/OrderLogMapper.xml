@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.qutihuo.order.dao.OrderLogMapper" >
+    <resultMap id="OrderLogMapper" type="com.ejunhai.qutihuo.order.model.OrderLog" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="log_type" property="logType" jdbcType="INTEGER" />
+        <result column="operate_user" property="operateUser" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        id,
+        order_no,
+        log_type,
+        operate_user,
+        remark,
+        create_time
+    </sql>
+    
+    <insert id="insert" parameterType="com.ejunhai.qutihuo.order.model.OrderLog" useGeneratedKeys="true" keyProperty="id" >
+        insert into tb_order_log (<include refid="Base_Column_List" />)
+        values (
+	        #{id,jdbcType=VARCHAR},
+	        #{orderNo,jdbcType=VARCHAR},
+	        #{logType,jdbcType=INTEGER},
+	        #{operateUser,jdbcType=VARCHAR},
+	        #{remark,jdbcType=VARCHAR},
+	        #{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    
+    <update id="update" parameterType="com.ejunhai.qutihuo.order.model.OrderLog" >
+        update tb_order_log
+        <set>
+            id = #{id,jdbcType=VARCHAR},
+            order_no = #{orderNo,jdbcType=VARCHAR},
+            log_type = #{logType,jdbcType=INTEGER},
+            operate_user = #{operateUser,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <select id="queryOrderLogList" resultMap="OrderLogMapper">
+    	select <include refid="Base_Column_List" /> from tb_order_log
+			limit #{offset},#{pageSize}
+    </select>
+    
+</mapper>

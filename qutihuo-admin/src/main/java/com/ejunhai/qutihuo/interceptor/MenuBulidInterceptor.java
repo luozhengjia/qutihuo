@@ -75,6 +75,7 @@ public class MenuBulidInterceptor implements HandlerInterceptor {
 			arg3.addObject("menuSystemActionMap", systemActionMap);
 			arg3.addObject("rootMenuSystemActionList", rootMenuSystemActionList);
 			arg3.addObject("menuRouteMap", SystemActionUtil.getRouteMapByUrl(authorizedActionList, request.getRequestURI()));
+			arg3.addObject("_referUrl", request.getHeader("referer"));
 		}
 		
 	}
