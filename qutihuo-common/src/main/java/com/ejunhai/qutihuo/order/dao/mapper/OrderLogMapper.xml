@@ -46,7 +46,10 @@
     
     <select id="queryOrderLogList" resultMap="OrderLogMapper">
     	select <include refid="Base_Column_List" /> from tb_order_log
-			limit #{offset},#{pageSize}
+    	<where>
+    		<if test="orderMainNo != null and orderMainNo !=''"> and order_no = #{orderNo} </if>
+		</where>
+		limit #{offset},#{pageSize}
     </select>
     
 </mapper>

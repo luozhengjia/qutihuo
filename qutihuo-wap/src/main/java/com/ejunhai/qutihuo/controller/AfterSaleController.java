@@ -18,6 +18,8 @@ import com.ejunhai.qutihuo.aftersale.service.AfterSaleRequService;
 import com.ejunhai.qutihuo.common.base.BaseController;
 import com.ejunhai.qutihuo.common.utils.PropertyConfigurer;
 import com.ejunhai.qutihuo.coupon.model.Coupon;
+import com.ejunhai.qutihuo.merchant.model.Merchant;
+import com.ejunhai.qutihuo.merchant.service.MerchantService;
 import com.ejunhai.qutihuo.order.model.OrderMain;
 import com.ejunhai.qutihuo.order.service.OrderMainService;
 import com.ejunhai.qutihuo.utils.LoginUtil;
@@ -39,6 +41,9 @@ public class AfterSaleController extends BaseController {
 
 	@Resource
 	private AfterSaleRequService afterSaleRequService;
+
+	@Resource
+	private MerchantService merchantService;
 
 	@RequestMapping("/toAfterSaleRequ")
 	public String toAfterSaleRequ(ModelMap modelMap, HttpServletRequest request) {
@@ -87,4 +92,14 @@ public class AfterSaleController extends BaseController {
 
 		return jsonSuccess();
 	}
+
+	@RequestMapping("/introduction")
+	public String introduction(ModelMap modelMap, HttpServletRequest request) {
+		Coupon coupon = LoginUtil.getLoginUser(request);
+		Merchant merchant = merchantService.read(coupon.getMerchantId());
+
+		modelMap.addAttribute("merchant", merchant);
+		return "introduction";
+	}
+
 }

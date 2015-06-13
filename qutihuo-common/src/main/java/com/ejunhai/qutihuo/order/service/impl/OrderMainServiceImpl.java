@@ -102,6 +102,7 @@ public class OrderMainServiceImpl implements OrderMainService {
 		OrderLog orderLog = new OrderLog();
 		orderLog.setRemark("订单已预定成功，正在给您备货。");
 		orderLog.setOrderNo(orderMainNo);
+		orderLog.setOperateUser("system");
 		orderLog.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		orderLogService.insert(orderLog);
 
@@ -141,6 +142,7 @@ public class OrderMainServiceImpl implements OrderMainService {
 		String logiInfo = orderMain.getLogisticsCompany() + ",快递单号：" + orderMain.getExpressOrderNo();
 		orderLog.setRemark("订单已出库，请您留意签收。" + logiInfo);
 		orderLog.setOrderNo(orderMain.getOrderMainNo());
+		orderLog.setOperateUser("system");
 		orderLogService.insert(orderLog);
 	}
 

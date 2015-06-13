@@ -20,15 +20,15 @@
       	<#if afterSaleRequ??>
 	      	<p><small><strong  class="label label-info">申请时间</strong> ${afterSaleRequ.createTime?string('yyyy-MM-dd HH:mm')}</small></p>
 	      	<p><small><strong  class="label label-info">死蟹说明</strong> ${afterSaleRequ.description!''}</small></p>
-	      	<p><small><strong  class="label label-info">处理状态</strong> <#if afterSaleRequ.state==1>待处理中<#elseif afterSaleRequ.state==2>已下补货单<#elseif afterSaleRequ.state==3>已拒绝</#if></small></p>
-	      	<#if afterSaleRequ.state!=1>
-	      	<p><small><strong  class="label label-info">处理时间</strong> ${afterSaleRequ.dealTime?string('yyyy-MM-dd HH:mm')}</small></p>
+	      	<p><small><strong  class="label label-info">处理状态</strong> <#if afterSaleRequ.state==0>处理中<#elseif afterSaleRequ.state==2>已下补货单<#elseif afterSaleRequ.state==1>已拒绝</#if></small></p>
+	      	<#if afterSaleRequ.state!=0>
+	      	<p><small><strong  class="label label-info">处理时间</strong> <#if afterSaleRequ.dealTime??>${afterSaleRequ.dealTime?string('yyyy-MM-dd HH:mm')}</#if></small></p>
 	      	<p><small><strong  class="label label-info">处理说明</strong> ${afterSaleRequ.dealInfo!''}</small></p>
 			</#if>
 			<p><small><strong  class="label label-info">死蟹遗照</strong></small></p>
 			<div class="clearfix">
 				<#list afterSaleRequ.urls?split(",") as url>
-					<div class="col-xs-6"><img src="${url}" class="img-thumbnail" width="140px"/></div>
+					<div class="col-xs-12"><img src="${url}" class="img-thumbnail"/></div>
 				</#list>
 			</div>
 			<br>
@@ -62,7 +62,7 @@
 		$(document).ready(function() {
 		
 			// 图片上传
-			$('#urls').imgUploader({max:5});
+			$('#urls').imgUploader({max:3});
 			
 			$('#afterSaleRequForm').bootstrapValidator({
 				live: 'disabled',

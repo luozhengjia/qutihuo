@@ -4,7 +4,7 @@ jQuery.fn.imgUploader = function(options) {
 	
 	// 先构建出上传组件，再隐藏自己
 	var uploadBtnId = this.attr('id')+'_imgUploader';
-	input.after('<ul class="list-inline"><li class="btn-upload"><a id="'+ uploadBtnId +'" href="#" ><img src="http://s.demo.shangquanquan.com/static/images/upload.png"/></a></li></ul>');
+	input.after('<ul class="list-unstyled"><li class="btn-upload"><img id="'+ uploadBtnId +'" src="http://s.demo.shangquanquan.com/static/images/upload.png"/></li></ul>');
 	input.css({position: "absolute",left: "-10000px"});
                     
 	// 获取数据值，渲染出图片节点

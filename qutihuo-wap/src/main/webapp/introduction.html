@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <title>骏海水产大闸蟹预定系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+  </head>
+  
+  <body style="padding-top: 70px;">
+	<div class="container">
+		<div class="navbar navbar-default navbar-fixed-top">
+			<a href="${BasePath}/dispatchCenter.jhtml" class="navbar-text col-xs-2" title="返回"><span class="glyphicon glyphicon-arrow-left"></span></a>
+			<span class="navbar-text col-xs-8  col-lg-7" style="text-align:center;"><strong>公司简介</strong></span>
+			<a href="${BasePath}/logout.jhtml" class="navbar-text col-xs-2" title="退出"><span class="glyphicon glyphicon-log-out"></span></a>
+      	</div>
+      	
+      	<p><small><strong  class="label label-info">公司名称</strong> ${merchant.merchantName!''}</small></p>
+	    <p><small><strong  class="label label-info">主营业务</strong> ${merchant.businessLine!''}</small></p>
+	    <p><small><strong  class="label label-info">联系人</strong> ${merchant.contacts!''}</small></p>
+	    <p><small><strong  class="label label-info">联系电话</strong> ${merchant.telephone!''}</small></p>
+	    <p><small><strong  class="label label-info">联系电话</strong> ${merchant.address!''}</small></p>
+	     
+	     <p>&nbsp;</p>
+	     <p>&nbsp;</p>
+	     <p>&nbsp;</p>
+		<#include "/common/footer.ftl" >
+	</div>
+	
+	
+    <script src="http://ejunhai.qiniudn.com/jquery-1.10.2.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/bootstrap.min.js"></script>
+    <script src="http://ejunhai.qiniudn.com/bootstrap-validator.min.js"></script>
+  </body>
+</html>
