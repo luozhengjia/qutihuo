@@ -54,6 +54,7 @@ public class OrderController extends BaseController {
 
 		// 提前预订时间
 		Date useStartDate = DateUtil.addDate(new Date(), couponSchema.getFrontDayNum());
+		useStartDate =couponSchema.getUseStartdate().after(useStartDate)?couponSchema.getUseStartdate():useStartDate;
 		Date useEndDate = DateUtil.addDate(coupon.getUseEnddate(), couponSchema.getFrontDayNum());
 		modelMap.put("startDate", DateUtil.format(useStartDate, "yyyy-MM-dd"));
 		modelMap.put("endDate", DateUtil.format(useEndDate, "yyyy-MM-dd"));
