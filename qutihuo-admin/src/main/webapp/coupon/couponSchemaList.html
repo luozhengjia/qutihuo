@@ -32,9 +32,8 @@
                                 <th>ID</th>
                                 <th>方案名称</th>
                                 <th>有效期</th>
-                                <th>发行量</th>
+                                <th>核销数/领取数/发行量</th>
                                 <th>日限使用量</th>
-                                <th>已使用量</th>
                                 <th>创建时间</th>
                                 <th>操作</th>
                             </tr>
@@ -45,9 +44,8 @@
                     			<td>${item.id}</td>
                     			<td>${item.couponName}</td>
                     			<td>${item.useStartdate?string('yyyy-MM-dd')} 至 ${item.useEnddate?string('yyyy-MM-dd')}</td>
-                    			<td>${item.hasIssueNum?c}/${item.issueAmount?c}</td>
+                    			<td>${item.hasUseNum?c}/${item.hasIssueNum?c}/${item.issueAmount?c}</td>
                     			<td>${item.dayLimitNum?c}</td>
-                    			<td>${item.hasUseNum?c}</td>
                     			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
                     			<td>
                     				<#if item.hasIssueNum ==item.issueAmount>

@@ -50,7 +50,7 @@
                             	<span class="form-control">${merchant.availableSmsNum} 条</span>
                             </div>
                             <div class="col-xs-3">
-                            	<button type="submit" class="btn btn-info">充值</button>
+                            	<button type="button" class="btn btn-info">充值</button>
                             </div>
                         </div>
                         
@@ -90,6 +90,9 @@
 <@override name="custom-script">
 	<script>
 		$(document).ready(function() {
+			$('.btn').click(function() {  
+				Notify("敬请期待", 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+			}); 
 	
 		});
 	</script>
