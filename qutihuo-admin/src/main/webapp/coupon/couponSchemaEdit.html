@@ -124,15 +124,19 @@
 			// 开始日期
 	        $('#useStartdate').datetimepicker({language:'zh-CN',autoclose: 1,todayHighlight: 1, minView: 2,format:'yyyy-mm-dd 00:00'}).on('changeDate', function(ev){
 				 $('#useEnddate').datetimepicker('setStartDate', $(this).val());
+				 $('#html5Form').formValidation('revalidateField', 'useStartdate');
 			});
 			
 			// 结束日期
 			$('#useEnddate').datetimepicker({language:'zh-CN',autoclose: 1,todayHighlight: 1, minView: 2,format:'yyyy-mm-dd 23:59'}).on('changeDate', function(ev){
 				 $('#useStartdate').datetimepicker('setEndDate', $(this).val());
+				 $('#html5Form').formValidation('revalidateField', 'useEnddate');
 			});
 			
 			// 图片上传
-			$('#iconUrl').imgUploader();
+			$('#iconUrl').imgUploader({max:1,callback:function(){
+				$('#html5Form').formValidation('revalidateField', 'iconUrl');
+			}});
 			
 			// 提交表单
 			$('#html5Form').formValidation({

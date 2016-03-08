@@ -48,6 +48,9 @@ jQuery.fn.imgUploader = function(options) {
 					imgs[i] = $(n).attr("src");
 				});
     			input.val(imgs.join(","));
+    			
+    			// 回调函数
+    			options.callback();
     		}
     	}
     });
@@ -63,5 +66,8 @@ jQuery.fn.imgUploader = function(options) {
 			imgs[i] = $(n).attr("src");
 		});
 		input.val(imgs.join(","));
+		
+		// 回调函数
+    	options.callback();
     })
 }
