@@ -30,57 +30,59 @@ import com.ejunhai.qutihuo.utils.SessionManager;
 @RequestMapping("orderMain")
 public class AfterSaleRequController extends BaseController {
 
-	@Resource
-	private AfterSaleRequService afterSaleRequService;
+    @Resource
+    private AfterSaleRequService afterSaleRequService;
 
-	@Resource
-	private CouponSchemaService couponSchemaService;
+    @Resource
+    private CouponSchemaService couponSchemaService;
 
-	@Resource
-	private CouponService couponService;
+    @Resource
+    private CouponService couponService;
 
-	@Resource
-	private OrderMainService orderMainService;
+    @Resource
+    private OrderMainService orderMainService;
 
-	@RequestMapping("/afterSaleRequList")
-	public String afterSaleRequList(HttpServletRequest request, AfterSaleRequDto afterSaleRequDto, ModelMap modelMap) {
-		afterSaleRequDto.setMerchantId(SessionManager.get(request).getMerchantId());
-		Integer iCount = afterSaleRequService.queryAfterSaleRequCount(afterSaleRequDto);
-		Pagination pagination = new Pagination(afterSaleRequDto.getPageNo(), iCount);
+    @RequestMapping("/afterSaleRequList")
+    public String afterSaleRequList(HttpServletRequest request, AfterSaleRequDto afterSaleRequDto, ModelMap modelMap) {
+        afterSaleRequDto.setMerchantId(SessionManager.get(request).getMerchantId());
+        Integer iCount = afterSaleRequService.queryAfterSaleRequCount(afterSaleRequDto);
+        Pagination pagination = new Pagination(afterSaleRequDto.getPageNo(), iCount);
 
-		// 获取分页数据
-		List<AfterSaleRequ> afterSaleRequList = new ArrayList<AfterSaleRequ>();
-		if (iCount > 0) {
-			afterSaleRequDto.setOffset(pagination.getOffset());
-			afterSaleRequDto.setPageSize(pagination.getPageSize());
-			afterSaleRequList = afterSaleRequService.queryAfterSaleRequList(afterSaleRequDto);
-		}
+        // 获取分页数据
+        List<AfterSaleRequ> afterSaleRequList = new ArrayList<AfterSaleRequ>();
+        if (iCount > 0) {
+            afterSaleRequDto.setOffset(pagination.getOffset());
+            afterSaleRequDto.setPageSize(pagination.getPageSize());
+            afterSaleRequList = afterSaleRequService.queryAfterSaleRequList(afterSaleRequDto);
+        }
 
-		modelMap.put("pagination", pagination);
-		modelMap.put("afterSaleRequDto", afterSaleRequDto);
-		modelMap.put("afterSaleRequList", afterSaleRequList);
-		return "order/afterSaleRequList";
-	}
+        modelMap.put("pagination", pagination);
+        modelMap.put("afterSaleRequDto", afterSaleRequDto);
+        modelMap.put("afterSaleRequList", afterSaleRequList);
+        return "order/afterSaleRequList";
+    }
 
-	@RequestMapping("/toAfterSaleRequ")
-	public String toAfterSaleRequ(Integer afterSaleRequId, ModelMap modelMap) throws Exception {
-		AfterSaleRequ afterSaleRequ = afterSaleRequService.read(afterSaleRequId);
-		OrderMain orderMain = orderMainService.getOrderMainByOrderMainNo(afterSaleRequ.getOrderMainNo());
-		Coupon coupon = couponService.getCouponByOrderNo(orderMain.getOrderMainNo());
-		CouponSchema couponSchema = couponSchemaService.read(coupon.getCouponSchemaId());
+    @RequestMapping("/toAfterSaleRequ")
+    public String toAfterSaleRequ(Integer afterSaleRequId, ModelMap modelMap) throws Exception {
+        AfterSaleRequ afterSaleRequ = afterSaleRequService.read(afterSaleRequId);
+        OrderMain orderMain = orderMainService.getOrderMainByOrderMainNo(afterSaleRequ.getOrderMainNo());
+        Coupon coupon = couponService.getCouponByOrderNo(orderMain.getOrderMainNo());
+        CouponSchema couponSchema = couponSchemaService.read(coupon.getCouponSchemaId());
 
-		modelMap.addAttribute("afterSaleRequ", afterSaleRequ);
-		modelMap.addAttribute("orderMain", orderMain);
-		modelMap.addAttribute("couponSchema", couponSchema);
-		return "order/afterSaleRequEdit";
-	}
+        modelMap.addAttribute("afterSaleRequ", afterSaleRequ);
+        modelMap.addAttribute("orderMain", orderMain);
+        modelMap.addAttribute("couponSchema", couponSchema);
+        return "order/afterSaleRequEdit";
+    }
 
-	@RequestMapping("/refuseAfterSaleRequ")
-	@ResponseBody
-	public String refuseAfterSaleRequ(AfterSaleRequ afterSaleRequ, ModelMap modelMap) throws Exception {
-		afterSaleRequ.setState(RequState.refuse.getValue());
-		afterSaleRequ.setDealTime(new Timestamp(System.currentTimeMillis()));
-		afterSaleRequService.update(afterSaleRequ);
-		return jsonSuccess();
-	}
+    @RequestMapping("/refuseAfterSaleRequ")
+    @ResponseBody
+    public String refuseAfterSaleRequ(AfterSaleRequDto afterSaleRequDto, ModelMap modelMap) throws Exception {
+        AfterSaleRequ afterSaleRequ = afterSaleRequService.read(afterSaleRequDto.getId());
+        afterSaleRequ.setState(RequState.refuse.getValue());
+        afterSaleRequ.setDealInfo(afterSaleRequDto.getDealInfo());
+        afterSaleRequ.setDealTime(new Timestamp(System.currentTimeMillis()));
+        afterSaleRequService.update(afterSaleRequ);
+        return jsonSuccess();
+    }
 }

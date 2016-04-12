@@ -21,26 +21,31 @@ import com.ejunhai.qutihuo.utils.SessionManager;
 @RequestMapping("orderRepl")
 public class OrderReplController extends BaseController {
 
-	@Resource
-	private OrderReplService orderReplService;
+    @Resource
+    private OrderReplService orderReplService;
 
-	@RequestMapping("/orderReplList")
-	public String orderReplList(HttpServletRequest request, OrderReplDto orderReplDto, ModelMap modelMap) {
-		orderReplDto.setMerchantId(SessionManager.get(request).getMerchantId());
-		Integer iCount = orderReplService.queryOrderReplCount(orderReplDto);
-		Pagination pagination = new Pagination(orderReplDto.getPageNo(), iCount);
+    @RequestMapping("/orderReplList")
+    public String orderReplList(HttpServletRequest request, OrderReplDto orderReplDto, ModelMap modelMap) {
+        orderReplDto.setMerchantId(SessionManager.get(request).getMerchantId());
+        Integer iCount = orderReplService.queryOrderReplCount(orderReplDto);
+        Pagination pagination = new Pagination(orderReplDto.getPageNo(), iCount);
 
-		// 获取分页数据
-		List<OrderRepl> orderReplList = new ArrayList<OrderRepl>();
-		if (iCount > 0) {
-			orderReplDto.setOffset(pagination.getOffset());
-			orderReplDto.setPageSize(pagination.getPageSize());
-			orderReplList = orderReplService.queryOrderReplList(orderReplDto);
-		}
+        // 获取分页数据
+        List<OrderRepl> orderReplList = new ArrayList<OrderRepl>();
+        if (iCount > 0) {
+            orderReplDto.setOffset(pagination.getOffset());
+            orderReplDto.setPageSize(pagination.getPageSize());
+            orderReplList = orderReplService.queryOrderReplList(orderReplDto);
+        }
 
-		modelMap.put("pagination", pagination);
-		modelMap.put("orderReplDto", orderReplDto);
-		modelMap.put("orderReplList", orderReplList);
-		return "order/orderReplList";
-	}
+        modelMap.put("pagination", pagination);
+        modelMap.put("orderReplDto", orderReplDto);
+        modelMap.put("orderReplList", orderReplList);
+        return "order/orderReplList";
+    }
+
+    @RequestMapping("/toAddOrderRepl")
+    public String toAddOrderRepl(HttpServletRequest request, OrderReplDto orderReplDto, ModelMap modelMap) {
+        return "order/orderReplList";
+    }
 }

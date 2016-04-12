@@ -10,92 +10,98 @@
 	<div class="page-body">
         <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             <div class="col-xs-12 col-md-12">
-                <div class="well with-header with-footer">
-                    <div class="header">
-                    	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>查看订单</b>
+                <div class="with-header with-footer">
+                    <div class="widget-header">
+                    	<span class="widget-caption"><i class="glyphicon glyphicon-edit"></i>&nbsp;<b>查看订单</b></span>
+                    	
+                    	<div class="widget-buttons">
+							<a href="${_referUrl!'/orderMain/orderMainList.jhtml'}" class="btn">&nbsp;&nbsp;<i class="typcn typcn-arrow-back"></i>&nbsp;&nbsp;</a>
+						</div>
                     </div>
                 
-					<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/orderMain/changeConsigneeInfo.jhtml">
-						<input type="hidden" name="id" value="${orderMain.id}"/>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">订单编号</label>
-                            <div class="col-lg-3">
-                                <p class="form-control">${orderMain.orderMainNo}</p>
-                            </div>
-                            <label class="col-lg-2 control-label">礼品券编号</label>
-                            <div class="col-lg-3">
-                                <p class="form-control">${orderMain.orderMainNo}</p>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">礼品券名称</label>
-                            <div class="col-lg-6">
-                            	<p class="form-control">${couponSchema.couponName}</p>
-							</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">预约日期</label>
-                            <div class="col-lg-3">
-                                <p class="form-control">${orderMain.orderDate}</p>
-                            </div>
-                        </div>
-                            
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">收货人姓名<font color="red"> *</font></label>
-                            <div class="col-lg-3">
-                            	<input type="text" name="consignee" class="form-control"  value="${orderMain.consignee}">
-							</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">收货人手机号码<font color="red"> *</font></label>
-                            <div class="col-lg-3">
-                            	<input type="text" name="telephone" class="form-control" value="${orderMain.telephone}">
-							</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">省市区<font color="red"> *</font></label>
-                            <div class="col-lg-6">
-                            	<div id="district" class="clearfix"></div>
-                            	<span id="provinceCityArea_tip"><small class="help-block">请选择收货人所在省市区</small></span>
-                            	
-                            	<input type="hidden" name="provinceCode" id="provinceCode" />
-								<input type="hidden" name="cityCode" id="cityCode" />
-								<input type="hidden" name="areaCode" id="areaCode" />
-							</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">收货人详细地址<font color="red"> *</font></label>
-                            <div class="col-lg-8">
-                            	<input type="text" name="detailAddress" class="form-control"  value="${orderMain.detailAddress}">
-							</div>
-                        </div>
-                        
-                        <#if orderMain.state==2>
-                        <div class="form-group">
-                        	<label class="col-lg-2 control-label">物流公司</label>
-                            <div class="col-lg-3">
-                                <p class="form-control">${LogisticsCompany.get(orderMain.logisticsCompany?eval).title}</p>
-                            </div>
-                            <label class="col-lg-2 control-label">快递单号</label>
-                            <div class="col-lg-3">
-                                <p class="form-control">${orderMain.expressOrderNo}</p>
-                            </div>
-                        </div>
-                        </#if>
-                        
-                        <#if orderMain.state==1>
-                        <div class="form-group">
-                            <div class="col-lg-2 col-lg-offset-2">
-                            	 <button type="submit" class="btn btn-success">更新收货地址</button>
-                            </div>
-                        </div>
-                        </#if>
-                    </form>
+                	<div class="widget-body">
+						<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/orderMain/changeConsigneeInfo.jhtml">
+							<input type="hidden" name="id" value="${orderMain.id}"/>
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">订单编号</label>
+	                            <div class="col-lg-3">
+	                                <p class="form-control">${orderMain.orderMainNo}</p>
+	                            </div>
+	                            <label class="col-lg-2 control-label">礼品券编号</label>
+	                            <div class="col-lg-3">
+	                                <p class="form-control">${orderMain.orderMainNo}</p>
+	                            </div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">礼品券名称</label>
+	                            <div class="col-lg-6">
+	                            	<p class="form-control">${couponSchema.couponName}</p>
+								</div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">预约日期</label>
+	                            <div class="col-lg-3">
+	                                <p class="form-control">${orderMain.orderDate}</p>
+	                            </div>
+	                        </div>
+	                            
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">收货人姓名<font color="red"> *</font></label>
+	                            <div class="col-lg-3">
+	                            	<input type="text" name="consignee" class="form-control"  value="${orderMain.consignee}">
+								</div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">收货人手机号码<font color="red"> *</font></label>
+	                            <div class="col-lg-3">
+	                            	<input type="text" name="telephone" class="form-control" value="${orderMain.telephone}">
+								</div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">省市区<font color="red"> *</font></label>
+	                            <div class="col-lg-6">
+	                            	<div id="district" class="clearfix"></div>
+	                            	<span id="provinceCityArea_tip"><small class="help-block">请选择收货人所在省市区</small></span>
+	                            	
+	                            	<input type="hidden" name="provinceCode" id="provinceCode" value="${orderMain.provinceCode?default("")}" />
+									<input type="hidden" name="cityCode" id="cityCode" value="${orderMain.cityCode?default("")}"/>
+									<input type="hidden" name="areaCode" id="areaCode" value="${orderMain.areaCode?default("")}"/>
+								</div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">收货人详细地址<font color="red"> *</font></label>
+	                            <div class="col-lg-8">
+	                            	<input type="text" name="detailAddress" class="form-control"  value="${orderMain.detailAddress}">
+								</div>
+	                        </div>
+	                        
+	                        <#if orderMain.state==2>
+		                        <div class="form-group">
+		                        	<label class="col-lg-2 control-label">物流公司</label>
+		                            <div class="col-lg-3">
+		                                <p class="form-control">${LogisticsCompany.get(orderMain.logisticsCompany?eval).title}</p>
+		                            </div>
+		                            <label class="col-lg-2 control-label">快递单号</label>
+		                            <div class="col-lg-3">
+		                                <p class="form-control">${orderMain.expressOrderNo}</p>
+		                            </div>
+		                        </div>
+	                        </#if>
+	                        
+	                        <#if orderMain.state==1>
+		                        <div class="form-group">
+		                            <div class="col-lg-2 col-lg-offset-2">
+		                            	 <button type="submit" class="btn btn-success">更新收货地址</button>
+		                            </div>
+		                        </div>
+	                        </#if>
+	                    </form>
+	                </div>
                 </div>
 
             </div>
@@ -138,6 +144,7 @@
 		});
 		
 		$('#html5Form').formValidation({
+			excluded:[':disabled', ':not(:visible)'],
 			fields: {
 	            consignee: {
 	                validators: {
