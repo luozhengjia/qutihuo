@@ -72,7 +72,7 @@ public class AfterSaleRequController extends BaseController {
         modelMap.addAttribute("afterSaleRequ", afterSaleRequ);
         modelMap.addAttribute("orderMain", orderMain);
         modelMap.addAttribute("couponSchema", couponSchema);
-        return "order/afterSaleRequEdit";
+        return "order/editAfterSaleRequ";
     }
 
     @RequestMapping("/refuseAfterSaleRequ")

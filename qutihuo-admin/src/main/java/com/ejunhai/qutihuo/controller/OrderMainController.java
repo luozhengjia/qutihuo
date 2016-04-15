@@ -68,7 +68,7 @@ public class OrderMainController extends BaseController {
 
         modelMap.put("orderMain", orderMain);
         modelMap.put("couponSchema", couponSchema);
-        return "order/orderMainEdit";
+        return "order/editOrderMain";
     }
 
     @RequestMapping("/changeConsigneeInfo")

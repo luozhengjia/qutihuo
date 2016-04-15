@@ -3,6 +3,7 @@ package com.ejunhai.qutihuo.order.service;
 import java.util.List;
 
 import com.ejunhai.qutihuo.order.dto.OrderReplDto;
+import com.ejunhai.qutihuo.order.model.OrderMain;
 import com.ejunhai.qutihuo.order.model.OrderRepl;
 
 /**
@@ -23,13 +24,14 @@ public interface OrderReplService {
      * @return
      */
     public OrderRepl read(Integer id);
-    
+
     /**
-     * 新增OrderRepl
+     * 创建补货单
      * 
+     * @param orderMain
      * @param orderRepl
      */
-    public void insert(OrderRepl orderRepl);
+    public void createOrderRepl(OrderMain orderMain, OrderRepl orderRepl);
 
     /**
      * 更新OrderRepl
@@ -37,14 +39,14 @@ public interface OrderReplService {
      * @param orderRepl
      */
     public void update(OrderRepl orderRepl);
-    
+
     /**
      * 删除OrderRepl
      * 
      * @param id
      */
     public void delete(Integer id);
-    
+
     /**
      * 查询OrderRepl数量
      * 
@@ -52,7 +54,7 @@ public interface OrderReplService {
      * @return
      */
     public Integer queryOrderReplCount(OrderReplDto orderReplDto);
-    
+
     /**
      * 查询OrderRepl列表
      * 
