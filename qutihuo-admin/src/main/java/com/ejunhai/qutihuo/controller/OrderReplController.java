@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ejunhai.qutihuo.common.base.BaseController;
 import com.ejunhai.qutihuo.common.base.Pagination;
@@ -75,9 +74,29 @@ public class OrderReplController extends BaseController {
     }
 
     @RequestMapping("/addOrderRepl")
-    public ModelAndView addOrderRepl(OrderRepl orderRepl, ModelMap modelMap) throws Exception {
+    @ResponseBody
+    public String addOrderRepl(OrderRepl orderRepl, ModelMap modelMap) throws Exception {
         OrderMain orderMain = orderMainService.getOrderMainByOrderMainNo(orderRepl.getOrderMainNo());
         this.orderReplService.createOrderRepl(orderMain, orderRepl);
-        return new ModelAndView(new RedirectView("/system/order/orderReplList.sc?state=0"));
+        return jsonSuccess();
+    }
+
+    @RequestMapping("/changeConsigneeInfo")
+    @ResponseBody
+    public String changeConsigneeInfo(OrderRepl orderRepl, ModelMap modelMap) throws Exception {
+        JunhaiAssert.notNull(orderRepl.getDetailAddress(), "收货人详细地址不能为空");
+        JunhaiAssert.notNull(orderRepl.getAreaCode(), "收货人省市区不能为空");
+        orderReplService.changeConsigneeInfo(orderRepl);
+        return jsonSuccess();
+    }
+
+    @RequestMapping("/deliver")
+    @ResponseBody
+    public String deliverOrderMain(OrderRepl orderRepl, ModelMap modelMap) throws Exception {
+        JunhaiAssert.notNull(orderRepl.getLogisticsCompany(), "物流公司不能为空");
+        JunhaiAssert.notNull(orderRepl.getExpressOrderNo(), "快递单号不能为空");
+
+        orderReplService.deliverOrderRepl(orderRepl);
+        return jsonSuccess();
     }
 }

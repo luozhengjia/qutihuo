@@ -45,13 +45,11 @@
                             <#list orderReplList as item >
                             <tr data-formData='{"id":${item.id},"orderMainNo":"${item.orderMainNo}","logisticsCompany":1}'>
                             	<td>${item.id?c}</td>
-                    			<td>${item.orderMainNo}</td>
-                    			<td>${item.couponNumber}</td>
-                    			<td>${item.orderDate}</td>
+                    			<td>${item.orderReplNo}</td>
+                    			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
                     			<td>${item.payAmount}</td>
                     			<td>${item.consignee}</td>
-                    			<td>${item.telephone}</td>
-                    			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
+                    			<td>${item.mobilePhone}</td>
                     			<td>${OrderState.get(item.state).getTitle()}</td>
                     			<td>
                     				<#if item.state==1>
@@ -81,7 +79,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">订单号</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" name="orderMainNo" disabled>
+                <input type="text" class="form-control" name="orderReplNo" disabled>
             </div>
         </div>
         

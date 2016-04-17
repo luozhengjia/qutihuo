@@ -26,14 +26,6 @@ public interface OrderReplService {
     public OrderRepl read(Integer id);
 
     /**
-     * 创建补货单
-     * 
-     * @param orderMain
-     * @param orderRepl
-     */
-    public void createOrderRepl(OrderMain orderMain, OrderRepl orderRepl);
-
-    /**
      * 更新OrderRepl
      * 
      * @param orderRepl
@@ -62,5 +54,27 @@ public interface OrderReplService {
      * @return
      */
     public List<OrderRepl> queryOrderReplList(OrderReplDto orderReplDto);
+
+    /**
+     * 新增补货单
+     * 
+     * @param orderMain
+     * @return
+     */
+    public OrderRepl createOrderRepl(OrderMain orderMain, OrderRepl orderRepl);
+
+    /**
+     * 更改收货人地址
+     * 
+     * @param orderRepl
+     */
+    public void changeConsigneeInfo(OrderRepl orderRepl);
+
+    /**
+     * 补货单发货
+     * 
+     * @param orderMain
+     */
+    public void deliverOrderRepl(OrderRepl orderRepl);
 
 }

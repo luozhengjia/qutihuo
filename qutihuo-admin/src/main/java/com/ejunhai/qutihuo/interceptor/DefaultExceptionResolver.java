@@ -57,9 +57,9 @@ public class DefaultExceptionResolver implements HandlerExceptionResolver {
 
 		// 根据不同错误转向不同页面
 		if (ex instanceof BusinessException) {
-			return new ModelAndView("error-500");
+			return new ModelAndView("error/error-500");
 		}
 
-		return new ModelAndView("error-404");
+		return new ModelAndView("error/error-404");
 	}
 }
