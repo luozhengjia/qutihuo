@@ -30,13 +30,14 @@
 			</div>
 			
 			<div class="panel panel-info">
-			  <div class="panel-heading"><strong>请您选择发货时间</strong></div>
+			  <div class="panel-heading"><strong>请您选择发货时间</strong>（需提前<font color="red">${couponScheme.frontDayNum?c}</font>天预定）</div>
 			  <div class="panel-body">
 			  	<div class="form-group" style="margin-bottom: 0px;">
                     <div class="col-xs-12">
                         <div class="input-group date form_date" id="datetimepicker">
-                            <input type="text" name="orderDate" class="form-control" placeholder="发货时间，需提前${couponScheme.frontDayNum?c}天预定"/>
+                            <input type="text" name="orderDate" value="${startDate!""}" class="form-control" placeholder="发货时间，需提前${couponScheme.frontDayNum?c}天预定"/>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            
                         </div>
                     </div>
                 </div>

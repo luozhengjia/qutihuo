@@ -18,14 +18,14 @@
       	</div>
       	
       	<#if afterSaleRequ??>
-	      	<p><small><strong  class="label label-info">申请时间</strong> ${afterSaleRequ.createTime?string('yyyy-MM-dd HH:mm')}</small></p>
-	      	<p><small><strong  class="label label-info">死蟹说明</strong> ${afterSaleRequ.description!''}</small></p>
-	      	<p><small><strong  class="label label-info">处理状态</strong> <#if afterSaleRequ.state==0>处理中<#elseif afterSaleRequ.state==2>已下补货单<#elseif afterSaleRequ.state==1>已拒绝</#if></small></p>
+	      	<p><strong  class="label label-info">申请时间</strong> ${afterSaleRequ.createTime?string('yyyy-MM-dd HH:mm')}</p>
+	      	<p><strong  class="label label-info">死蟹说明</strong> ${afterSaleRequ.description!''}</p>
+	      	<p><strong  class="label label-info">处理状态</strong> <#if afterSaleRequ.state==0>处理中<#elseif afterSaleRequ.state==2>已下补货单<#elseif afterSaleRequ.state==1>已拒绝</#if></p>
 	      	<#if afterSaleRequ.state!=0>
-	      	<p><small><strong  class="label label-info">处理时间</strong> <#if afterSaleRequ.dealTime??>${afterSaleRequ.dealTime?string('yyyy-MM-dd HH:mm')}</#if></small></p>
-	      	<p><small><strong  class="label label-info">处理说明</strong> ${afterSaleRequ.dealInfo!''}</small></p>
+	      	<p><strong  class="label label-info">处理时间</strong> <#if afterSaleRequ.dealTime??>${afterSaleRequ.dealTime?string('yyyy-MM-dd HH:mm')}</#if></p>
+	      	<p><strong  class="label label-info">处理说明</strong> ${afterSaleRequ.dealInfo!''}</p>
 			</#if>
-			<p><small><strong  class="label label-info">死蟹遗照</strong></small></p>
+			<p><strong  class="label label-info">死蟹遗照</strong></p>
 			<div class="clearfix">
 				<#list afterSaleRequ.urls?split(",") as url>
 					<div class="col-xs-12"><img src="${url}" class="img-thumbnail"/></div>
@@ -39,7 +39,7 @@
 			    <textarea name="description" class="form-control" rows="4" placeholder="请至少输入20个说明文字"></textarea>
 			  </div>
 			  <p><small>至少上传2张照片,每张照片最大不超过2M</small></p>
-			  <div class="form-group">
+			  <div id="container" class="form-group">
 			  	<input type="text" class="form-control" id="urls" name="urls"/>
 			  </div>
 			  <div class="form-group">
@@ -53,8 +53,8 @@
 	
     <script src="${BasePath}/js/jquery-1.10.2.min.js"></script>
     <script src="${BasePath}/js/bootstrap.min.js"></script>
-    <script src="${BasePath}/js/bootstrap-file-input.js"></script>
     <script src="${BasePath}/js/bootstrap-validator.min.js"></script>
+    <script src="${BasePath}/js/uploader/moxie.js"></script>
     <script src="${BasePath}/js/uploader/plupload.full.min.js"></script>
     <script src="${BasePath}/js/uploader/qiniu.js"></script>
     <script src="${BasePath}/js/uploader/imgUploader.js"></script>
@@ -62,7 +62,13 @@
 		$(document).ready(function() {
 		
 			// 图片上传
-			$('#urls').imgUploader({max:3});
+			$('#urls').imgUploader({max:3,callback:function(){
+				$('#afterSaleRequForm').bootstrapValidator('validateField', 'urls');
+			}});
+			
+			$('#urls').on("change", function(){
+				alert( $(this).text() );
+			});
 			
 			$('#afterSaleRequForm').bootstrapValidator({
 				live: 'disabled',
@@ -80,13 +86,24 @@
 		                }
 		            },
 		            urls:{
+		            	trigger: 'change',
 		            	validators:{
 		            		notEmpty: {
 		                        message: '请上传图片'
 		                    }
 		            	}
 		            }
-		        }
+		        },
+		        submitHandler: function(validator, form, submitButton) {
+				    // Use Ajax to submit form data
+				    $.post(form.attr('action'), form.serialize(), function(result) {
+				        if(result.state.code==200){
+			        		setTimeout(function () {window.location = "${_referUrl!'/toAfterSaleRequ.jhtml'}";}, 1500);
+			        	}else{
+			        		alert(result.state.msg);
+			        	}
+				    }, 'json');
+				}
 		    });
 		});
 	</script>

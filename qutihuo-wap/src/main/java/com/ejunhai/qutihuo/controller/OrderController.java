@@ -23,7 +23,6 @@ import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.order.enums.OrderSource;
 import com.ejunhai.qutihuo.order.model.OrderMain;
 import com.ejunhai.qutihuo.order.service.OrderMainService;
-import com.ejunhai.qutihuo.utils.LoginUtil;
 import com.ejunhai.qutihuo.utils.SessionManager;
 
 /**
@@ -48,6 +47,10 @@ public class OrderController extends BaseController {
 	@RequestMapping("/toSubscribe")
 	public String toSubscribe(ModelMap modelMap, HttpServletRequest request) {
 		Coupon coupon = SessionManager.get(request);
+		if (CouponState.used.getValue().equals(coupon.getState())) {
+            return "redirect:orderInfo.jhtml";
+        }
+		
 		CouponSchema couponSchema = couponSchemaService.read(coupon.getCouponSchemaId());
 		modelMap.put("coupon", coupon);
 		modelMap.put("couponScheme", couponSchema);
@@ -81,7 +84,7 @@ public class OrderController extends BaseController {
 
 		// 提前预订时间
 		CouponSchema couponSchema = couponSchemaService.read(coupon.getCouponSchemaId());
-		Date useStartDate = DateUtil.addDate(new Date(), couponSchema.getFrontDayNum());
+		Date useStartDate = DateUtil.addDate(coupon.getUseStartdate(), couponSchema.getFrontDayNum());
 		Date useEndDate = DateUtil.addDate(coupon.getUseEnddate(), couponSchema.getFrontDayNum());
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date orderDate = format.parse(orderMain.getOrderDate());
@@ -95,7 +98,8 @@ public class OrderController extends BaseController {
 		orderMain = orderMainService.createOrderMain(coupon, orderMain);
 
 		// 更新coupon状态
-		request.getSession().setAttribute(LoginUtil.LOGIN_USER, coupon);
+		coupon = couponService.getCouponByNo(coupon.getCouponNumber());
+		SessionManager.put(request, coupon);
 		modelMap.put("orderMain", orderMain);
 		modelMap.put("createOrderSuccess", true);
 		return "profile";

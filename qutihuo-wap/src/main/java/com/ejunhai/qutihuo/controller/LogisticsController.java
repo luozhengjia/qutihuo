@@ -19,7 +19,7 @@ import com.ejunhai.qutihuo.order.model.OrderRepl;
 import com.ejunhai.qutihuo.order.service.OrderLogService;
 import com.ejunhai.qutihuo.order.service.OrderMainService;
 import com.ejunhai.qutihuo.order.service.OrderReplService;
-import com.ejunhai.qutihuo.utils.LoginUtil;
+import com.ejunhai.qutihuo.utils.SessionManager;
 
 /**
  * after sale Controller
@@ -42,7 +42,7 @@ public class LogisticsController extends BaseController {
 
 	@RequestMapping("/toLogistics")
 	public String toLogistics(ModelMap modelMap, HttpServletRequest request) {
-		Coupon coupon = LoginUtil.getLoginUser(request);
+		Coupon coupon = SessionManager.get(request);
 		if (coupon == null) {
 			return "index";
 		}

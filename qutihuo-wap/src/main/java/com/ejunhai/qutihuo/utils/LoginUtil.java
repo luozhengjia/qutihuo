@@ -4,13 +4,9 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.fileupload.util.Streams;
 import org.apache.log4j.Logger;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
-import com.ejunhai.qutihuo.coupon.model.Coupon;
 
 public class LoginUtil {
 	private static final Logger logger = Logger.getLogger(LoginUtil.class);
@@ -23,25 +19,6 @@ public class LoginUtil {
 	 */
 	public static String validateResponseJson(boolean valid, String message) {
 		return "{\"valid\":" + valid + ",\"msg\":\"" + message + "\"}";
-	}
-
-	public static boolean isLogin(HttpServletRequest req) {
-		Object obj = req.getSession().getAttribute(LOGIN_USER);
-		if (obj == null)
-			return false;
-		return true;
-	}
-
-	public static Coupon getLoginUser(HttpServletRequest req) {
-		Object obj = req.getSession().getAttribute(LOGIN_USER);
-		if (obj == null)
-			return null;
-		return (Coupon) obj;
-	}
-
-	public static void logout(HttpServletRequest req) {
-		req.getSession().removeAttribute(LOGIN_USER);
-		req.getSession().invalidate();
 	}
 
 	public static int savePic(CommonsMultipartFile pic1File, String picServerPath) {

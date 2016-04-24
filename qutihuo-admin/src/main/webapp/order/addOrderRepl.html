@@ -1,0 +1,202 @@
+<@override name="page-content">  
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#">订单管理</a></li>
+            <li><a href="/orderRepl/orderReplList.jhtml">补货单列表</a></li>
+            <li>创建补货单</li>
+        </ul>
+    </div>
+    
+	<div class="page-body">
+        <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            <div class="col-xs-12 col-md-12">
+                <div class="with-header with-footer">
+                    <div class="widget-header">
+                    	<span class="widget-caption"><i class="glyphicon glyphicon-edit"></i>&nbsp;<b>创建补货单</b></span>
+                    	
+                    	<div class="widget-buttons">
+							<a href="${_referUrl!'/orderRepl/orderReplList.jhtml'}" class="btn">&nbsp;&nbsp;<i class="typcn typcn-arrow-back"></i>&nbsp;&nbsp;</a>
+						</div>
+                    </div>
+                
+                	<div class="widget-body">
+						<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/orderRepl/addOrderRepl.jhtml">
+							<input type="hidden" name="orderMainNo" value="${orderMain.orderMainNo}"/>
+							 <div class="form-group">
+	                            <label class="col-lg-2 control-label">礼品券名称</label>
+	                            <div class="col-lg-6">
+	                            	<p class="form-control">${couponSchema.couponName}</p>
+								</div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">礼品券编号</label>
+	                            <div class="col-lg-3">
+	                                <p class="form-control">${orderMain.couponNumber}</p>
+	                            </div>
+	                            <label class="col-lg-2 control-label">预约日期</label>
+	                            <div class="col-lg-3">
+	                                <p class="form-control">${orderMain.orderDate}</p>
+	                            </div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">订单编号</label>
+	                            <div class="col-lg-3">
+	                                <p class="form-control">${orderMain.orderMainNo}</p>
+	                            </div>
+	                            <label class="col-lg-2 control-label">下单日期</label>
+	                            <div class="col-lg-3">
+	                                <p class="form-control">${orderMain.createTime?string('yyyy-MM-dd HH:mm')}</p>
+	                            </div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">收货人姓名<font color="red"> *</font></label>
+	                            <div class="col-lg-3">
+	                            	<input type="text" name="consignee" class="form-control"  value="${orderMain.consignee}">
+								</div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">收货人手机号码<font color="red"> *</font></label>
+	                            <div class="col-lg-3">
+	                            	<input type="text" name="mobilePhone" class="form-control" value="${orderMain.telephone}">
+								</div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">省市区<font color="red"> *</font></label>
+	                            <div class="col-lg-6">
+	                            	<div id="district" class="clearfix"></div>
+	                            	<span id="provinceCityArea_tip"><small class="help-block">请选择收货人所在省市区</small></span>
+	                            	
+	                            	<input type="hidden" name="provinceCode" id="provinceCode" value="${orderMain.provinceCode?default("")}" />
+									<input type="hidden" name="cityCode" id="cityCode" value="${orderMain.cityCode?default("")}"/>
+									<input type="hidden" name="areaCode" id="areaCode" value="${orderMain.areaCode?default("")}"/>
+								</div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">收货人详细地址<font color="red"> *</font></label>
+	                            <div class="col-lg-8">
+	                            	<input type="text" name="detailAddress" class="form-control"  value="${orderMain.detailAddress}">
+								</div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+		                        <label class="col-lg-2 control-label">补货说明<font color="red"> *</font></label>
+		                        <div class="col-lg-9">
+		                            <textarea class="form-control" name="remark" rows="5"></textarea>
+		                        </div>
+		                    </div>
+		                    
+						    <div class="form-group">
+	                            <div class="col-lg-2 col-lg-offset-2">
+	                            	 <button type="submit" class="btn btn-success">确认</button>
+	                            </div>
+	                        </div>
+	                    </form>
+	                </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</@override>
+<@override name="custom-script">
+   	<script>
+		$(document).ready(function() {
+	        
+	        // 省市区选择器
+    		$("#district").areaSelecor({valueType:'id',province:'${orderMain.provinceCode}',city:'${orderMain.cityCode}',area:'${orderMain.areaCode}',change:function(province,city,area){
+    			if(area==null || area==''){
+    				$("#areaCode").val('');
+    			}else{
+    				$("#provinceCode").val(province);
+    				$("#cityCode").val(city);
+    				$("#areaCode").val(area);
+    			}
+    			
+    			districtValidator($("#areaCode").val());
+    		}});
+    		
+    		// 省市区选择器验证
+    		function districtValidator(area){
+    			if(area==null || area==''){
+    				$("#district span").removeClass('has-success').addClass('has-error');
+    				$("#provinceCityArea_tip").removeClass('has-success').addClass('has-error');
+    				return false;
+    			}else{
+    				$("#district span").removeClass('has-error').addClass('has-success');
+    				$("#provinceCityArea_tip").removeClass('has-error').addClass('has-success');
+    				return true;
+    			}
+    		}
+    		
+    		$('button[type="submit"]').click(function() {  
+			    districtValidator($("#areaCode").val());
+			});
+		});
+		
+		$('#html5Form').formValidation({
+			excluded:[':disabled', ':not(:visible)'],
+			fields: {
+	            consignee: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '请输入收货人姓名'
+	                    }
+	                }
+	            },
+	            mobilePhone: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '请输入收货人手机号码'
+	                    },
+	                    regexp: {
+	                        regexp: /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|2|3|5|6|7|8|9])\d{8}$/,
+	                        message: '手机号码无效'
+	                    }
+	                }
+	            },
+	            detailAddress: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '请输入详细地址'
+	                    }
+	                }
+	            },
+	            remark: {
+	                validators: {
+	                    notEmpty: {
+	                        message: '请输入处理说明'
+	                    }
+	                }
+	            }
+	        }
+		})        
+		.on('success.form.fv', function(e) {
+            // Prevent form submission
+            e.preventDefault();
+            
+            // Get the form instance
+            var $form = $(e.target);
+
+            // Get the FormValidation instance
+            var bv = $form.data('formValidation');
+            
+            // Use Ajax to submit form data
+            $.post($form.attr('action'), $form.serialize(), function(result) {
+                if(result.state.code==200){
+	        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+	        		setTimeout(function () {window.location = "/orderRepl/orderReplList.jhtml";}, 1500);
+	        	}else{
+	        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+	        	}
+            }, 'json');
+        });
+	</script>
+		
+</@override>
+<@extends name="/common/base.html"/>  
