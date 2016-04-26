@@ -104,6 +104,7 @@ public class CouponController extends BaseController {
         couponSchema.setIssueAmount(couponSchemaDto.getIssueAmount());
         couponSchema.setDayLimitNum(couponSchemaDto.getDayLimitNum());
         couponSchema.setFrontDayNum(couponSchemaDto.getFrontDayNum());
+        couponSchema.setInitActivate(couponSchemaDto.getInitActivate());
         couponSchema.setRemark(couponSchemaDto.getRemark());
 
         // 新增或更新用户信息
@@ -112,8 +113,6 @@ public class CouponController extends BaseController {
         } else {
             couponSchema.setMerchantId(merchantId);
             couponSchema.setExchangeMode(ExchangeMode.single.getValue());
-            couponSchema.setParValue(new BigDecimal(0));
-            couponSchema.setInitActivate(CouponState.unused.getValue());
             couponSchema.setHasIssueNum(0);
             couponSchema.setHasUseNum(0);
             couponSchema.setHasConfusion(Confusion.no.getValue());

@@ -117,7 +117,7 @@
     		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
     		<if test="couponName != null and couponName!=''">and coupon_name like CONCAT('%',#{couponName},'%')</if>
 		</where>
-		limit #{offset},#{pageSize} 
+		order by create_time desc limit #{offset},#{pageSize} 
     </select>
     
     <select id="getCouponSchemaListByIds" resultMap="CouponSchemaMapper">
