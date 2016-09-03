@@ -7,16 +7,19 @@ package com.ejunhai.qutihuo.order.enums;
  */
 public enum LogisticsCompany {
 
-	shunfeng(1, "顺丰快递"), zhongtong(2, "中通快递");
+	shunfeng(1, "顺丰快递", "shunfeng"), zhongtong(2, "中通快递", "zhongtong");
 
-	private LogisticsCompany(Integer flag, String title) {
+	private LogisticsCompany(Integer flag, String title, String qcode) {
 		this.flag = flag;
 		this.title = title;
+		this.qcode = qcode;
 	}
 
 	private Integer flag;
 
 	private String title;
+
+	private String qcode;
 
 	public Integer getValue() {
 		return flag;
@@ -24,6 +27,10 @@ public enum LogisticsCompany {
 
 	public String getTitle() {
 		return title;
+	}
+
+	public String getQcode() {
+		return qcode;
 	}
 
 	public static LogisticsCompany get(Integer flag) {

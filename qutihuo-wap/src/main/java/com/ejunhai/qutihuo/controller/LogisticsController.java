@@ -16,6 +16,7 @@ import com.ejunhai.qutihuo.common.base.BaseController;
 import com.ejunhai.qutihuo.common.utils.HttpClientHelper;
 import com.ejunhai.qutihuo.coupon.model.Coupon;
 import com.ejunhai.qutihuo.order.dto.OrderLogDto;
+import com.ejunhai.qutihuo.order.enums.LogisticsCompany;
 import com.ejunhai.qutihuo.order.model.OrderMain;
 import com.ejunhai.qutihuo.order.model.OrderRepl;
 import com.ejunhai.qutihuo.order.service.OrderLogService;
@@ -76,9 +77,9 @@ public class LogisticsController extends BaseController {
 
 	@RequestMapping(value = "/queryLogistics", method = RequestMethod.GET)
 	@ResponseBody
-	public String queryLogistics(String companyCode, String expressNo) {
+	public String queryLogistics(Integer companyCode, String expressNo) {
 		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("com", companyCode);
+		parameters.put("com", LogisticsCompany.get(companyCode).getQcode());
 		parameters.put("nu", expressNo);
 		String postUrl = HttpClientHelper.requestBodyString(LogisticsServiceUrl, parameters);
 		String result = postUrl.substring(5, postUrl.length() - 2);

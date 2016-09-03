@@ -30,7 +30,7 @@
 			  	<#if orderRepl.state==2>
 			  	<p>
 			  		<button  type="button" id="btn_${orderRepl.expressOrderNo!""}" class="btn btn-info btn-xs"
-			  			onclick="showOrderLogisticsTrack('${orderRepl.logisticsCompanyCode?default('shunfeng')}','${orderRepl.expressOrderNo}');">查看物流信息</button>
+			  			onclick="showOrderLogisticsTrack('${orderRepl.logisticsCompany}','${orderRepl.expressOrderNo}');">查看物流信息</button>
 			  	</p>
 			  	<p id="logicInfo_${orderRepl.expressOrderNo!""}"></p>
 			  	</#if>
@@ -50,7 +50,7 @@
 		  	<#if orderMain.state==2>
 		  	<p>
 		  		<button  type="button" id="btn_${orderMain.expressOrderNo!""}" class="btn btn-info btn-xs"
-		  			onclick="showOrderLogisticsTrack('${orderMain.logisticsCompanyCode?default('shunfeng')}','${orderMain.expressOrderNo}');">查看物流信息</button>
+		  			onclick="showOrderLogisticsTrack('${orderMain.logisticsCompany}','${orderMain.expressOrderNo}');">查看物流信息</button>
 		  	</p>
 		  	<p id="logicInfo_${orderMain.expressOrderNo!""}"></p>
 		  	</#if>

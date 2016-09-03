@@ -26,13 +26,13 @@
                                     <img src="/assets/img/avatars/Osvaldus-Valutis.jpg">
                                 </div>
                                 <section>
-                                    <h2><span class="profile"><span>David.Stevenson</span></span></h2>
+                                    <h2><span class="profile"><span>&nbsp;&nbsp;${_user.loginName}&nbsp;&nbsp;</span></span></h2>
                                 </section>
                             </a>
                             <!--Login Area Dropdown-->
                             <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
-                                <li class="username"><a>David Stevenson</a></li>
-                                <li class="email"><a>David.Stevenson@live.com</a></li>
+                                <li class="username"><a>David Stevenson${_user.loginName}</a></li>
+                                <li class="email"><a>${UserType.get(_user.userType).getTitle()}</a></li>
                                 <!--Avatar Area-->
                                 <li>
                                     <div class="avatar-area">
