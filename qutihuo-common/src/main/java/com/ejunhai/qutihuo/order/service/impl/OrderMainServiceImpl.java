@@ -13,6 +13,7 @@ import com.ejunhai.qutihuo.coupon.service.CouponSchemaService;
 import com.ejunhai.qutihuo.coupon.service.CouponService;
 import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.order.dao.OrderMainMapper;
+import com.ejunhai.qutihuo.order.enums.LogisticsCompany;
 import com.ejunhai.qutihuo.order.enums.OrderPrint;
 import com.ejunhai.qutihuo.order.enums.OrderState;
 import com.ejunhai.qutihuo.order.model.OrderLog;
@@ -140,12 +141,12 @@ public class OrderMainServiceImpl implements OrderMainService {
 
 		// 记录订单处理日志
 		OrderLog orderLog = new OrderLog();
-		String logiInfo = orderMain.getLogisticsCompany() + ",快递单号：" + orderMain.getExpressOrderNo();
+		String lcogisticsCompany = LogisticsCompany.get(Integer.parseInt(orderMain.getLogisticsCompany())).getTitle();
+		String logiInfo = lcogisticsCompany + ",快递单号：" + orderMain.getExpressOrderNo();
 		orderLog.setRemark("订单已出库，请您留意签收。" + logiInfo);
 		orderLog.setOrderNo(oldOrderMain.getOrderMainNo());
 		orderLog.setOperateUser("system");
 		orderLog.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		orderLogService.insert(orderLog);
 	}
-
 }

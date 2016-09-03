@@ -14,6 +14,7 @@ import com.ejunhai.qutihuo.aftersale.service.AfterSaleRequService;
 import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.order.dao.OrderReplMapper;
 import com.ejunhai.qutihuo.order.dto.OrderReplDto;
+import com.ejunhai.qutihuo.order.enums.LogisticsCompany;
 import com.ejunhai.qutihuo.order.enums.OrderState;
 import com.ejunhai.qutihuo.order.model.OrderLog;
 import com.ejunhai.qutihuo.order.model.OrderMain;
@@ -139,7 +140,8 @@ public class OrderReplServiceImpl implements OrderReplService {
 
 		// 记录订单处理日志
 		OrderLog orderLog = new OrderLog();
-		String logiInfo = orderRepl.getLogisticsCompany() + ",快递单号：" + orderRepl.getExpressOrderNo();
+		String lcogisticsCompany = LogisticsCompany.get(Integer.parseInt(orderRepl.getLogisticsCompany())).getTitle();
+		String logiInfo = lcogisticsCompany + ",快递单号：" + orderRepl.getExpressOrderNo();
 		orderLog.setRemark("补货单已出库，请您留意签收。" + logiInfo);
 		orderLog.setOrderNo(oldOrderRepl.getOrderReplNo());
 		orderLog.setOperateUser("system");
