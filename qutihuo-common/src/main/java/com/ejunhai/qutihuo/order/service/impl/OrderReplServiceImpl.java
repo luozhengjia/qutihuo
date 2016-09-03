@@ -138,8 +138,7 @@ public class OrderReplServiceImpl implements OrderReplService {
 
 	@Override
 	public OrderRepl getOrderReplByOrderMainNo(String orderMainNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.orderReplMapper.getOrderReplByOrderMainNo(orderMainNo);
 	}
 
 }
