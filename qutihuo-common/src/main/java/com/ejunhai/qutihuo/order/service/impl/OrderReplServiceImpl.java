@@ -33,102 +33,107 @@ import com.ejunhai.qutihuo.system.service.SystemAreaService;
 @Service("orderReplService")
 public class OrderReplServiceImpl implements OrderReplService {
 
-    @Resource
-    private OrderReplMapper orderReplMapper;
+	@Resource
+	private OrderReplMapper orderReplMapper;
 
-    @Resource
-    private SystemAreaService systemAreaService;
+	@Resource
+	private SystemAreaService systemAreaService;
 
-    @Resource
-    private OrderLogService orderLogService;
+	@Resource
+	private OrderLogService orderLogService;
 
-    @Resource
-    private AfterSaleRequService afterSaleRequService;
+	@Resource
+	private AfterSaleRequService afterSaleRequService;
 
-    @Override
-    public OrderRepl read(Integer id) {
-        return orderReplMapper.read(id);
-    }
+	@Override
+	public OrderRepl read(Integer id) {
+		return orderReplMapper.read(id);
+	}
 
-    @Override
-    public void update(OrderRepl orderRepl) {
-        orderReplMapper.update(orderRepl);
-    }
+	@Override
+	public OrderRepl getOrderReplByOrderReplNo(String orderReplNo) {
+		return orderReplMapper.getOrderReplByOrderReplNo(orderReplNo);
+	}
 
-    @Override
-    public void delete(Integer id) {
-        orderReplMapper.delete(id);
-    }
+	@Override
+	public void update(OrderRepl orderRepl) {
+		orderReplMapper.update(orderRepl);
+	}
 
-    @Override
-    public Integer queryOrderReplCount(OrderReplDto orderReplDto) {
-        return orderReplMapper.queryOrderReplCount(orderReplDto);
-    }
+	@Override
+	public void delete(Integer id) {
+		orderReplMapper.delete(id);
+	}
 
-    @Override
-    public List<OrderRepl> queryOrderReplList(OrderReplDto orderReplDto) {
-        return orderReplMapper.queryOrderReplList(orderReplDto);
-    }
+	@Override
+	public Integer queryOrderReplCount(OrderReplDto orderReplDto) {
+		return orderReplMapper.queryOrderReplCount(orderReplDto);
+	}
 
-    @Override
-    public OrderRepl createOrderRepl(OrderMain orderMain, OrderRepl orderRepl) {
-        orderRepl.setMerchantId(orderMain.getMerchantId());
-        orderRepl.setOrderReplNo(OrderUtil.createOrderReplNo());
-        orderRepl.setOrderMainNo(orderMain.getOrderMainNo());
-        orderRepl.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        orderRepl.setOrderDate(orderMain.getOrderDate());
-        orderRepl.setPayAmount(orderMain.getPayAmount());
-        orderRepl.setLogisticsCompany(orderMain.getLogisticsCompany());
+	@Override
+	public List<OrderRepl> queryOrderReplList(OrderReplDto orderReplDto) {
+		return orderReplMapper.queryOrderReplList(orderReplDto);
+	}
 
-        // 封装省市区数据
-        String provinceCityArea = systemAreaService.getProvinceCityArea(orderRepl.getAreaCode());
-        orderRepl.setProvinceCityArea(provinceCityArea);
-        orderRepl.setState(OrderState.NO_DELIVER.getValue());
-        orderReplMapper.insert(orderRepl);
+	@Override
+	public OrderRepl createOrderRepl(OrderMain orderMain, OrderRepl orderRepl) {
+		orderRepl.setMerchantId(orderMain.getMerchantId());
+		orderRepl.setOrderReplNo(OrderUtil.createOrderReplNo());
+		orderRepl.setOrderMainNo(orderMain.getOrderMainNo());
+		orderRepl.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		orderRepl.setOrderDate(orderMain.getOrderDate());
+		orderRepl.setPayAmount(orderMain.getPayAmount());
+		orderRepl.setLogisticsCompany(orderMain.getLogisticsCompany());
 
-        // 更新售后请求状态
-        AfterSaleRequ afterSaleRequ = afterSaleRequService.getAfterSaleRequByOrderMainNo(orderMain.getOrderMainNo());
-        if (afterSaleRequ != null) {
-            afterSaleRequ.setDealTime(new Timestamp(System.currentTimeMillis()));
-            afterSaleRequ.setDealInfo(orderRepl.getRemark());
-            afterSaleRequ.setState(RequState.deal.getValue());
-            afterSaleRequService.update(afterSaleRequ);
-        }
+		// 封装省市区数据
+		String provinceCityArea = systemAreaService.getProvinceCityArea(orderRepl.getAreaCode());
+		orderRepl.setProvinceCityArea(provinceCityArea);
+		orderRepl.setState(OrderState.NO_DELIVER.getValue());
+		orderReplMapper.insert(orderRepl);
 
-        // 记录订单处理日志
-        OrderLog orderLog = new OrderLog();
-        orderLog.setRemark("补货单已生成，正在给您备货。");
-        orderLog.setOrderNo(orderRepl.getOrderReplNo());
-        orderLog.setOperateUser("system");
-        orderLog.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        orderLogService.insert(orderLog);
+		// 更新售后请求状态
+		AfterSaleRequ afterSaleRequ = afterSaleRequService.getAfterSaleRequByOrderMainNo(orderMain.getOrderMainNo());
+		if (afterSaleRequ != null) {
+			afterSaleRequ.setDealTime(new Timestamp(System.currentTimeMillis()));
+			afterSaleRequ.setDealInfo(orderRepl.getRemark());
+			afterSaleRequ.setState(RequState.deal.getValue());
+			afterSaleRequService.update(afterSaleRequ);
+		}
 
-        return orderRepl;
-    }
+		// 记录订单处理日志
+		OrderLog orderLog = new OrderLog();
+		orderLog.setRemark("补货单已生成，正在给您备货。");
+		orderLog.setOrderNo(orderRepl.getOrderReplNo());
+		orderLog.setOperateUser("system");
+		orderLog.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		orderLogService.insert(orderLog);
 
-    @Override
-    public void changeConsigneeInfo(OrderRepl orderRepl) {
-        String provinceCityArea = systemAreaService.getProvinceCityArea(orderRepl.getAreaCode());
-        orderRepl.setProvinceCityArea(provinceCityArea);
-        this.orderReplMapper.update(orderRepl);
-    }
+		return orderRepl;
+	}
 
-    @Override
-    @Transactional
-    public void deliverOrderRepl(OrderRepl orderRepl) {
-        String provinceCityArea = systemAreaService.getProvinceCityArea(orderRepl.getAreaCode());
-        orderRepl.setProvinceCityArea(provinceCityArea);
-        orderRepl.setState(OrderState.DELIVERD.getValue());
-        this.orderReplMapper.update(orderRepl);
+	@Override
+	public void changeConsigneeInfo(OrderRepl orderRepl) {
+		String provinceCityArea = systemAreaService.getProvinceCityArea(orderRepl.getAreaCode());
+		orderRepl.setProvinceCityArea(provinceCityArea);
+		this.orderReplMapper.update(orderRepl);
+	}
 
-        // 记录订单处理日志
-        OrderLog orderLog = new OrderLog();
-        String logiInfo = orderRepl.getLogisticsCompany() + ",快递单号：" + orderRepl.getExpressOrderNo();
-        orderLog.setRemark("补货单已出库，请您留意签收。" + logiInfo);
-        orderLog.setOrderNo(orderRepl.getOrderReplNo());
-        orderLog.setOperateUser("system");
-        orderLog.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        orderLogService.insert(orderLog);
-    }
+	@Override
+	@Transactional
+	public void deliverOrderRepl(OrderRepl orderRepl) {
+		String provinceCityArea = systemAreaService.getProvinceCityArea(orderRepl.getAreaCode());
+		orderRepl.setProvinceCityArea(provinceCityArea);
+		orderRepl.setState(OrderState.DELIVERD.getValue());
+		this.orderReplMapper.update(orderRepl);
+
+		// 记录订单处理日志
+		OrderLog orderLog = new OrderLog();
+		String logiInfo = orderRepl.getLogisticsCompany() + ",快递单号：" + orderRepl.getExpressOrderNo();
+		orderLog.setRemark("补货单已出库，请您留意签收。" + logiInfo);
+		orderLog.setOrderNo(orderRepl.getOrderReplNo());
+		orderLog.setOperateUser("system");
+		orderLog.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		orderLogService.insert(orderLog);
+	}
 
 }

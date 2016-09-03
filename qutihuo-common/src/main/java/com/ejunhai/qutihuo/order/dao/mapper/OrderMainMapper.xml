@@ -140,6 +140,7 @@
     		<if test="orderDate != null and orderDate !=''"> and order_date = #{orderDate} </if>
   			<if test="state != null">and state=#{state} </if>
 		</where>
+		order by create_time desc
     	limit #{offset},#{pageSize} 
     </select>
     

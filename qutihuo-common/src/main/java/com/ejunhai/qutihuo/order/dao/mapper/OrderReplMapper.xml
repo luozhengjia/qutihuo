@@ -58,6 +58,13 @@
         where ID = #{id,jdbcType=INTEGER}
     </select>
     
+   <select id="getOrderReplByOrderReplNo" resultMap="OrderReplMapper">
+        select 
+        <include refid="Base_Column_List" />
+        from tb_order_repl
+        where order_repl_no = #{orderReplNo,jdbcType=VARCHAR}
+    </select>
+    
     <insert id="insert" parameterType="com.ejunhai.qutihuo.order.model.OrderRepl" useGeneratedKeys="true" keyProperty="id" >
         insert into tb_order_repl (<include refid="Base_Column_List" />)
         values (
@@ -125,7 +132,7 @@
     </select>
     
     <select id="queryOrderReplList" resultMap="OrderReplMapper">
-    	select <include refid="Base_Column_List" /> from tb_order_repl
+    	select <include refid="Base_Column_List" /> from tb_order_repl order by create_time desc
 		limit #{offset},#{pageSize}
     </select>
     

@@ -43,7 +43,7 @@
                         </thead>
                         <tbody>
                             <#list orderReplList as item >
-                            <tr data-formData='{"id":${item.id},"orderMainNo":"${item.orderMainNo}","logisticsCompany":1}'>
+                            <tr data-formData='{"id":${item.id},"orderReplNo":"${item.orderReplNo}","logisticsCompany":1}'>
                             	<td>${item.id?c}</td>
                     			<td>${item.orderReplNo}</td>
                     			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
@@ -55,7 +55,7 @@
                     				<#if item.state==1>
                     					<button type="button" class="btn btn-success btn-xs J_deliver"><i class="glyphicon glyphicon-transfer"></i> 发货</button>
                     				</#if>
-                    				<a class="btn btn-info btn-xs" href="/orderMain/toOrderMain.jhtml?orderMainNo=${item.orderMainNo}"><i class="fa fa-eye"></i> 查看</a>
+                    				<a class="btn btn-info btn-xs" href="/orderRepl/toEditOrderRepl.jhtml?orderReplNo=${item.orderReplNo}"><i class="fa fa-eye"></i> 查看</a>
                     			</td>
                             </tr>
                             </#list>
@@ -162,7 +162,7 @@
 	            $.post($form.attr('action'), $form.serialize(), function(result) {
 	                if(result.state.code==200){
 		        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-		        		setTimeout(function () {window.location = "/orderMain/orderMainList.jhtml";}, 1500);
+		        		setTimeout(function () {window.location = "/orderMain/orderReplList.jhtml";}, 1500);
 		        	}else{
 		        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 		        	}

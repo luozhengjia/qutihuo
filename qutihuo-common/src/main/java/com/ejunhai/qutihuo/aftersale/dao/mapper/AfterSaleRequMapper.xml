@@ -83,6 +83,7 @@
     		<if test="orderMainNo != null and orderMainNo !=''"> and order_main_no = #{orderMainNo} </if>
   			<if test="state != null">and state=#{state} </if>
 		</where>
+		order by create_time desc
 		limit #{offset},#{pageSize}
     </select>
     
