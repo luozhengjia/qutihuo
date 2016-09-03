@@ -136,4 +136,10 @@ public class OrderReplServiceImpl implements OrderReplService {
 		orderLogService.insert(orderLog);
 	}
 
+	@Override
+	public OrderRepl getOrderReplByOrderMainNo(String orderMainNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

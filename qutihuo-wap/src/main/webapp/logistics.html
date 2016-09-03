@@ -68,12 +68,13 @@
 <script type="text/javascript">
 	function showOrderLogisticsTrack(logisticsCompanyCode,expressOrderNo){
 		$("#btn_"+expressOrderNo).attr('disabled',"true")
-		$.getJSON("/queryLogistics.json?companyCode="+logisticsCompanyCode+"&expressNo="+expressOrderNo,function(json){
-			var html = [];  
-            if(json.data){
-            	for(var i=0;i<json.data.length;i++) {
-					html.push('<small>'+ json.data[i].time +'&nbsp;'+ json.data[i].context +'</small>');
-					html.push(i<json.data.length-1?'<br>':'');
+		$.getJSON("${BasePath}/queryLogistics.jhtml?companyCode="+logisticsCompanyCode+"&expressNo="+expressOrderNo,function(json){
+			var html = []; 
+			var results=$.parseJSON(json.data)
+            if(results.data){
+            	for(var i=0;i<results.data.length;i++) {
+					html.push('<small>'+ results.data[i].time +'&nbsp;'+ results.data[i].context +'</small>');
+					html.push(i<results.data.length-1?'<br>':'');
 				}
 	        }else{
 				html.push('<small style="color:red;">很抱歉，未获取到快递公司的配送信息，可能是由于快递官网信息未及时录入，请耐心等待，如有问题可登录快递官网查询或致电快递官方客服。</small>');

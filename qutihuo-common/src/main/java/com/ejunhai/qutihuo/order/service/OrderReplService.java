@@ -34,6 +34,14 @@ public interface OrderReplService {
 	public OrderRepl getOrderReplByOrderReplNo(String orderReplNo);
 
 	/**
+	 * 根据订单号获取补货单
+	 * 
+	 * @param orderMainNo
+	 * @return
+	 */
+	public OrderRepl getOrderReplByOrderMainNo(String orderMainNo);
+
+	/**
 	 * 更新OrderRepl
 	 * 
 	 * @param orderRepl
