@@ -24,32 +24,23 @@ public class HttpClientHelper {
 		GET, POST, MULTIPART_FORM_DATA
 	}
 
-	public static InputStream get(String urlToRequest,
-			Map<String, String> parameters) {
+	public static InputStream get(String urlToRequest, Map<String, String> parameters) {
 		return invokeRequest(urlToRequest, REQUEST_METHOD.GET, parameters);
 	}
 
-	public static InputStream post(String urlToRequest,
-			Map<String, String> parameters) {
+	public static InputStream post(String urlToRequest, Map<String, String> parameters) {
 		return invokeRequest(urlToRequest, REQUEST_METHOD.POST, parameters);
 	}
 
-	public static String requestBodyString(String urlToRequest,
-			Map<String, String> parameters) {
-		return convertStreamToString(
-				invokeRequest(urlToRequest, REQUEST_METHOD.GET, parameters),
-				"utf-8");
+	public static String requestBodyString(String urlToRequest, Map<String, String> parameters) {
+		return convertStreamToString(invokeRequest(urlToRequest, REQUEST_METHOD.GET, parameters), "utf-8");
 	}
 
-	public static String postBodyString(String urlToRequest,
-			Map<String, String> parameters) {
-		return convertStreamToString(
-				invokeRequest(urlToRequest, REQUEST_METHOD.POST, parameters),
-				"utf-8");
+	public static String postBodyString(String urlToRequest, Map<String, String> parameters) {
+		return convertStreamToString(invokeRequest(urlToRequest, REQUEST_METHOD.POST, parameters), "utf-8");
 	}
 
-	public static InputStream invokeRequest(String urlToRequest,
-			REQUEST_METHOD method, Map<String, String> parameters) {
+	public static InputStream invokeRequest(String urlToRequest, REQUEST_METHOD method, Map<String, String> parameters) {
 		if (urlToRequest == null || urlToRequest.trim().length() == 0)
 			return null;
 		if (parameters == null) {
@@ -57,8 +48,8 @@ public class HttpClientHelper {
 		}
 		String urlParameters = constructURLString(parameters);
 
-		if ((method == null || REQUEST_METHOD.GET.equals(method))
-				&& urlParameters.length() < 900 && urlParameters.length() > 0) {
+		if ((method == null || REQUEST_METHOD.GET.equals(method)) && urlParameters.length() < 900
+				&& urlParameters.length() > 0) {
 			if (urlToRequest.indexOf("?") == -1)
 				urlToRequest += "?" + urlParameters;
 			else
@@ -91,13 +82,11 @@ public class HttpClientHelper {
 				// The following request properties were recommended by the MPF
 				// class
 				con.setRequestProperty("Accept", "*/*");
-				con.setRequestProperty("Content-Type",
-						MultipartFormOutputStream.getContentType(boundary));
+				con.setRequestProperty("Content-Type", MultipartFormOutputStream.getContentType(boundary));
 				con.setRequestProperty("Connection", "Keep-Alive");
 				con.setRequestProperty("Cache-Control", "no-cache");
 				con.connect();
-				MultipartFormOutputStream mpout = new MultipartFormOutputStream(
-						con.getOutputStream(), boundary);
+				MultipartFormOutputStream mpout = new MultipartFormOutputStream(con.getOutputStream(), boundary);
 				// First, write out the parameters
 				for (Map.Entry<String, String> entry : parameters.entrySet()) {
 					mpout.writeField(entry.getKey(), entry.getValue());
@@ -181,8 +170,8 @@ public class HttpClientHelper {
 			final char[] buffer = new char[CHARS_PER_PAGE];
 			StringBuilder output = new StringBuilder(CHARS_PER_PAGE);
 			try {
-				for (int read = input.read(buffer, 0, buffer.length); read != -1; read = input
-						.read(buffer, 0, buffer.length)) {
+				for (int read = input.read(buffer, 0, buffer.length); read != -1; read = input.read(buffer, 0,
+						buffer.length)) {
 					output.append(buffer, 0, read);
 				}
 			} catch (IOException e) {
@@ -258,8 +247,7 @@ class MultipartFormOutputStream {
 	 * @throws java.io.IOException
 	 *             on input/output errors
 	 */
-	public void writeField(String name, boolean value)
-			throws java.io.IOException {
+	public void writeField(String name, boolean value) throws java.io.IOException {
 		writeField(name, new Boolean(value).toString());
 	}
 
@@ -273,8 +261,7 @@ class MultipartFormOutputStream {
 	 * @throws java.io.IOException
 	 *             on input/output errors
 	 */
-	public void writeField(String name, double value)
-			throws java.io.IOException {
+	public void writeField(String name, double value) throws java.io.IOException {
 		writeField(name, Double.toString(value));
 	}
 
@@ -359,8 +346,7 @@ class MultipartFormOutputStream {
 	 * @throws java.io.IOException
 	 *             on input/output errors
 	 */
-	public void writeField(String name, String value)
-			throws java.io.IOException {
+	public void writeField(String name, String value) throws java.io.IOException {
 		if (name == null) {
 			throw new IllegalArgumentException("Name cannot be null or empty.");
 		}
@@ -399,8 +385,7 @@ class MultipartFormOutputStream {
 	 * @throws java.io.IOException
 	 *             on input/output errors
 	 */
-	public void writeFile(String name, String mimeType, File file)
-			throws java.io.IOException {
+	public void writeFile(String name, String mimeType, File file) throws java.io.IOException {
 		if (file == null) {
 			throw new IllegalArgumentException("File cannot be null.");
 		}
@@ -410,8 +395,7 @@ class MultipartFormOutputStream {
 		if (file.isDirectory()) {
 			throw new IllegalArgumentException("File cannot be a directory.");
 		}
-		writeFile(name, mimeType, file.getCanonicalPath(), new FileInputStream(
-				file));
+		writeFile(name, mimeType, file.getCanonicalPath(), new FileInputStream(file));
 	}
 
 	/**
@@ -429,14 +413,12 @@ class MultipartFormOutputStream {
 	 * @throws java.io.IOException
 	 *             on input/output errors
 	 */
-	public void writeFile(String name, String mimeType, String fileName,
-			InputStream is) throws java.io.IOException {
+	public void writeFile(String name, String mimeType, String fileName, InputStream is) throws java.io.IOException {
 		if (is == null) {
 			throw new IllegalArgumentException("Input stream cannot be null.");
 		}
 		if (fileName == null || fileName.length() == 0) {
-			throw new IllegalArgumentException(
-					"File name cannot be null or empty.");
+			throw new IllegalArgumentException("File name cannot be null or empty.");
 		}
 		/*
 		 * --boundary\r\n Content-Disposition: form-data; name="<fieldName>";
@@ -448,8 +430,7 @@ class MultipartFormOutputStream {
 		out.writeBytes(boundary);
 		out.writeBytes(NEWLINE);
 		// write content header
-		out.writeBytes("Content-Disposition: form-data; name=\"" + name
-				+ "\"; filename=\"" + fileName + "\"");
+		out.writeBytes("Content-Disposition: form-data; name=\"" + name + "\"; filename=\"" + fileName + "\"");
 		out.writeBytes(NEWLINE);
 		if (mimeType != null) {
 			out.writeBytes("Content-Type: " + mimeType);
@@ -487,14 +468,12 @@ class MultipartFormOutputStream {
 	 * @throws java.io.IOException
 	 *             on input/output errors
 	 */
-	void writeFile(String name, String mimeType, String fileName, byte[] data)
-			throws java.io.IOException {
+	void writeFile(String name, String mimeType, String fileName, byte[] data) throws java.io.IOException {
 		if (data == null) {
 			throw new IllegalArgumentException("Data cannot be null.");
 		}
 		if (fileName == null || fileName.length() == 0) {
-			throw new IllegalArgumentException(
-					"File name cannot be null or empty.");
+			throw new IllegalArgumentException("File name cannot be null or empty.");
 		}
 		/*
 		 * --boundary\r\n Content-Disposition: form-data; name="<fieldName>";
@@ -506,8 +485,7 @@ class MultipartFormOutputStream {
 		out.writeBytes(boundary);
 		out.writeBytes(NEWLINE);
 		// write content header
-		out.writeBytes("Content-Disposition: form-data; name=\"" + name
-				+ "\"; filename=\"" + fileName + "\"");
+		out.writeBytes("Content-Disposition: form-data; name=\"" + name + "\"; filename=\"" + fileName + "\"");
 		out.writeBytes(NEWLINE);
 		if (mimeType != null) {
 			out.writeBytes("Content-Type: " + mimeType);
@@ -567,8 +545,7 @@ class MultipartFormOutputStream {
 	 * @throws java.io.IOException
 	 *             on input/output errors
 	 */
-	public static URLConnection createConnection(URL url)
-			throws java.io.IOException {
+	public static URLConnection createConnection(URL url) throws java.io.IOException {
 		URLConnection urlConn = url.openConnection();
 		if (urlConn instanceof HttpURLConnection) {
 			HttpURLConnection httpConn = (HttpURLConnection) urlConn;
@@ -590,8 +567,7 @@ class MultipartFormOutputStream {
 	 * @see #getContentType(String)
 	 */
 	public static String createBoundary() {
-		return "--------------------"
-				+ Long.toString(System.currentTimeMillis(), 16);
+		return "--------------------" + Long.toString(System.currentTimeMillis(), 16);
 	}
 
 	/**

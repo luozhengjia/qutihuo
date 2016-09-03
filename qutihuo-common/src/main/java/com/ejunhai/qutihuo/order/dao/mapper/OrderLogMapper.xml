@@ -47,7 +47,7 @@
     <select id="queryOrderLogList" resultMap="OrderLogMapper">
     	select <include refid="Base_Column_List" /> from tb_order_log
     	<where>
-    		<if test="orderMainNo != null and orderMainNo !=''"> and order_no = #{orderNo} </if>
+    		<if test="orderNo != null and orderNo !=''"> and order_no = #{orderNo} </if>
 		</where>
 		limit #{offset},#{pageSize}
     </select>

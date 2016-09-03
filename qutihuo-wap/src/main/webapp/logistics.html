@@ -17,6 +17,27 @@
 			<a href="${BasePath}/logout.jhtml" class="navbar-text col-xs-2" title="退出"><span class="glyphicon glyphicon-log-out"></span></a>
       	</div>
       	
+      	<#if orderRepl??>
+			<div class="panel panel-info">
+			  <div class="panel-heading"><strong>补货单：${orderRepl.orderReplNo!""}</strong></div>
+			  <div class="panel-body">
+			  	<p>
+			  		<#list replOrderLogList as item >
+						<small>${item.createTime?string('yyyy-MM-dd HH:mm')}  ${item.remark!''}</small>
+						<#if item_has_next><br></#if>
+					</#list>
+			  	</p>
+			  	<#if orderRepl.state==2>
+			  	<p>
+			  		<button  type="button" id="btn_${orderRepl.expressOrderNo!""}" class="btn btn-info btn-xs"
+			  			onclick="showOrderLogisticsTrack('${orderRepl.logisticsCompanyCode?default('shunfeng')}','${orderRepl.expressOrderNo}');">查看物流信息</button>
+			  	</p>
+			  	<p id="logicInfo_${orderRepl.expressOrderNo!""}"></p>
+			  	</#if>
+			  </div>
+			</div>
+		</#if>
+      	
 		<div class="panel panel-info">
 		  <div class="panel-heading"><strong>订单号：${orderMain.orderMainNo!""}</strong></div>
 		  <div class="panel-body">
@@ -26,7 +47,7 @@
 		  		<#if item_has_next><br></#if>
 			  </#list>
 		  	</p>
-		  	<#if orderMain.state==1>
+		  	<#if orderMain.state==2>
 		  	<p>
 		  		<button  type="button" id="btn_${orderMain.expressOrderNo!""}" class="btn btn-info btn-xs"
 		  			onclick="showOrderLogisticsTrack('${orderMain.logisticsCompanyCode?default('shunfeng')}','${orderMain.expressOrderNo}');">查看物流信息</button>
@@ -35,27 +56,6 @@
 		  	</#if>
 		  </div>
 		</div>
-		
-		<#if orderRepl??>
-		<div class="panel panel-info">
-		  <div class="panel-heading"><strong>补货单：${orderRepl.orderReplNo!""}</strong></div>
-		  <div class="panel-body">
-		  	<p>
-		  		<#list orderRepl.orderLogList as item >
-					<small>${item.createTime?string('yyyy-MM-dd HH:mm')}  ${item.remark!''}</small>
-					<#if item_has_next><br></#if>
-				</#list>
-		  	</p>
-		  	<#if orderRepl.state==1>
-		  	<p>
-		  		<button  type="button" id="btn_${orderRepl.expressOrderNo!""}" class="btn btn-info btn-xs"
-		  			onclick="showOrderLogisticsTrack('${orderRepl.logisticsCompanyCode?default('shunfeng')}','${orderRepl.expressOrderNo}');">查看物流信息</button>
-		  	</p>
-		  	<p id="logicInfo_${orderRepl.expressOrderNo!""}"></p>
-		  	</#if>
-		  </div>
-		</div>
-		</#if>
 		
 		<#include "/common/footer.ftl" >
 	</div>
@@ -68,7 +68,7 @@
 <script type="text/javascript">
 	function showOrderLogisticsTrack(logisticsCompanyCode,expressOrderNo){
 		$("#btn_"+expressOrderNo).attr('disabled',"true")
-		$.getJSON("http://api.ickd.cn/?com="+logisticsCompanyCode+"&type=json&encode=utf8&ord=desc&id=F88275FED9B2AFD04ECF53BD4EEFB3F9&nu="+expressOrderNo+"&callback=?",function(json){
+		$.getJSON("/queryLogistics.json?companyCode="+logisticsCompanyCode+"&expressNo="+expressOrderNo,function(json){
 			var html = [];  
             if(json.data){
             	for(var i=0;i<json.data.length;i++) {
