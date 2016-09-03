@@ -136,11 +136,24 @@
     
     <select id="queryOrderReplCount" resultType="java.lang.Integer">
     	select count(1) from tb_order_repl
+    	<where>
+    		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
+    		<if test="orderReplNo != null and orderReplNo !=''"> and order_repl_no = #{orderReplNo} </if>
+    		<if test="orderMainNo != null and orderMainNo !=''"> and order_main_no = #{orderMainNo} </if>
+  			<if test="state != null">and state=#{state} </if>
+		</where>
     </select>
     
     <select id="queryOrderReplList" resultMap="OrderReplMapper">
-    	select <include refid="Base_Column_List" /> from tb_order_repl order by create_time desc
-		limit #{offset},#{pageSize}
+    	select <include refid="Base_Column_List" /> from tb_order_repl
+    	<where>
+    		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
+    		<if test="orderReplNo != null and orderReplNo !=''"> and order_repl_no = #{orderReplNo} </if>
+    		<if test="orderMainNo != null and orderMainNo !=''"> and order_main_no = #{orderMainNo} </if>
+  			<if test="state != null">and state=#{state} </if>
+		</where>
+		order by create_time desc
+    	limit #{offset},#{pageSize} 
     </select>
     
 </mapper>
