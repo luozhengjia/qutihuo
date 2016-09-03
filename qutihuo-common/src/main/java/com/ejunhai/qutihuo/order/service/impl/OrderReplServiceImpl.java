@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ejunhai.qutihuo.aftersale.enums.RequState;
 import com.ejunhai.qutihuo.aftersale.model.AfterSaleRequ;
 import com.ejunhai.qutihuo.aftersale.service.AfterSaleRequService;
+import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.order.dao.OrderReplMapper;
 import com.ejunhai.qutihuo.order.dto.OrderReplDto;
 import com.ejunhai.qutihuo.order.enums.OrderState;
@@ -53,6 +54,11 @@ public class OrderReplServiceImpl implements OrderReplService {
 	@Override
 	public OrderRepl getOrderReplByOrderReplNo(String orderReplNo) {
 		return orderReplMapper.getOrderReplByOrderReplNo(orderReplNo);
+	}
+
+	@Override
+	public OrderRepl getOrderReplByOrderMainNo(String orderMainNo) {
+		return this.orderReplMapper.getOrderReplByOrderMainNo(orderMainNo);
 	}
 
 	@Override
@@ -107,7 +113,6 @@ public class OrderReplServiceImpl implements OrderReplService {
 		orderLog.setOperateUser("system");
 		orderLog.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		orderLogService.insert(orderLog);
-
 		return orderRepl;
 	}
 
@@ -121,24 +126,24 @@ public class OrderReplServiceImpl implements OrderReplService {
 	@Override
 	@Transactional
 	public void deliverOrderRepl(OrderRepl orderRepl) {
-		String provinceCityArea = systemAreaService.getProvinceCityArea(orderRepl.getAreaCode());
-		orderRepl.setProvinceCityArea(provinceCityArea);
-		orderRepl.setState(OrderState.DELIVERD.getValue());
-		this.orderReplMapper.update(orderRepl);
+		OrderRepl oldOrderRepl = this.read(orderRepl.getId());
+		JunhaiAssert.notNull(oldOrderRepl, "补货单ID无效");
+
+		oldOrderRepl.setLogisticsCompany(orderRepl.getLogisticsCompany());
+		oldOrderRepl.setExpressOrderNo(orderRepl.getExpressOrderNo());
+		oldOrderRepl.setState(OrderState.DELIVERD.getValue());
+		oldOrderRepl.setDeliverTime(new Timestamp(System.currentTimeMillis()));
+		this.orderReplMapper.update(oldOrderRepl);
+
+		// 发送短信
 
 		// 记录订单处理日志
 		OrderLog orderLog = new OrderLog();
 		String logiInfo = orderRepl.getLogisticsCompany() + ",快递单号：" + orderRepl.getExpressOrderNo();
 		orderLog.setRemark("补货单已出库，请您留意签收。" + logiInfo);
-		orderLog.setOrderNo(orderRepl.getOrderReplNo());
+		orderLog.setOrderNo(oldOrderRepl.getOrderReplNo());
 		orderLog.setOperateUser("system");
 		orderLog.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		orderLogService.insert(orderLog);
 	}
-
-	@Override
-	public OrderRepl getOrderReplByOrderMainNo(String orderMainNo) {
-		return this.orderReplMapper.getOrderReplByOrderMainNo(orderMainNo);
-	}
-
 }

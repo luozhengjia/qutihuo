@@ -62,14 +62,14 @@
         select 
         <include refid="Base_Column_List" />
         from tb_order_repl
-        where order_main_no = #{orderReplNo,jdbcType=VARCHAR}
+        where order_repl_no = #{orderReplNo,jdbcType=VARCHAR}
     </select>
     
     <select id="getOrderReplByOrderMainNo" resultMap="OrderReplMapper">
         select 
         <include refid="Base_Column_List" />
         from tb_order_repl
-        where order_repl_no = #{OrderMainNo,jdbcType=VARCHAR}
+        where order_main_no = #{OrderMainNo,jdbcType=VARCHAR}
     </select>
     
     <insert id="insert" parameterType="com.ejunhai.qutihuo.order.model.OrderRepl" useGeneratedKeys="true" keyProperty="id" >

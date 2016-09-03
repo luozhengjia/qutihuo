@@ -74,7 +74,7 @@
         </div>
     </div>
     
-    <form id="html5Form" class="form-horizontal" role="form" method="POST" style="display: none;" action="/orderMain/deliver.jhtml">
+    <form id="html5Form" class="form-horizontal" role="form" method="POST" style="display: none;" action="/orderRepl/deliver.jhtml">
     	<input type="hidden" name="id"/>
         <div class="form-group">
             <label class="col-sm-3 control-label">订单号</label>
@@ -162,7 +162,7 @@
 	            $.post($form.attr('action'), $form.serialize(), function(result) {
 	                if(result.state.code==200){
 		        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-		        		setTimeout(function () {window.location = "/orderMain/orderReplList.jhtml";}, 1500);
+		        		setTimeout(function () {window.location = "/orderRepl/orderReplList.jhtml";}, 1500);
 		        	}else{
 		        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 		        	}
