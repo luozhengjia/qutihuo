@@ -84,6 +84,7 @@ public class LogisticsController extends BaseController {
 		String postUrl = HttpClientHelper.requestBodyString(LogisticsServiceUrl, parameters);
 		String result = postUrl.substring(5, postUrl.length() - 2);
 		logger.debug(result);
+		
 		return jsonSuccess(result);
 	}
 }
