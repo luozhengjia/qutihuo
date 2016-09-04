@@ -59,4 +59,9 @@ public class MerchantServiceImpl implements MerchantService {
 		return merchantMapper.queryMerchantList(merchantDto);
 	}
 
+	@Override
+	public List<Merchant> getMerchantListByIds(List<Integer> merchantIds) {
+		return merchantMapper.getMerchantListByIds(merchantIds);
+	}
+
 }

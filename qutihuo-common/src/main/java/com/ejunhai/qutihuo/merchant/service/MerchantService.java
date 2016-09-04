@@ -61,4 +61,12 @@ public interface MerchantService {
 	 */
 	public List<Merchant> queryMerchantList(MerchantDto merchantDto);
 
+	/**
+	 * 根据ID获取商户列表
+	 * 
+	 * @param merchantIds
+	 * @return
+	 */
+	public List<Merchant> getMerchantListByIds(List<Integer> merchantIds);
+
 }

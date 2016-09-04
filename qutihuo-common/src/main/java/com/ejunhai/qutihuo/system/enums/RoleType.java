@@ -7,7 +7,7 @@ package com.ejunhai.qutihuo.system.enums;
  */
 public enum RoleType {
 
-	ssa(1, "超级系统管理员"), sma(2, "商户户主"), sa(3, "系统管理员");
+	ssa(1, "超级系统管理员"), sma(2, "商户户主"), sa(3, "商户管理员");
 
 	private RoleType(Integer flag, String title) {
 		this.flag = flag;

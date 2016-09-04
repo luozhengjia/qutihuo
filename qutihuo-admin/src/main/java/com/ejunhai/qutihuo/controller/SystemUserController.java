@@ -21,6 +21,9 @@ import com.ejunhai.qutihuo.common.base.BaseController;
 import com.ejunhai.qutihuo.common.base.Pagination;
 import com.ejunhai.qutihuo.common.constant.CommonConstant;
 import com.ejunhai.qutihuo.errors.JunhaiAssert;
+import com.ejunhai.qutihuo.merchant.model.Merchant;
+import com.ejunhai.qutihuo.merchant.service.MerchantService;
+import com.ejunhai.qutihuo.merchant.utils.MerchantUtil;
 import com.ejunhai.qutihuo.system.dto.SystemPrivilageDto;
 import com.ejunhai.qutihuo.system.dto.SystemRoleDto;
 import com.ejunhai.qutihuo.system.dto.SystemUserDto;
@@ -56,6 +59,9 @@ public class SystemUserController extends BaseController {
 
 	@Resource
 	private SystemPrivilageService systemPrivilageService;
+
+	@Resource
+	private MerchantService merchantService;
 
 	@RequestMapping("/userList")
 	public String userList(HttpServletRequest request, SystemUserDto systemUserDto, ModelMap modelMap) {
@@ -226,6 +232,11 @@ public class SystemUserController extends BaseController {
 			systemRoleDto.setOffset(pagination.getOffset());
 			systemRoleDto.setPageSize(pagination.getPageSize());
 			systemRoleList = systemRoleService.querySystemRoleList(systemRoleDto);
+
+			// 根据商户IDS获取商户列表
+			List<Integer> merchantIds = SystemRoleUtil.getMerchantIdList(systemRoleList);
+			List<Merchant> merchantList = merchantService.getMerchantListByIds(merchantIds);
+			modelMap.put("merchantMap", MerchantUtil.getMerchantMap(merchantList));
 		}
 		modelMap.put("systemRoleList", systemRoleList);
 		modelMap.put("pagination", pagination);

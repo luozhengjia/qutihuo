@@ -1,5 +1,6 @@
 package com.ejunhai.qutihuo.system.utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,5 +22,15 @@ public class SystemRoleUtil {
 		}
 
 		return systemRoleMap;
+	}
+
+	public static List<Integer> getMerchantIdList(List<SystemRole> systemRoleList) {
+		List<Integer> merchantIds = new ArrayList<Integer>();
+		for (SystemRole systemRole : systemRoleList) {
+			if (systemRole.getMerchantId() != null) {
+				merchantIds.add(systemRole.getMerchantId());
+			}
+		}
+		return merchantIds;
 	}
 }
