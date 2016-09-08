@@ -132,7 +132,7 @@ public class SystemUserController extends BaseController {
 		systemUser.setPasswd(systemUserDto.getPasswd());
 
 		// 系统管理员可以创建系统管理员，商户可以创建商户管理员
-		systemUser.setUserType(merchantId == null ? UserType.ma.getValue() : UserType.sa.getValue());
+		systemUser.setUserType(merchantId == null ? UserType.sa.getValue() : UserType.ma.getValue());
 		systemUser.setMerchantId(merchantId);
 		systemUser.setState(UserState.normal.getValue());
 		systemUserService.insert(systemUser);
