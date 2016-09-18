@@ -21,6 +21,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		// 若用户未登录，则跳转至登陆页
 		if (SessionManager.get(request) == null) {
 			response.sendRedirect("/index.jhtml");
+			return false;
 		}
 		return true;
 	}
