@@ -48,16 +48,17 @@ public class OrderController extends BaseController {
 	public String toSubscribe(ModelMap modelMap, HttpServletRequest request) {
 		Coupon coupon = SessionManager.get(request);
 		if (CouponState.used.getValue().equals(coupon.getState())) {
-            return "redirect:orderInfo.jhtml";
-        }
-		
+			return "redirect:orderInfo.jhtml";
+		}
+
 		CouponSchema couponSchema = couponSchemaService.read(coupon.getCouponSchemaId());
 		modelMap.put("coupon", coupon);
 		modelMap.put("couponScheme", couponSchema);
 
 		// 提前预订时间
 		Date useStartDate = DateUtil.addDate(new Date(), couponSchema.getFrontDayNum());
-		useStartDate =couponSchema.getUseStartdate().after(useStartDate)?couponSchema.getUseStartdate():useStartDate;
+		useStartDate = couponSchema.getUseStartdate().after(useStartDate) ? couponSchema.getUseStartdate()
+				: useStartDate;
 		Date useEndDate = DateUtil.addDate(coupon.getUseEnddate(), couponSchema.getFrontDayNum());
 		modelMap.put("startDate", DateUtil.format(useStartDate, "yyyy-MM-dd"));
 		modelMap.put("endDate", DateUtil.format(useEndDate, "yyyy-MM-dd"));
@@ -71,6 +72,7 @@ public class OrderController extends BaseController {
 		// 验证礼品卡的可用性
 		coupon = couponService.getCouponByNo(coupon.getCouponNumber());
 		if (!CouponState.unused.getValue().equals(coupon.getState())) {
+			logger.info("优惠券状态不对");
 			return "redirect:toSubscribe.jhtml";
 		}
 
@@ -91,6 +93,7 @@ public class OrderController extends BaseController {
 
 		// 预定日期无效
 		if (!(orderDate.after(useStartDate) && orderDate.before(useEndDate))) {
+			logger.info("预定日期无效");
 			return "redirect:toSubscribe.jhtml";
 		}
 
