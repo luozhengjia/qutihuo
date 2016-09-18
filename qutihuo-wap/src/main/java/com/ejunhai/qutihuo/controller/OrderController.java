@@ -86,7 +86,9 @@ public class OrderController extends BaseController {
 
 		// 提前预订时间
 		CouponSchema couponSchema = couponSchemaService.read(coupon.getCouponSchemaId());
-		Date useStartDate = DateUtil.addDate(coupon.getUseStartdate(), couponSchema.getFrontDayNum());
+		Date useStartDate = DateUtil.addDate(new Date(), couponSchema.getFrontDayNum());
+		useStartDate = couponSchema.getUseStartdate().after(useStartDate) ? couponSchema.getUseStartdate()
+				: useStartDate;
 		Date useEndDate = DateUtil.addDate(coupon.getUseEnddate(), couponSchema.getFrontDayNum());
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date orderDate = format.parse(orderMain.getOrderDate());
