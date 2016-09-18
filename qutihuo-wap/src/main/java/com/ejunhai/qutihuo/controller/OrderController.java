@@ -94,7 +94,7 @@ public class OrderController extends BaseController {
 		Date orderDate = format.parse(orderMain.getOrderDate());
 
 		// 预定日期无效
-		if (!(orderDate.after(useStartDate) && orderDate.before(useEndDate))) {
+		if (orderDate.getTime() < useStartDate.getTime() || orderDate.getTime() > useEndDate.getTime()) {
 			logger.info("预定日期无效");
 			return "redirect:toSubscribe.jhtml";
 		}
