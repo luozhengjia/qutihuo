@@ -1,5 +1,8 @@
 package com.ejunhai.qutihuo.system.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.ejunhai.qutihuo.system.model.SystemArea;
 
 /**
@@ -29,4 +32,7 @@ public interface SystemAreaService {
 	 */
 	public String getProvinceCityArea(String areaNo);
 
+	public List<SystemArea> getAll();
+
+	public Map<String, SystemArea> getSystemAreaMap();
 }

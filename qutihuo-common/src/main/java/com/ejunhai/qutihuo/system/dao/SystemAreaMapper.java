@@ -1,5 +1,7 @@
 package com.ejunhai.qutihuo.system.dao;
 
+import java.util.List;
+
 import com.ejunhai.qutihuo.system.model.SystemArea;
 
 /**
@@ -19,4 +21,6 @@ public interface SystemAreaMapper {
 	 * @return
 	 */
 	public SystemArea getAreaByNo(String no);
+
+	public List<SystemArea> getAll();
 }

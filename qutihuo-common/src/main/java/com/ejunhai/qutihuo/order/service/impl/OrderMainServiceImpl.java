@@ -114,7 +114,8 @@ public class OrderMainServiceImpl implements OrderMainService {
 	public void changeConsigneeInfo(OrderMain orderMain) {
 		OrderMain oldOrderMain = this.read(orderMain.getId());
 		JunhaiAssert.notNull(oldOrderMain, "订单ID无效");
-
+		
+		oldOrderMain.setOrderDate(orderMain.getOrderDate());
 		oldOrderMain.setConsignee(orderMain.getConsignee());
 		oldOrderMain.setTelephone(orderMain.getTelephone());
 		oldOrderMain.setProvinceCode(orderMain.getProvinceCode());

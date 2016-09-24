@@ -37,6 +37,7 @@
                                 <th>礼品卡码</th>
                                 <th>预约日期</th>
                                 <th>订单金额</th>
+                                <th>省市区</th>
                                 <th>收货人</th>
                                 <th>联系电话</th>
                                 <th>下单日期</th>
@@ -52,6 +53,7 @@
                     			<td>${item.couponNumber}</td>
                     			<td>${item.orderDate}</td>
                     			<td>${item.payAmount}</td>
+                    			<td>${(item.provinceCityArea)!''}</td>
                     			<td>${item.consignee}</td>
                     			<td>${item.telephone}</td>
                     			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>

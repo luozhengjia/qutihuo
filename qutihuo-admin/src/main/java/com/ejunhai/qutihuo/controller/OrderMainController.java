@@ -21,72 +21,76 @@ import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.order.dto.OrderMainDto;
 import com.ejunhai.qutihuo.order.model.OrderMain;
 import com.ejunhai.qutihuo.order.service.OrderMainService;
+import com.ejunhai.qutihuo.system.service.SystemAreaService;
 import com.ejunhai.qutihuo.utils.SessionManager;
 
 @Controller
 @RequestMapping("orderMain")
 public class OrderMainController extends BaseController {
 
-    @Resource
-    private OrderMainService orderMainService;
+	@Resource
+	private OrderMainService orderMainService;
 
-    @Resource
-    private CouponSchemaService couponSchemaService;
+	@Resource
+	private CouponSchemaService couponSchemaService;
 
-    @Resource
-    private CouponService couponService;
+	@Resource
+	private CouponService couponService;
 
-    @RequestMapping("/orderMainList")
-    public String orderMainList(HttpServletRequest request, OrderMainDto orderMainDto, ModelMap modelMap) {
-        orderMainDto.setMerchantId(SessionManager.get(request).getMerchantId());
-        Integer iCount = orderMainService.queryOrderMainCount(orderMainDto);
-        Pagination pagination = new Pagination(orderMainDto.getPageNo(), iCount);
+	@Resource
+	private SystemAreaService systemAreaService;
 
-        // 获取分页数据
-        List<OrderMain> orderMainList = new ArrayList<OrderMain>();
-        if (iCount > 0) {
-            orderMainDto.setOffset(pagination.getOffset());
-            orderMainDto.setPageSize(pagination.getPageSize());
-            orderMainList = orderMainService.queryOrderMainList(orderMainDto);
-        }
+	@RequestMapping("/orderMainList")
+	public String orderMainList(HttpServletRequest request, OrderMainDto orderMainDto, ModelMap modelMap) {
+		orderMainDto.setMerchantId(SessionManager.get(request).getMerchantId());
+		Integer iCount = orderMainService.queryOrderMainCount(orderMainDto);
+		Pagination pagination = new Pagination(orderMainDto.getPageNo(), iCount);
 
-        modelMap.put("pagination", pagination);
-        modelMap.put("orderMainDto", orderMainDto);
-        modelMap.put("orderMainList", orderMainList);
-        return "order/orderMainList";
-    }
+		// 获取分页数据
+		List<OrderMain> orderMainList = new ArrayList<OrderMain>();
+		if (iCount > 0) {
+			orderMainDto.setOffset(pagination.getOffset());
+			orderMainDto.setPageSize(pagination.getPageSize());
+			orderMainList = orderMainService.queryOrderMainList(orderMainDto);
+		}
 
-    @RequestMapping("/toOrderMain")
-    public String toOrderMain(HttpServletRequest request, String orderMainNo, ModelMap modelMap) {
+		modelMap.put("pagination", pagination);
+		modelMap.put("orderMainDto", orderMainDto);
+		modelMap.put("orderMainList", orderMainList);
+		return "order/orderMainList";
+	}
 
-        OrderMain orderMain = orderMainService.getOrderMainByOrderMainNo(orderMainNo);
-        JunhaiAssert.notNull(orderMain, "订单号码无效");
+	@RequestMapping("/toOrderMain")
+	public String toOrderMain(HttpServletRequest request, String orderMainNo, ModelMap modelMap) {
 
-        // 获取券详情信息
-        Coupon coupon = couponService.getCouponByNo(orderMain.getCouponNumber());
-        CouponSchema couponSchema = couponSchemaService.read(coupon.getCouponSchemaId());
+		OrderMain orderMain = orderMainService.getOrderMainByOrderMainNo(orderMainNo);
+		JunhaiAssert.notNull(orderMain, "订单号码无效");
 
-        modelMap.put("orderMain", orderMain);
-        modelMap.put("couponSchema", couponSchema);
-        return "order/editOrderMain";
-    }
+		// 获取券详情信息
+		Coupon coupon = couponService.getCouponByNo(orderMain.getCouponNumber());
+		CouponSchema couponSchema = couponSchemaService.read(coupon.getCouponSchemaId());
 
-    @RequestMapping("/changeConsigneeInfo")
-    @ResponseBody
-    public String changeConsigneeInfo(OrderMain orderMain, ModelMap modelMap) throws Exception {
-        JunhaiAssert.notNull(orderMain.getDetailAddress(), "收货人详细地址不能为空");
-        JunhaiAssert.notNull(orderMain.getAreaCode(), "收货人省市区不能为空");
-        orderMainService.changeConsigneeInfo(orderMain);
-        return jsonSuccess();
-    }
+		modelMap.put("orderMain", orderMain);
+		modelMap.put("couponSchema", couponSchema);
+		return "order/editOrderMain";
+	}
 
-    @RequestMapping("/deliver")
-    @ResponseBody
-    public String deliverOrderMain(OrderMain orderMain, ModelMap modelMap) throws Exception {
-        JunhaiAssert.notNull(orderMain.getLogisticsCompany(), "物流公司不能为空");
-        JunhaiAssert.notNull(orderMain.getExpressOrderNo(), "快递单号不能为空");
+	@RequestMapping("/changeConsigneeInfo")
+	@ResponseBody
+	public String changeConsigneeInfo(OrderMain orderMain, ModelMap modelMap) throws Exception {
+		JunhaiAssert.notNull(orderMain.getDetailAddress(), "收货人详细地址不能为空");
+		JunhaiAssert.notNull(orderMain.getAreaCode(), "收货人省市区不能为空");
+		orderMainService.changeConsigneeInfo(orderMain);
+		return jsonSuccess();
+	}
 
-        orderMainService.deliverOrderMain(orderMain);
-        return jsonSuccess();
-    }
+	@RequestMapping("/deliver")
+	@ResponseBody
+	public String deliverOrderMain(OrderMain orderMain, ModelMap modelMap) throws Exception {
+		JunhaiAssert.notNull(orderMain.getLogisticsCompany(), "物流公司不能为空");
+		JunhaiAssert.notNull(orderMain.getExpressOrderNo(), "快递单号不能为空");
+
+		orderMainService.deliverOrderMain(orderMain);
+		return jsonSuccess();
+	}
 }
