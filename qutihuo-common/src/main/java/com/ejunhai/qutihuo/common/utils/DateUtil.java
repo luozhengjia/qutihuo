@@ -217,6 +217,16 @@ public class DateUtil {
 		return (int) ((s - n) / 1000);
 	}
 
+	public static long getZeroTime(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		return c.getTimeInMillis();
+	}
+
 	public static void main(String[] args) {
 		try {
 			System.out.println(getLeftSeconds("2011-12-29 23:33:09"));
