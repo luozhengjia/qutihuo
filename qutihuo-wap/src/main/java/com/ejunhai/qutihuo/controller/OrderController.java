@@ -95,7 +95,7 @@ public class OrderController extends BaseController {
 
 		// 预定日期无效
 		if (orderDate.getTime() < useStartDate.getTime() || orderDate.getTime() > useEndDate.getTime()) {
-			logger.info("预定日期无效");
+			logger.info("卡券" + coupon.getCouponNumber() + "预定日期无效，预定日期：" + orderMain.getOrderDate());
 			return "redirect:toSubscribe.jhtml";
 		}
 
