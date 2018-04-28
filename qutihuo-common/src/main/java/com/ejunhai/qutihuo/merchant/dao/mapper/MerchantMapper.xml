@@ -3,21 +3,19 @@
 <mapper namespace="com.ejunhai.qutihuo.merchant.dao.MerchantMapper">
 	<resultMap id="MerchantMapper" type="com.ejunhai.qutihuo.merchant.model.Merchant">
 		<id column="id" property="id" jdbcType="INTEGER" />
-		<result column="merchant_name" property="merchantName"
-			jdbcType="VARCHAR" />
-		<result column="business_line" property="businessLine"
-			jdbcType="VARCHAR" />
-		<result column="merchant_level" property="merchantLevel"
-			jdbcType="TINYINT" />
+		<result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
+		<result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+		<result column="headimg_url" property="headimgUrl" jdbcType="VARCHAR" />
+		<result column="business_line" property="businessLine" jdbcType="VARCHAR" />
+		<result column="merchant_level" property="merchantLevel" jdbcType="TINYINT" />
 		<result column="open_time" property="openTime" jdbcType="TIMESTAMP" />
 		<result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
-		<result column="available_sms_num" property="availableSmsNum"
-			jdbcType="INTEGER" />
-		<result column="record_number" property="recordNumber"
-			jdbcType="VARCHAR" />
+		<result column="available_sms_num" property="availableSmsNum" jdbcType="INTEGER" />
+		<result column="record_number" property="recordNumber" jdbcType="VARCHAR" />
 		<result column="contacts" property="contacts" jdbcType="VARCHAR" />
 		<result column="telephone" property="telephone" jdbcType="VARCHAR" />
 		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
 	</resultMap>
@@ -25,6 +23,8 @@
 	<sql id="Base_Column_List">
 		id,
 		merchant_name,
+		logo_url,
+		headimg_url,
 		business_line,
 		merchant_level,
 		open_time,
@@ -34,6 +34,7 @@
 		contacts,
 		telephone,
 		address,
+		remark,
 		create_time,
 		update_time
 	</sql>
@@ -53,6 +54,8 @@
 		values (
 		#{id,jdbcType=INTEGER},
 		#{merchantName,jdbcType=VARCHAR},
+		#{logoUrl,jdbcType=VARCHAR},
+		#{headimgUrl,jdbcType=VARCHAR},
 		#{businessLine,jdbcType=VARCHAR},
 		#{merchantLevel,jdbcType=TINYINT},
 		#{openTime,jdbcType=TIMESTAMP},
@@ -62,6 +65,7 @@
 		#{contacts,jdbcType=VARCHAR},
 		#{telephone,jdbcType=VARCHAR},
 		#{address,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
 		#{createTime,jdbcType=TIMESTAMP},
 		#{updateTime,jdbcType=TIMESTAMP}
 		)
@@ -72,6 +76,8 @@
 		<set>
 			id = #{id,jdbcType=INTEGER},
 			merchant_name = #{merchantName,jdbcType=VARCHAR},
+			logo_url = #{logoUrl,jdbcType=VARCHAR},
+			headimg_url = #{headimgUrl,jdbcType=VARCHAR},
 			business_line = #{businessLine,jdbcType=VARCHAR},
 			merchant_level = #{merchantLevel,jdbcType=TINYINT},
 			open_time = #{openTime,jdbcType=TIMESTAMP},
@@ -81,6 +87,7 @@
 			contacts = #{contacts,jdbcType=VARCHAR},
 			telephone = #{telephone,jdbcType=VARCHAR},
 			address = #{address,jdbcType=VARCHAR},
+			remark = #{remark,jdbcType=VARCHAR},
 			create_time = #{createTime,jdbcType=TIMESTAMP},
 			update_time = #{updateTime,jdbcType=TIMESTAMP}
 		</set>

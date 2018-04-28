@@ -19,7 +19,7 @@
 		
 		  <div class="carousel-inner">
 		    <div class="item active">
-		      <img src="http://ejunhai.qiniudn.com/banner.jpg" alt="...">
+		      <img src="${merchant.headimgUrl!''}" alt="...">
 		      <div class="carousel-caption">
 		      </div>
 		    </div>
@@ -28,7 +28,7 @@
 		<br/>
 		
 		<div class="panel panel-info">
-		  <div class="panel-heading text-center"><strong>欢迎登入骏海水产预定系统</strong></div>
+		  <div class="panel-heading text-center"><strong>欢迎登入<#if merchant.id==4>骏海水产<#elseif merchant.id==5>翊上风华</#if>预定系统</strong></div>
 		  <div class="panel-body">
 		  	<form id="loginForm" class="form-horizontal" method="POST" action="${BasePath}/login.jhtml">
 		  	  <div id="valate_msg_tip" class="alert alert-danger alert-dismissable" style="display: none;">
@@ -60,7 +60,9 @@
 		  </div>
 		</div>
 		
-		<#include "/common/footer.ftl" >
+		<div class="navbar navbar-default">
+			<p class="navbar-text text-center" style="width:100%"><small> ${merchant.merchantName!''} |${merchant.recordNumber!''}<br> 如遇困难可拨打 ${merchant.telephone!''} </small></p>
+		</div>
 	</div>
 	
     <script src="http://ejunhai.qiniudn.com/jquery-1.10.2.min.js"></script>

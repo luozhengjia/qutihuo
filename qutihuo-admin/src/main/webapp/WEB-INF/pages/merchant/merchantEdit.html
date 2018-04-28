@@ -47,6 +47,17 @@
 	                        </div>
 	                        
 	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">商户logo</label>
+	                            <div class="col-lg-1">
+	                            	<input type="text" class="form-control" id="logoUrl" name="logoUrl"/>
+								</div>
+								<label class="col-lg-1 control-label">宣传图</label>
+								<div class="col-lg-1">
+	                            	<input type="text" class="form-control" style="float:left" id="headimgUrl" name="headimgUrl"/>
+								</div>
+	                        </div>
+	                        
+	                        <div class="form-group">
 	                            <label class="col-lg-2 control-label">公司联系人</label>
 	                            <div class="col-lg-3">
 	                                <input type="text" class="form-control" name="contacts"/>
@@ -67,6 +78,13 @@
 	                            </div>
 	                        </div>
 	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">商户简介</label>
+	                            <div class="col-lg-6">
+	                                <textarea class="form-control" name="remark" rows="5"></textarea>
+	                            </div>
+	                        </div>
+		                        
 	                        <div class="form-group">
 	                            <div class="col-lg-2 col-lg-offset-2">
 	                            	 <button type="submit" class="btn btn-success">确认</button>
@@ -133,15 +151,24 @@
 			var formData = {			
 	         	"id":${(merchant.id?c)!''},
 				"merchantName":"${(merchant.merchantName)!''}",
+				"logoUrl":"${(merchant.logoUrl)!''}",
+				"headimgUrl":"${(merchant.headimgUrl)!''}",
 				"businessLine":"${(merchant.businessLine)!''}",
 				"recordNumber":"${(merchant.recordNumber)!''}",
 				"contacts":"${(merchant.contacts)!''}",
 				"telephone":"${(merchant.telephone)!''}", 
-				"address":"${(merchant.address)!''}"
+				"address":"${(merchant.address)!''}",
+				"remark":"${(merchant.remark)!''}"
 	        };
 	        
 			// 自动填充表单
 	        $("#html5Form").autofill(formData);
+	        
+	        // 图片上传
+			$('#logoUrl').imgUploader({max:1,callback:function(){}});
+			
+			// 图片上传
+			$('#headimgUrl').imgUploader({max:1,callback:function(){}});
 		});
 	</script>
 </@override>

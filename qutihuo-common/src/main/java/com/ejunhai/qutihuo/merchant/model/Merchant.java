@@ -11,175 +11,205 @@ import java.sql.Timestamp;
  */
 public class Merchant implements Serializable {
 
-	private static final long serialVersionUID = -8038668664301516934L;
+    private static final long serialVersionUID = -8038668664301516934L;
 
-	/**
-	 * 商户ID
-	 */
-	private Integer id;
+    /**
+     * 商户ID
+     */
+    private Integer id;
 
-	/**
-	 * 商户名称
-	 */
-	private String merchantName;
+    /**
+     * 商户名称
+     */
+    private String merchantName;
 
-	/**
-	 * 主营业务
-	 */
-	private String businessLine;
+    /**
+     * 主营业务
+     */
+    private String businessLine;
 
-	/**
-	 * 商户等级
-	 */
-	private Integer merchantLevel;
+    private String logoUrl;
 
-	/**
-	 * 开通时间
-	 */
-	private Timestamp openTime;
+    private String headimgUrl;
 
-	/**
-	 * 到期时间
-	 */
-	private Timestamp expireTime;
+    /**
+     * 商户等级
+     */
+    private Integer merchantLevel;
 
-	/**
-	 * 可用短信数量
-	 */
-	private Integer availableSmsNum;
+    /**
+     * 开通时间
+     */
+    private Timestamp openTime;
 
-	/**
-	 * 备案号
-	 */
-	private String recordNumber;
+    /**
+     * 到期时间
+     */
+    private Timestamp expireTime;
 
-	/**
-	 * 联系人
-	 */
-	private String contacts;
+    /**
+     * 可用短信数量
+     */
+    private Integer availableSmsNum;
 
-	/**
-	 * 联系电话
-	 */
-	private String telephone;
+    /**
+     * 备案号
+     */
+    private String recordNumber;
 
-	/**
-	 * 联系地址
-	 */
-	private String address;
+    /**
+     * 联系人
+     */
+    private String contacts;
 
-	/**
-	 * 创建时间
-	 */
-	private Timestamp createTime;
+    /**
+     * 联系电话
+     */
+    private String telephone;
 
-	/**
-	 * 更新时间
-	 */
-	private Timestamp updateTime;
+    /**
+     * 联系地址
+     */
+    private String address;
 
-	public Integer getId() {
-		return id;
-	}
+    private String remark;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    /**
+     * 创建时间
+     */
+    private Timestamp createTime;
 
-	public String getMerchantName() {
-		return merchantName;
-	}
+    /**
+     * 更新时间
+     */
+    private Timestamp updateTime;
 
-	public void setMerchantName(String merchantName) {
-		this.merchantName = merchantName;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getBusinessLine() {
-		return businessLine;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setBusinessLine(String businessLine) {
-		this.businessLine = businessLine;
-	}
+    public String getMerchantName() {
+        return merchantName;
+    }
 
-	public Integer getMerchantLevel() {
-		return merchantLevel;
-	}
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
+    }
 
-	public void setMerchantLevel(Integer merchantLevel) {
-		this.merchantLevel = merchantLevel;
-	}
+    public String getBusinessLine() {
+        return businessLine;
+    }
 
-	public Timestamp getOpenTime() {
-		return openTime;
-	}
+    public void setBusinessLine(String businessLine) {
+        this.businessLine = businessLine;
+    }
 
-	public void setOpenTime(Timestamp openTime) {
-		this.openTime = openTime;
-	}
+    public Integer getMerchantLevel() {
+        return merchantLevel;
+    }
 
-	public Timestamp getExpireTime() {
-		return expireTime;
-	}
+    public void setMerchantLevel(Integer merchantLevel) {
+        this.merchantLevel = merchantLevel;
+    }
 
-	public void setExpireTime(Timestamp expireTime) {
-		this.expireTime = expireTime;
-	}
+    public Timestamp getOpenTime() {
+        return openTime;
+    }
 
-	public Integer getAvailableSmsNum() {
-		return availableSmsNum;
-	}
+    public void setOpenTime(Timestamp openTime) {
+        this.openTime = openTime;
+    }
 
-	public void setAvailableSmsNum(Integer availableSmsNum) {
-		this.availableSmsNum = availableSmsNum;
-	}
+    public Timestamp getExpireTime() {
+        return expireTime;
+    }
 
-	public String getRecordNumber() {
-		return recordNumber;
-	}
+    public void setExpireTime(Timestamp expireTime) {
+        this.expireTime = expireTime;
+    }
 
-	public void setRecordNumber(String recordNumber) {
-		this.recordNumber = recordNumber;
-	}
+    public Integer getAvailableSmsNum() {
+        return availableSmsNum;
+    }
 
-	public String getContacts() {
-		return contacts;
-	}
+    public void setAvailableSmsNum(Integer availableSmsNum) {
+        this.availableSmsNum = availableSmsNum;
+    }
 
-	public void setContacts(String contacts) {
-		this.contacts = contacts;
-	}
+    public String getRecordNumber() {
+        return recordNumber;
+    }
 
-	public String getTelephone() {
-		return telephone;
-	}
+    public void setRecordNumber(String recordNumber) {
+        this.recordNumber = recordNumber;
+    }
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
+    public String getContacts() {
+        return contacts;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public String getTelephone() {
+        return telephone;
+    }
 
-	public Timestamp getCreateTime() {
-		return createTime;
-	}
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
 
-	public void setCreateTime(Timestamp createTime) {
-		this.createTime = createTime;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public Timestamp getUpdateTime() {
-		return updateTime;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setUpdateTime(Timestamp updateTime) {
-		this.updateTime = updateTime;
-	}
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public String getHeadimgUrl() {
+        return headimgUrl;
+    }
+
+    public void setHeadimgUrl(String headimgUrl) {
+        this.headimgUrl = headimgUrl;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
 }
