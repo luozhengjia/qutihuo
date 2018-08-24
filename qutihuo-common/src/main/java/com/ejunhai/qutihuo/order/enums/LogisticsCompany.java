@@ -7,7 +7,7 @@ package com.ejunhai.qutihuo.order.enums;
  */
 public enum LogisticsCompany {
 
-	shunfeng(1, "顺丰快递", "shunfeng"), zhongtong(2, "中通快递", "zhongtong");
+	shunfeng(1, "顺丰快递", "shunfeng"), zhongtong(2, "中通快递", "zhongtong"), yunda(3, "韵达快递", "yunda");
 
 	private LogisticsCompany(Integer flag, String title, String qcode) {
 		this.flag = flag;
