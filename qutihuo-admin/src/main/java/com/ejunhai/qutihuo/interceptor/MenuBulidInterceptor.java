@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -78,6 +79,7 @@ public class MenuBulidInterceptor implements HandlerInterceptor {
             arg3.addObject("menuRouteMap", SystemActionUtil.getRouteMapByUrl(authorizedActionList, request.getRequestURI()));
             arg3.addObject("_referUrl", request.getHeader("referer"));
             arg3.addObject("_merchantId", SessionManager.get(request).getMerchantId() == null ? 4 : SessionManager.get(request).getMerchantId());
+            response.addCookie(new Cookie("current-skin", "/assets/css/skins/deepblue.min.css"));
         }
 
     }

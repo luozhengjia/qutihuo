@@ -77,9 +77,10 @@ public class LoginController extends BaseController {
 
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Integer merchantId = SessionManager.get(request).getMerchantId();
 
         // 注销用户
         SessionManager.clear(request);
-        return "redirect:/login.jhtml?merchantId=" + SessionManager.get(request).getMerchantId();
+        return "redirect:/login.jhtml?merchantId=" + merchantId;
     }
 }
