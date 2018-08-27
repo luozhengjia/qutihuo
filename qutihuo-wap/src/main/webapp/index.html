@@ -18,11 +18,29 @@
 		  </ol>
 		
 		  <div class="carousel-inner">
-		    <div class="item active">
-		      <img src="/images/banner_${merchant.id}.jpg" alt="...">
-		      <div class="carousel-caption">
-		      </div>
-		    </div>
+		  	<#if merchant.id==5>
+		  		<div class="item active">
+			      <img src="/images/banner_5_1.png?v=12" alt="...">
+			      <div class="carousel-caption"></div>
+			    </div>
+			    <div class="item">
+			      <img src="/images/banner_5_2.png?v=12" alt="...">
+			      <div class="carousel-caption"></div>
+			    </div>
+			    <div class="item">
+			      <img src="/images/banner_5_3.png?v=12" alt="...">
+			      <div class="carousel-caption"></div>
+			    </div>
+			    <div class="item">
+			      <img src="/images/banner_5_4.png?v=12" alt="...">
+			      <div class="carousel-caption"></div>
+			    </div>
+		  	<#else>
+		  		<div class="item active">
+			      <img src="/images/banner_4.jpg?v=12" alt="...">
+			      <div class="carousel-caption"></div>
+			    </div>
+		  	</#if>
 		  </div>
 		</div>
 		<br/>
@@ -77,6 +95,10 @@
 			
 			$('input').focus(function() { 
 				$('#valate_msg_tip').hide("slow");
+			});
+			
+			$('.carousel').carousel({
+			    interval: 2000
 			});
 			
 			$('#loginForm').bootstrapValidator({
