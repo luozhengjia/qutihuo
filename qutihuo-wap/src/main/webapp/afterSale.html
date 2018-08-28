@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
   <head>
-    <title>骏海水产大闸蟹预定系统</title>
+    <title><#if _user.id==4>生鲜果蔬<#elseif _user.id==5>翊上风华</#if>预定系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
@@ -13,19 +13,19 @@
 	<div class="container">
 		<div class="navbar navbar-default navbar-fixed-top">
 			<a href="${BasePath}/dispatchCenter.jhtml" class="navbar-text col-xs-2" title="返回"><span class="glyphicon glyphicon-arrow-left"></span></a>
-			<span class="navbar-text col-xs-8 col-lg-7" style="text-align:center;"><strong>死蟹申请</strong></span>
+			<span class="navbar-text col-xs-8 col-lg-7" style="text-align:center;"><strong>售后申请</strong></span>
 			<a href="${BasePath}/logout.jhtml" class="navbar-text col-xs-2" title="退出"><span class="glyphicon glyphicon-log-out"></span></a>
       	</div>
       	
       	<#if afterSaleRequ??>
 	      	<p><strong  class="label label-info">申请时间</strong> ${afterSaleRequ.createTime?string('yyyy-MM-dd HH:mm')}</p>
-	      	<p><strong  class="label label-info">死蟹说明</strong> ${afterSaleRequ.description!''}</p>
+	      	<p><strong  class="label label-info">售后说明</strong> ${afterSaleRequ.description!''}</p>
 	      	<p><strong  class="label label-info">处理状态</strong> <#if afterSaleRequ.state==0>处理中<#elseif afterSaleRequ.state==2>已下补货单<#elseif afterSaleRequ.state==1>已拒绝</#if></p>
 	      	<#if afterSaleRequ.state!=0>
 	      	<p><strong  class="label label-info">处理时间</strong> <#if afterSaleRequ.dealTime??>${afterSaleRequ.dealTime?string('yyyy-MM-dd HH:mm')}</#if></p>
 	      	<p><strong  class="label label-info">处理说明</strong> ${afterSaleRequ.dealInfo!''}</p>
 			</#if>
-			<p><strong  class="label label-info">死蟹遗照</strong></p>
+			<p><strong  class="label label-info">产品拍照</strong></p>
 			<div class="clearfix">
 				<#list afterSaleRequ.urls?split(",") as url>
 					<div class="col-xs-12"><img src="${url}" class="img-thumbnail"/></div>
@@ -76,7 +76,7 @@
 		        	description: {
 		                validators: {
 		                    notEmpty: {
-		                        message: '请输入死蟹描述信息'
+		                        message: '请输入商品描述信息'
 		                    },
 		                    stringLength:{
 		                    	min: 10,

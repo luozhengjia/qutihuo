@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
   <head>
-    <title>骏海水产大闸蟹预定系统</title>
+    <title><#if _user.id==4>生鲜果蔬<#elseif _user.id==5>翊上风华</#if>预定系统预定系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
@@ -12,7 +12,7 @@
   <body style="padding-top: 70px;">
 	<div class="container">
 		<div class="navbar navbar-default navbar-fixed-top">
-			<span class="navbar-text col-xs-offset-2 col-xs-8 col-lg-7 text-center"><strong>欢迎登入骏海水产预定系统</strong></span>
+			<span class="navbar-text col-xs-offset-2 col-xs-8 col-lg-7 text-center"><strong>欢迎登入<#if _user.id==4>生鲜果蔬<#elseif _user.id==5>翊上风华</#if>预定系统预定系统</strong></span>
 			<a href="${BasePath}/logout.jhtml" class="navbar-text col-xs-2 pull-right" title="退出"><span class="glyphicon glyphicon-log-out"></span></a>
       	</div>
       	
@@ -57,7 +57,7 @@
 				 <img src="${BasePath}/images/apply.png" width="64px" height="64px" class="pull-left media-object" alt='' />
 				<div class="media-body">
 					<h4 class="media-heading">公司简介</h4> 
-					<small>中国领先的优质淡水水产品牌</small>
+					<small>中国领先的优质品牌</small>
 				</div>
 			</div>
 		  </a>
