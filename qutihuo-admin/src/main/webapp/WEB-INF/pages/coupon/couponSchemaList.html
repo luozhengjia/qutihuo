@@ -40,8 +40,8 @@
                         </thead>
                         <tbody>
                             <#list couponSchemaList as item >
-                            <tr data-formData='{"id":${item.id}}'>
-                    			<td>${item.id}</td>
+                            <tr data-formData='{"id":${item.id?c}}'>
+                    			<td>${item.id?c}</td>
                     			<td>${item.couponName}</td>
                     			<td>${item.useStartdate?string('yyyy-MM-dd')} 至 ${item.useEnddate?string('yyyy-MM-dd')}</td>
                     			<td>${item.hasUseNum?c}/${item.hasIssueNum?c}/${item.issueAmount?c}</td>

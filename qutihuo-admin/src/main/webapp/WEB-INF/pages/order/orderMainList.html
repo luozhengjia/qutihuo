@@ -47,7 +47,7 @@
                         </thead>
                         <tbody>
                             <#list orderMainList as item >
-                            <tr data-formData='{"id":${item.id},"orderMainNo":"${item.orderMainNo}","logisticsCompany":1}'>
+                            <tr data-formData='{"id":${item.id?c},"orderMainNo":"${item.orderMainNo}","logisticsCompany":1}'>
                             	<td>${item.id?c}</td>
                     			<td>${item.orderMainNo}</td>
                     			<td>${item.couponNumber}</td>

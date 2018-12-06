@@ -17,7 +17,7 @@
 							    	<select name="couponSchemaId" class="form-control">
 										<option value="">按方案Id过滤</option>
 										<#list couponSchemaList as item >
-											<option value="${item.id}" <#if couponDto.couponSchemaId?? && couponDto.couponSchemaId==item.id>selected</#if>>${item.couponName}</option> 
+											<option value="${item.id?c}" <#if couponDto.couponSchemaId?? && couponDto.couponSchemaId==item.id>selected</#if>>${item.couponName}</option> 
 										</#list>
                                     </select>
 							        <input type="text"  name="couponNumber" class="form-control" value="${(couponDto.couponNumber)!''}" placeholder="按礼品卡编码过滤">
