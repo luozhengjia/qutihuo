@@ -84,8 +84,8 @@
 		                            <label class="col-lg-2 control-label">是否默认激活111</label>
 		                            <div class="col-lg-2">
 		                            	<select name="initActivate" class="form-control">
-		                            		<option value="1">不激活</option> 
-		                            		<option value="2">激活</option> 
+		                            		<option value="1" <#if couponSchema??&&couponSchema.initActivate==1>selected</#if>>不激活</option> 
+		                            		<option value="2" <#if couponSchema??&&couponSchema.initActivate==2>selected</#if>>激活</option> 
 	                                    </select>
 		                            </div>
 		                            <div class="col-lg-6"><p class="help-block">选择“激活”生成券后时会自动激活优惠券；否则需要手动激活优惠券</p></div>
